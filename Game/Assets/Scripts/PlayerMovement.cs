@@ -8,12 +8,16 @@ public class PlayerMovement : MonoBehaviour
     Vector3 movement;                   // The vector to store the direction of the player's movement.
     Animator anim;                      // Reference to the animator component.
     Rigidbody playerRigidbody;          // Reference to the player's rigidbody.
+    Collider collider;
+    float distToGround;
 
     void Awake()
     {
         // Set up references.
         anim = GetComponent<Animator>();
         playerRigidbody = GetComponent<Rigidbody>();
+        collider = GetComponent<Collider>();
+        distToGround = collider.bounds.extents.y;
     }
 
     // Movement speed
@@ -50,7 +54,7 @@ public class PlayerMovement : MonoBehaviour
         Turning(rotationX, rotationY);
 
         // Turn the player to face the mouse cursor.
-        if(!Input.GetJoystickNames().Contains("Controller (Xbox One For Windows)"))
+        if(Input.GetJoystickNames().Length == 0 || string.IsNullOrEmpty(Input.GetJoystickNames()[0]))
         {
             Turning(h, v);
             rotationX = h;
@@ -59,6 +63,12 @@ public class PlayerMovement : MonoBehaviour
         // Animate the player.
         Animating(translationX, translationZ, rotationX);
         
+    }
+
+    
+
+    bool IsGrounded() {
+        return Physics.Raycast(transform.position, -Vector3.up, distToGround + 1.0F);
     }
 
     void Move(float h, float v)
@@ -80,17 +90,15 @@ public class PlayerMovement : MonoBehaviour
         
         playerRigidbody.AddRelativeTorque(vec * playerRigidbody.mass / 2);
         playerRigidbody.MoveRotation(deltaRotation);
-
     }
 
     void Animating(float h, float v, float a)
     {
-        // Create a boolean that is true if either of the input axes is non-zero.
-        bool walking = h != 0f || v != 0f;
-
         // Tell the animator whether or not the player is walking.
         anim.SetFloat("HSpeed", h);
         anim.SetFloat("VSpeed", v);
         anim.SetFloat("AngularSpeed", a);
+        
+        anim.SetBool("Grounded", IsGrounded());
     }
 }
