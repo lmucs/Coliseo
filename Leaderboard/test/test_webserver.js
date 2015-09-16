@@ -1,4 +1,3 @@
-require('babel/register');
 const app = require('../app'),
       request = require('supertest'),
       fs = require('fs'),
