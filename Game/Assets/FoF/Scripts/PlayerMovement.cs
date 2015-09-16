@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Linq;
+using UnityEngine.Networking;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     Animator anim;                      // Reference to the animator component.
     Rigidbody playerRigidbody;          // Reference to the player's rigidbody.
     Collider collider;
+    NetworkIdentity identity;
     float distToGround;
 
     void Awake()
@@ -18,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
         playerRigidbody = GetComponent<Rigidbody>();
         collider = GetComponent<Collider>();
         distToGround = collider.bounds.extents.y;
+        identity = GetComponent<NetworkIdentity>();
     }
 
     // Movement speed
@@ -26,13 +29,11 @@ public class PlayerMovement : MonoBehaviour
     // Controller sensitivity
     public float rotationSpeed = 100.0F;
 
-    // Mouse sensitivity
-    // public float horizontalSpeed = 4.0F;
-    // public float verticalSpeed = 4.0F;
-
     void FixedUpdate()
     {
-
+        //Debug.Log("Player ID: " + identity.netId + ", localAuth: " + identity.hasAuthority);
+        if (identity.hasAuthority)
+        {
         float translationX = Input.GetAxis("Left_X_Axis") * moveSpeed;
         float translationZ = Input.GetAxis("Left_Y_Axis") * moveSpeed;
 
@@ -62,7 +63,7 @@ public class PlayerMovement : MonoBehaviour
 
         // Animate the player.
         Animating(translationX, translationZ, rotationX);
-        
+        }
     }
 
     
