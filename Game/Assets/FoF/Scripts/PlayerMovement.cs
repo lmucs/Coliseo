@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Linq;
 using UnityEngine.Networking;
+using XInputDotNetPure;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -9,8 +10,12 @@ public class PlayerMovement : MonoBehaviour
     Vector3 movement;                   // The vector to store the direction of the player's movement.
     Animator anim;                      // Reference to the animator component.
     Rigidbody playerRigidbody;          // Reference to the player's rigidbody.
-    Collider collider;
     NetworkIdentity identity;
+    GamePadState state;
+    GamePadState prevState;
+
+    bool playerIndexSet = false;
+    PlayerIndex playerIndex;
     float distToGround;
 
     void Awake()
@@ -18,8 +23,7 @@ public class PlayerMovement : MonoBehaviour
         // Set up references.
         anim = GetComponent<Animator>();
         playerRigidbody = GetComponent<Rigidbody>();
-        collider = GetComponent<Collider>();
-        distToGround = collider.bounds.extents.y;
+        distToGround = GetComponent<Collider>().bounds.extents.y;
         identity = GetComponent<NetworkIdentity>();
     }
 
@@ -29,47 +33,80 @@ public class PlayerMovement : MonoBehaviour
     // Controller sensitivity
     public float rotationSpeed = 100.0F;
 
+    // For jumps
+    public float jumpStrength = 50.0f;
+
+    bool isFocused = true;
+
     void FixedUpdate()
     {
-        //Debug.Log("Player ID: " + identity.netId + ", localAuth: " + identity.hasAuthority);
-        if (identity.hasAuthority)
+        /// This controller state code is straight from the example file for XInput
+        // Find a PlayerIndex, for a single player game
+        // Will find the first controller that is connected ans use it
+        if (!playerIndexSet || !prevState.IsConnected)
         {
-        float translationX = Input.GetAxis("Left_X_Axis") * moveSpeed;
-        float translationZ = Input.GetAxis("Left_Y_Axis") * moveSpeed;
-
-        float rotationX = Input.GetAxis("Right_X_Axis") * rotationSpeed;
-        float rotationY = Input.GetAxis("Right_Y_Axis") * rotationSpeed;
-
-        float h = rotationSpeed * Input.GetAxis("Mouse X");
-        float v = rotationSpeed * Input.GetAxis("Mouse Y");
-
-        translationX = (Input.GetKey("a") ? -speed : translationX);
-        translationX = (Input.GetKey("d") ? speed : translationX);
-        translationZ = (Input.GetKey("s") ? -speed : translationZ);
-        translationZ = (Input.GetKey("w") ? speed : translationZ);
-
-        // Move the player around the scene.
-        Move(translationX, translationZ);
-
-        // Turn the player to face the mouse cursor.
-        Turning(rotationX, rotationY);
-
-        // Turn the player to face the mouse cursor.
-        if(Input.GetJoystickNames().Length == 0 || string.IsNullOrEmpty(Input.GetJoystickNames()[0]))
-        {
-            Turning(h, v);
-            rotationX = h;
+            for (int i = 0; i < 4; ++i)
+            {
+                PlayerIndex testPlayerIndex = (PlayerIndex)i;
+                GamePadState testState = GamePad.GetState(testPlayerIndex);
+                if (testState.IsConnected)
+                {
+                    playerIndex = testPlayerIndex;
+                    playerIndexSet = true;
+                }
+            }
         }
 
-        // Animate the player.
-        Animating(translationX, translationZ, rotationX);
+        prevState = state;
+        state = GamePad.GetState(playerIndex);
+
+        if (identity.hasAuthority && isFocused)
+        {
+            float translationX = state.ThumbSticks.Left.X * moveSpeed;
+            float translationZ = state.ThumbSticks.Left.Y * moveSpeed;
+
+            float rotationX = state.ThumbSticks.Right.X * rotationSpeed;
+            float rotationY = -state.ThumbSticks.Right.Y * rotationSpeed;
+
+            float h = rotationSpeed * Input.GetAxis("Mouse X");
+            float v = rotationSpeed * Input.GetAxis("Mouse Y");
+
+            translationX = (Input.GetKey("a") ? -speed : translationX);
+            translationX = (Input.GetKey("d") ? speed : translationX);
+            translationZ = (Input.GetKey("s") ? -speed : translationZ);
+            translationZ = (Input.GetKey("w") ? speed : translationZ);
+
+            // Move the player around the scene.
+            Move(translationX, translationZ);
+
+            // Turn the player according to controller input
+            Turning(rotationX, rotationY);
+
+            // Turn the player to face the mouse cursor.
+            if(!state.IsConnected)
+            {
+                Turning(h, v);
+                rotationX = h;
+            }
+
+            if(IsGrounded() && state.Buttons.A == ButtonState.Pressed)
+            {
+                playerRigidbody.AddForce(Vector3.up*jumpStrength);
+            }
+
+            // Animate the player.
+            Animating(translationX, translationZ, rotationX);
         }
     }
 
+    void OnApplicationFocus(bool focusStatus)
+    {
+        isFocused = focusStatus;
+    }
     
-
+    // This is probably the source of the crashes. Just sayin.
     bool IsGrounded() {
-        return Physics.Raycast(transform.position, -Vector3.up, distToGround + 1.0F);
+        return Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.1F);
     }
 
     void Move(float h, float v)
@@ -99,7 +136,5 @@ public class PlayerMovement : MonoBehaviour
         anim.SetFloat("HSpeed", h);
         anim.SetFloat("VSpeed", v);
         anim.SetFloat("AngularSpeed", a);
-        
-        anim.SetBool("Grounded", IsGrounded());
     }
 }
