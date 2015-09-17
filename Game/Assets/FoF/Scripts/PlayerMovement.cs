@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Linq;
-using UnityEngine.Networking;
 using XInputDotNetPure;
 
 public class PlayerMovement : MonoBehaviour
@@ -10,7 +9,6 @@ public class PlayerMovement : MonoBehaviour
     Vector3 movement;                   // The vector to store the direction of the player's movement.
     Animator anim;                      // Reference to the animator component.
     Rigidbody playerRigidbody;          // Reference to the player's rigidbody.
-    NetworkIdentity identity;
     GamePadState state;
     GamePadState prevState;
 
@@ -24,7 +22,6 @@ public class PlayerMovement : MonoBehaviour
         anim = GetComponent<Animator>();
         playerRigidbody = GetComponent<Rigidbody>();
         distToGround = GetComponent<Collider>().bounds.extents.y;
-        identity = GetComponent<NetworkIdentity>();
     }
 
     // Movement speed
@@ -35,8 +32,6 @@ public class PlayerMovement : MonoBehaviour
 
     // For jumps
     public float jumpStrength = 50.0f;
-
-    bool isFocused = true;
 
     void FixedUpdate()
     {
@@ -59,49 +54,42 @@ public class PlayerMovement : MonoBehaviour
 
         prevState = state;
         state = GamePad.GetState(playerIndex);
+        
+        float translationX = state.ThumbSticks.Left.X * moveSpeed;
+        float translationZ = state.ThumbSticks.Left.Y * moveSpeed;
 
-        if (identity.hasAuthority && isFocused)
+        float rotationX = state.ThumbSticks.Right.X * rotationSpeed;
+        float rotationY = -state.ThumbSticks.Right.Y * rotationSpeed;
+
+        float h = rotationSpeed * Input.GetAxis("Mouse X");
+        float v = rotationSpeed * Input.GetAxis("Mouse Y");
+
+        translationX = (Input.GetKey("a") ? -speed : translationX);
+        translationX = (Input.GetKey("d") ? speed : translationX);
+        translationZ = (Input.GetKey("s") ? -speed : translationZ);
+        translationZ = (Input.GetKey("w") ? speed : translationZ);
+
+        // Move the player around the scene.
+        Move(translationX, translationZ);
+
+        // Turn the player according to controller input
+        Turning(rotationX, rotationY);
+
+        // Turn the player to face the mouse cursor.
+        if(!state.IsConnected)
         {
-            float translationX = state.ThumbSticks.Left.X * moveSpeed;
-            float translationZ = state.ThumbSticks.Left.Y * moveSpeed;
-
-            float rotationX = state.ThumbSticks.Right.X * rotationSpeed;
-            float rotationY = -state.ThumbSticks.Right.Y * rotationSpeed;
-
-            float h = rotationSpeed * Input.GetAxis("Mouse X");
-            float v = rotationSpeed * Input.GetAxis("Mouse Y");
-
-            translationX = (Input.GetKey("a") ? -speed : translationX);
-            translationX = (Input.GetKey("d") ? speed : translationX);
-            translationZ = (Input.GetKey("s") ? -speed : translationZ);
-            translationZ = (Input.GetKey("w") ? speed : translationZ);
-
-            // Move the player around the scene.
-            Move(translationX, translationZ);
-
-            // Turn the player according to controller input
-            Turning(rotationX, rotationY);
-
-            // Turn the player to face the mouse cursor.
-            if(!state.IsConnected)
-            {
-                Turning(h, v);
-                rotationX = h;
-            }
-
-            if(IsGrounded() && state.Buttons.A == ButtonState.Pressed)
-            {
-                playerRigidbody.AddForce(Vector3.up*jumpStrength);
-            }
-
-            // Animate the player.
-            Animating(translationX, translationZ, rotationX);
+            Turning(h, v);
+            rotationX = h;
         }
-    }
 
-    void OnApplicationFocus(bool focusStatus)
-    {
-        isFocused = focusStatus;
+        if(IsGrounded() && state.Buttons.A == ButtonState.Pressed)
+        {
+            playerRigidbody.AddForce(Vector3.up*jumpStrength);
+        }
+
+        // Animate the player.
+        Animating(translationX, translationZ, rotationX);
+        
     }
     
     // This is probably the source of the crashes. Just sayin.
@@ -121,6 +109,8 @@ public class PlayerMovement : MonoBehaviour
         playerRigidbody.MovePosition(transform.position + transform.rotation * movement);
     }
 
+    // Now that the camera is directly on the head, we can, for the time being, 
+    // have the controller directly move the head to look down. For now.
     void Turning(float x, float y)
     {
         Vector3 vec = new Vector3(y, x, 0);
