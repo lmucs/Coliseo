@@ -1,15 +1,19 @@
-//require("babel/register");
-const express = require('express');
-const path = require('path');
-const favicon = require('serve-favicon');
-const logger = require('morgan');
-const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
+import express from 'express';
+import path from 'path';
+import favicon from 'serve-favicon';
+import logger from 'morgan';
+import cookieParser from 'cookie-parser';
+import bodyParser from 'body-parser';
+import hbs from 'hbs';
 
-const routes = require('./routes/index');
-const users = require('./routes/users');
+import routes from './routes/index';
+import users from './routes/users';
 
 const app = express();
+import setupLocals from './locals'; // Populate our app with custom locals
+setupLocals(app);
+import './handlebars_helpers';
+hbs.localsAsTemplateData(app);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -19,7 +23,7 @@ app.set('view engine', 'hbs');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -42,7 +46,7 @@ if (app.get('env') === 'development') {
     res.status(err.status || 500);
     res.render('error', {
       message: err.message,
-      error: err
+      error: err,
     });
   });
 }
@@ -53,9 +57,8 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500);
   res.render('error', {
     message: err.message,
-    error: {}
+    error: {},
   });
 });
 
-
-module.exports = app;
+export default app;
