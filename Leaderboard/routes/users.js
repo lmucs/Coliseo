@@ -25,11 +25,11 @@ router.route('/register').get((req, res, next) => {
     isUserError: !usernameRegex.test(req.body.username),
     isPasswordError: !passwordRegex.test(req.body.password),
     isConfirmError: req.body.password !== req.body.confirm,
-    isEmailError: false, // TODO
+    isEmailError: true, // TODO
   };
   if (_.any(errors)) {
     _.assign(res.locals, errors);
-    res.render('register', _.merge(errors, patterns, req.body));
+    res.status(400).render('register', _.merge(errors, patterns, req.body));
   } else {
     console.log('WE DIDN\'T HAVE ERRORS'); // TODO
   }

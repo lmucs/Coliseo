@@ -6,11 +6,11 @@
         <label class="mdl-textfield__label" for="email">Email</label>
         <span class="mdl-textfield__error">Given address is not a valid email address</span>
       </div>
-      {{#emailError}}
+      {{#isEmailError}}
         <p class="form-error">
           {{regEmailError}}
         </p>
-      {{/emailError}}
+      {{/isEmailError}}
     </div>
     <div class="mdl-cell mdl-cell--12-col">
       <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
