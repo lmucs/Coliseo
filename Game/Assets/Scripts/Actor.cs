@@ -5,16 +5,13 @@ namespace fof
 {
 	public abstract class Actor : MonoBehaviour
 	{
-		public float speed = 6f;            // The speed that the player will move at.
+		public float speed;            // The speed that the player will move at.
 		// Movement speed
-		public float moveSpeed = 10.0F;
-		
-		// Controller sensitivity
-		public float rotationSpeed = 100.0F;
+		public float movementSpeed;
 		
 		protected Vector3 movement;                   // The vector to store the direction of the player's movement.
 		protected Animator anim;                      // Reference to the animator component.
-		protected Rigidbody rigidbody;          // Reference to the player's rigidbody.
+		new protected Rigidbody rigidbody;          // Reference to the player's rigidbody.
 
 		void Awake()
 		{
@@ -23,6 +20,7 @@ namespace fof
 			rigidbody = GetComponent<Rigidbody>();
 		}
 
+		// Currently disabled as it affects movement and rotation speed
 		public void Animating(float h, float v, float a)
 		{
 			// Create a boolean that is true if either of the input axes is non-zero.
@@ -33,5 +31,7 @@ namespace fof
 			anim.SetFloat("VSpeed", v);
 			anim.SetFloat("AngularSpeed", a);
 		}
+
+		public abstract void Move (float h, float v);
 	}
 }

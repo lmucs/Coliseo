@@ -4,7 +4,7 @@ using fof;
 
 namespace fof
 {
-	public class PlayerControls : MonoBehaviour
+	public class PlayerControls
 	{
 		private Player p;
 
@@ -15,8 +15,8 @@ namespace fof
 	    public float rotationSpeed = 100.0F;
 
 	    // Mouse sensitivity
-	    // public float horizontalSpeed = 4.0F;
-	    // public float verticalSpeed = 4.0F;
+	    protected float horizontalSpeed = 4.0F;
+	    protected float verticalSpeed = 4.0F;
 
 		public PlayerControls (Player plerer)
 		{
@@ -44,14 +44,14 @@ namespace fof
 	        p.Move(translationX, translationZ);
 
 	        // Turn the player to face the mouse cursor.
-	        p.Turn(rotationX, rotationY);
-
-	        // Turn the player to face the mouse cursor.
-	        if(!Input.GetJoystickNames().Contains("Controller (Xbox One For Windows)"))
-	        {
-	            p.Turn(h, v);
-	            rotationX = h;
-	        }
+//			Debug.Log (Input.GetJoystickNames ().Contains("Controller (Xbox One For Windows)"));
+	        if (!Input.GetJoystickNames ().Contains ("Controller (Xbox One For Windows)")) {
+				p.Turn (h, v);
+//				Debug.Log("h: " + h + " v: " + v);
+//				rotationX = h;
+			} else {
+				p.Turn(rotationX, rotationY);
+			}
 
 	        // Animate the player.
 	        p.Animating(translationX, translationZ, rotationX);

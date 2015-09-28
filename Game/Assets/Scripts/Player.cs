@@ -4,6 +4,9 @@ using fof;
 
 public class Player : Actor
 {
+	public float speed = 6f;
+	public float movementSpeed = 10f;
+
 	PlayerControls controller;
 	// Use this for initialization
 	void Start ()
@@ -17,13 +20,13 @@ public class Player : Actor
 		this.controller.Update();
 	}
 
-	public void Move (float h, float v)
+	public override void Move(float h, float v)
 	{
 		// Set the movement vector based on the axis input.
-		this.movement.Set(h, 0f, v);
+		movement.Set(h, 0f, v);
 		
 		// Normalise the movement vector and make it proportional to the speed per second.
-		this.movement = movement.normalized * speed * Time.deltaTime;
+		movement = movement.normalized * speed * Time.deltaTime;
 		
 		// Move the player to it's current position plus the movement.
 		this.rigidbody.MovePosition(transform.position + transform.rotation * movement);
@@ -31,11 +34,12 @@ public class Player : Actor
 
 	public void Turn (float x, float y)
 	{
-		Vector3 vec = new Vector3(y, x, 0);
+
+//		Debug.Log ("turnX: " + x + ", turnY: " + y);
+		Vector3 vec = new Vector3(y, x, 0f);
 		Quaternion deltaRotation = Quaternion.Euler(vec * Time.deltaTime + transform.rotation.eulerAngles);
 		
-		this.rigidbody.AddRelativeTorque(vec * this.rigidbody.mass / 2);
+		this.rigidbody.AddRelativeTorque(vec * this.rigidbody.mass / 2f);
 		this.rigidbody.MoveRotation(deltaRotation);
-		
 	}
 }
