@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Linq;
-using XInputDotNetPure;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -9,12 +8,12 @@ public class PlayerMovement : MonoBehaviour
     Vector3 movement;                   // The vector to store the direction of the player's movement.
     Animator anim;                      // Reference to the animator component.
     Rigidbody playerRigidbody;          // Reference to the player's rigidbody.
-    GamePadState state;
-    GamePadState prevState;
 
     bool playerIndexSet = false;
-    PlayerIndex playerIndex;
+    
     float distToGround;
+    Transform cameraTransform;
+    float cameraRotX = 0;
 
     void Awake()
     {
@@ -22,47 +21,37 @@ public class PlayerMovement : MonoBehaviour
         anim = GetComponent<Animator>();
         playerRigidbody = GetComponent<Rigidbody>();
         distToGround = GetComponent<Collider>().bounds.extents.y;
+        cameraTransform = transform.Find("ScientistSkeleton/Hips/Spine/Spine1/Neck/Head/Camera");   // Gotta love long identifiers
+        cameraRotX = cameraTransform.localEulerAngles.x;
+
     }
 
     // Movement speed
     public float moveSpeed = 10.0F;
 
     // Controller sensitivity
-    public float rotationSpeed = 100.0F;
+    public float rotationSpeedHoriz = 100.0F;
+
+    // Controller sensitivity
+    public float rotationSpeedVert = 10.0F;
+
+    // Mouse sensitivity
+    public float mousePushHoriz = 10.0F;
 
     // For jumps
     public float jumpStrength = 50.0f;
 
     void FixedUpdate()
     {
-        /// This controller state code is straight from the example file for XInput
-        // Find a PlayerIndex, for a single player game
-        // Will find the first controller that is connected ans use it
-        if (!playerIndexSet || !prevState.IsConnected)
-        {
-            for (int i = 0; i < 4; ++i)
-            {
-                PlayerIndex testPlayerIndex = (PlayerIndex)i;
-                GamePadState testState = GamePad.GetState(testPlayerIndex);
-                if (testState.IsConnected)
-                {
-                    playerIndex = testPlayerIndex;
-                    playerIndexSet = true;
-                }
-            }
-        }
 
-        prevState = state;
-        state = GamePad.GetState(playerIndex);
-        
-        float translationX = state.ThumbSticks.Left.X * moveSpeed;
-        float translationZ = state.ThumbSticks.Left.Y * moveSpeed;
+        float translationX = Input.GetAxis("Left_X_Axis") * moveSpeed;
+        float translationZ = Input.GetAxis("Left_Y_Axis") * moveSpeed;
 
-        float rotationX = state.ThumbSticks.Right.X * rotationSpeed;
-        float rotationY = -state.ThumbSticks.Right.Y * rotationSpeed;
+        float rotationX = Input.GetAxis("Right_X_Axis") * rotationSpeedHoriz;
+        float rotationY = Input.GetAxis("Right_Y_Axis") * rotationSpeedVert;
 
-        float h = rotationSpeed * Input.GetAxis("Mouse X");
-        float v = rotationSpeed * Input.GetAxis("Mouse Y");
+        float h = rotationSpeedHoriz * Input.GetAxis("Mouse X") * mousePushHoriz;
+        float v = rotationSpeedVert * Input.GetAxis("Mouse Y");
 
         translationX = (Input.GetKey("a") ? -speed : translationX);
         translationX = (Input.GetKey("d") ? speed : translationX);
@@ -76,20 +65,19 @@ public class PlayerMovement : MonoBehaviour
         Turning(rotationX, rotationY);
 
         // Turn the player to face the mouse cursor.
-        if(!state.IsConnected)
+        if(!Input.GetJoystickNames().Contains("Controller (Xbox One For Windows)"))
         {
             Turning(h, v);
             rotationX = h;
         }
 
-        if(IsGrounded() && state.Buttons.A == ButtonState.Pressed)
+        if(IsGrounded() && Input.GetButton("Button A"))
         {
             playerRigidbody.AddForce(Vector3.up*jumpStrength);
         }
 
         // Animate the player.
         Animating(translationX, translationZ, rotationX);
-        
     }
     
     // This is probably the source of the crashes. Just sayin.
@@ -113,9 +101,15 @@ public class PlayerMovement : MonoBehaviour
     // have the controller directly move the head to look down. For now.
     void Turning(float x, float y)
     {
-        Vector3 vec = new Vector3(y, x, 0);
+        Vector3 vec = new Vector3(0, x, 0);
         Quaternion deltaRotation = Quaternion.Euler(vec * Time.deltaTime + transform.rotation.eulerAngles);
-        
+
+        if (!UnityEngine.VR.VRDevice.isPresent)
+        {
+            cameraRotX = Mathf.Clamp(cameraRotX + y, -90, 90);
+            cameraTransform.localEulerAngles = new Vector3(cameraRotX, 0, 0);
+        }
+
         playerRigidbody.AddRelativeTorque(vec * playerRigidbody.mass / 2);
         playerRigidbody.MoveRotation(deltaRotation);
     }
