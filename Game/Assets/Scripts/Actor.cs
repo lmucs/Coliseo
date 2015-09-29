@@ -5,10 +5,6 @@ namespace fof
 {
 	public abstract class Actor : MonoBehaviour
 	{
-		public float speed;            // The speed that the player will move at.
-		// Movement speed
-		public float movementSpeed;
-		
 		protected Vector3 movement;                   // The vector to store the direction of the player's movement.
 		protected Animator anim;                      // Reference to the animator component.
 		new protected Rigidbody rigidbody;          // Reference to the player's rigidbody.
