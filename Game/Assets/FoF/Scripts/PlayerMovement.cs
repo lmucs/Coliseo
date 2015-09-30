@@ -15,6 +15,14 @@ public class PlayerMovement : MonoBehaviour
 
     void Awake()
     {
+        // Copied from Init, just to be certain its working.
+        if (UnityEngine.VR.VRDevice.isPresent)
+        {
+            UnityEngine.VR.InputTracking.Recenter();
+            UnityEngine.VR.VRSettings.showDeviceView = true;
+            UnityEngine.VR.VRSettings.loadedDevice = UnityEngine.VR.VRDeviceType.Oculus;
+        }
+
         // Set up references.
         anim = GetComponent<Animator>();
         playerRigidbody = GetComponent<Rigidbody>();
@@ -63,7 +71,7 @@ public class PlayerMovement : MonoBehaviour
         Turning(rotationX, rotationY);
 
         // Turn the player to face the mouse cursor.
-        if(!Input.GetJoystickNames().Contains("Controller (Xbox One For Windows)"))
+        if(Input.GetJoystickNames().Length == 0 || string.IsNullOrEmpty(Input.GetJoystickNames()[0]))
         {
             Turning(h, v);
             rotationX = h;
