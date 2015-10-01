@@ -1,0 +1,21 @@
+Database:
+  # https://sequelize.readthedocs.org/en/latest/api/sequelize/#new-sequelizedatabase-usernamenull-passwordnull-options
+  dialect: sqlite
+  storage: database.sqlite
+  db: database
+  syncOptions:
+    # https://sequelize.readthedocs.org/en/latest/api/sequelize/#sync
+    force: true
+
+Logger:
+  transport:
+    # https://github.com/winstonjs/winston/blob/master/docs/transports.md
+    # We use Console ATM (no possibility to change)
+    level: silly
+    silent: false
+    colorize: true
+    json: false
+    prettyPrint: true
+    handleExceptions: true
+    humanReadableUnhandledException: true
+    showLevel: true

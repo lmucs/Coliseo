@@ -1,6 +1,7 @@
 import Sequelize from 'sequelize';
 import config from 'config';
 import _ from 'lodash';
+import log from './logging';
 
 const dbConfig = config.get('Database');
 
@@ -37,8 +38,14 @@ export const User = sequelize.define('user', {
   userID: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
-
+    primaryKey: true,
   },
+});
+
+sequelize.sync(dbConfig.syncOptions).then(() => {
+  log.info('Database initialized');
+}).catch(error => {
+  throw error;
 });
 
 export default sequelize;
