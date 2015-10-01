@@ -25,7 +25,7 @@ router.route('/register').get((req, res, next) => {
     isUserError: !usernameRegex.test(req.body.username),
     isPasswordError: !passwordRegex.test(req.body.password),
     isConfirmError: req.body.password !== req.body.confirm,
-    isEmailError: true, // TODO
+    isEmailError: false, // TODO
   };
   if (_.any(errors)) {
     _.assign(res.locals, errors);
