@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
     void Awake()
     {
         // Copied from Init, just to be certain its working.
-        if (UnityEngine.VR.VRDevice.isPresent)
+		if (Application.platform != RuntimePlatform.OSXEditor && Application.platform == RuntimePlatform.OSXPlayer && UnityEngine.VR.VRDevice.isPresent)
         {
             UnityEngine.VR.InputTracking.Recenter();
             UnityEngine.VR.VRSettings.showDeviceView = true;
