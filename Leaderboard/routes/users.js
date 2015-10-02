@@ -1,5 +1,6 @@
 import express from 'express';
 import _ from 'lodash';
+import {User} from '../database';
 const router = express.Router();
 
 const patterns = {
@@ -31,7 +32,7 @@ router.route('/register').get((req, res, next) => {
     _.assign(res.locals, errors);
     res.status(400).render('register', _.merge(errors, patterns, req.body));
   } else {
-    console.log('WE DIDN\'T HAVE ERRORS'); // TODO
+    
   }
 });
 

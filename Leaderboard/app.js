@@ -15,6 +15,7 @@ import './handlebars_helpers';
 hbs.localsAsTemplateData(app);
 
 import database from './database';
+
 import {errorLogger, requestLogger} from './logging';
 
 // view engine setup

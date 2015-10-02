@@ -10,6 +10,7 @@ const loggerConfig = {
   statusLevels: true,
   level: winstonConfig.transport.level,
   expressFormat: true,
+  meta: false,
 };
 
 export const errorLogger = expressWinston.errorLogger(loggerConfig);

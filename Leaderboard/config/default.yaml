@@ -11,7 +11,7 @@ Logger:
   transport:
     # https://github.com/winstonjs/winston/blob/master/docs/transports.md
     # We use Console ATM (no possibility to change)
-    level: silly
+    level: info
     silent: false
     colorize: true
     json: false
