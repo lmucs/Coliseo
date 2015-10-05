@@ -3,7 +3,7 @@ using System.Linq;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float speed = 6f;            // The speed that the player will move at.
+    private float speed = 4;            // The speed that the player will move at.
 
     Vector3 movement;                   // The vector to store the direction of the player's movement.
     Animator anim;                      // Reference to the animator component.
@@ -21,13 +21,14 @@ public class PlayerMovement : MonoBehaviour
             UnityEngine.VR.InputTracking.Recenter();
             UnityEngine.VR.VRSettings.showDeviceView = true;
             UnityEngine.VR.VRSettings.loadedDevice = UnityEngine.VR.VRDeviceType.Oculus;
+            //Debug.Log("EyeHeight: " + OVRManager.profile.eyeHeight);
         }
 
         // Set up references.
         anim = GetComponent<Animator>();
         playerRigidbody = GetComponent<Rigidbody>();
         distToGround = GetComponent<Collider>().bounds.extents.y;
-        cameraTransform = transform.Find("ScientistSkeleton/Hips/Spine/Spine1/Neck/Head/Camera");   // Gotta love long identifiers
+        cameraTransform = transform.Find("ScientistSkeleton/Hips/Spine/Spine1/Neck/Head/CameraRig/Camera");   // Gotta love long identifiers
         cameraRotX = cameraTransform.localEulerAngles.x;
 
     }
@@ -59,10 +60,10 @@ public class PlayerMovement : MonoBehaviour
         float h = rotationSpeedHoriz * Input.GetAxis("Mouse X") * mousePushHoriz;
         float v = rotationSpeedVert * Input.GetAxis("Mouse Y");
 
-        translationX = (Input.GetKey("a") ? -speed : translationX);
-        translationX = (Input.GetKey("d") ? speed : translationX);
-        translationZ = (Input.GetKey("s") ? -speed : translationZ);
-        translationZ = (Input.GetKey("w") ? speed : translationZ);
+        translationX = (Input.GetKey(KeyCode.A) ? -speed : translationX);
+        translationX = (Input.GetKey(KeyCode.D) ? speed : translationX);
+        translationZ = (Input.GetKey(KeyCode.S) ? -speed : translationZ);
+        translationZ = (Input.GetKey(KeyCode.W) ? speed : translationZ);
 
         // Move the player around the scene.
         Move(translationX, translationZ);
@@ -75,15 +76,16 @@ public class PlayerMovement : MonoBehaviour
         {
             Turning(h, v);
             rotationX = h;
+            rotationY = v;
         }
 
-        if(IsGrounded() && Input.GetButton("Button A"))
+        if(IsGrounded() && (Input.GetButton("Button A") || Input.GetKey(KeyCode.Space)))
         {
             playerRigidbody.AddForce(Vector3.up*jumpStrength);
         }
 
         // Animate the player.
-        Animating(translationX, translationZ, rotationX);
+        Animating(translationX, translationZ, rotationX, rotationY);
     }
     
     // This is probably the source of the crashes. Just sayin.
@@ -120,11 +122,33 @@ public class PlayerMovement : MonoBehaviour
         playerRigidbody.MoveRotation(deltaRotation);
     }
 
-    void Animating(float h, float v, float a)
+    bool rightTriggerActive = false;
+
+    void Animating(float h, float v, float a, float b)
     {
         // Tell the animator whether or not the player is walking.
-        anim.SetFloat("HSpeed", h);
-        anim.SetFloat("VSpeed", v);
-        anim.SetFloat("AngularSpeed", a);
+        bool isMoving = (h != 0 || v != 0);
+
+        // a > 0 = turning left, a < 0 = turning right
+        // b > 0 = down, b < 0 = up
+
+        anim.SetFloat("Input X", h);
+        anim.SetFloat("Input Z", v);
+        anim.SetFloat("Rotation X", a);
+        anim.SetFloat("Rotation Y", b);
+        bool rightTriggerDown = (Input.GetAxis("RightTrigger") == 1);
+        bool inSwing = anim.GetCurrentAnimatorStateInfo(0).IsTag("swordswing");
+
+        if (!rightTriggerActive && rightTriggerDown && !inSwing || Input.GetMouseButtonDown(0))
+        {
+            rightTriggerActive = true;
+            anim.SetTrigger("AttackDownTrigger");
+        }
+        rightTriggerActive = rightTriggerDown;
+
+        // I'm leaving this here for when we eventually add the turning animation
+        // anim.SetFloat("AngularSpeed", a);
     }
+
+    
 }
