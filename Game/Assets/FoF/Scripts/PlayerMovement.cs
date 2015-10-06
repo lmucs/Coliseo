@@ -13,15 +13,18 @@ public class PlayerMovement : MonoBehaviour
     Transform cameraTransform;
     float cameraRotX = 0;
 
+    public static GameObject player;
+
     void Awake()
     {
+        player = gameObject;
         // Copied from Init, just to be certain its working.
-		if (Application.platform != RuntimePlatform.OSXEditor && Application.platform == RuntimePlatform.OSXPlayer && UnityEngine.VR.VRDevice.isPresent)
+		if (Application.platform != RuntimePlatform.OSXEditor && Application.platform != RuntimePlatform.OSXPlayer && UnityEngine.VR.VRDevice.isPresent)
         {
             UnityEngine.VR.InputTracking.Recenter();
             UnityEngine.VR.VRSettings.showDeviceView = true;
             UnityEngine.VR.VRSettings.loadedDevice = UnityEngine.VR.VRDeviceType.Oculus;
-            //Debug.Log("EyeHeight: " + OVRManager.profile.eyeHeight);
+            // Debug.Log("EyeHeight: " + OVRManager.profile.eyeHeight);
         }
 
         // Set up references.
@@ -30,7 +33,8 @@ public class PlayerMovement : MonoBehaviour
         distToGround = GetComponent<Collider>().bounds.extents.y;
         cameraTransform = transform.Find("ScientistSkeleton/Hips/Spine/Spine1/Neck/Head/CameraRig/Camera");   // Gotta love long identifiers
         cameraRotX = cameraTransform.localEulerAngles.x;
-
+        GameObject saber = transform.Find("ScientistSkeleton/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightHand/LSaber/Beam").gameObject; // Hot damn!
+        saber.tag = "Player" + saber.tag;
     }
 
     // Movement speed
