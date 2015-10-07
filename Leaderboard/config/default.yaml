@@ -19,3 +19,9 @@ Logger:
     handleExceptions: true
     humanReadableUnhandledException: true
     showLevel: true
+
+Crypto:
+  saltLength: 64
+  iterations: 100000
+  hashLength: 512
+  encoding: base64

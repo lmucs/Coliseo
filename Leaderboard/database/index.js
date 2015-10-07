@@ -12,6 +12,7 @@ const sequelize = new Sequelize(dbConfig.db, dbConfig.user, dbConfig.password,
     define: {
       allowNull: false,
     },
+    logging: log.info,
   })
 );
 

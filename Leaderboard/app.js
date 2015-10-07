@@ -5,18 +5,17 @@ import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import hbs from 'hbs';
 
+
 import routes from './routes/index';
 import users from './routes/users';
+import setupLocals from './locals'; // Populate our app with custom locals
+import {errorLogger, requestLogger} from './logging';
 
 const app = express();
-import setupLocals from './locals'; // Populate our app with custom locals
 setupLocals(app);
-import './handlebars_helpers';
 hbs.localsAsTemplateData(app);
+import './handlebars_helpers';
 
-import database from './database';
-
-import {errorLogger, requestLogger} from './logging';
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

@@ -11,8 +11,26 @@ const loggerConfig = {
   level: winstonConfig.transport.level,
   expressFormat: true,
   meta: false,
+  handleExceptions: true,
+  humanReadableUnhandledExceptions: true,
+  prettyPrint: true,
+  colorize: true,
+  silent: false,
 };
+
+const logger = new winston.Logger(loggerConfig);
+
+Object.defineProperty(logger, 'exception', {
+  enumerable: false,
+  configurable: false,
+  writable: false,
+  value: (message, exception) => {
+    logger.error(message);
+    logger.silly(JSON.stringify(exception, null, 2));
+    logger.error(exception);
+  },
+});
 
 export const errorLogger = expressWinston.errorLogger(loggerConfig);
 export const requestLogger = expressWinston.logger(loggerConfig);
-export default new winston.Logger(loggerConfig);
+export default logger;
