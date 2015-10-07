@@ -19,7 +19,7 @@ public class Character : MonoBehaviour
     }
 
     // The angle needed to properly rotate the health toward the player.
-    float AngleToPlayer()
+    public float AngleToPlayer()
     {
         Vector3 localPosition = transform.position - PlayerMovement.player.transform.position;
         return 180f - (Mathf.Rad2Deg * Mathf.Atan2(localPosition.z, localPosition.x) + 90f);
@@ -78,7 +78,10 @@ public class Character : MonoBehaviour
     }
 
     void OnTriggerEnter(Collider other)
-    {        
+    {
+        //Debug.Log("My tag: " + tag);
+        //Debug.Log("Other tag: " + other.tag);
+        //Debug.Log("IsOpponent(): " + IsOpponent(other.gameObject));
         if (IsOpponent(other.gameObject))
         {
             TakeDamage(DAMAGE);

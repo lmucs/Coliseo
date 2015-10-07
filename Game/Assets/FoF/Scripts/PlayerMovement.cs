@@ -31,9 +31,9 @@ public class PlayerMovement : MonoBehaviour
         anim = GetComponent<Animator>();
         playerRigidbody = GetComponent<Rigidbody>();
         distToGround = GetComponent<Collider>().bounds.extents.y;
-        cameraTransform = transform.Find("ScientistSkeleton/Hips/Spine/Spine1/Neck/Head/CameraRig/Camera");   // Gotta love long identifiers
+        cameraTransform = anim.GetBoneTransform(HumanBodyBones.Head).Find("CameraRig/Camera");
         cameraRotX = cameraTransform.localEulerAngles.x;
-        GameObject saber = transform.Find("ScientistSkeleton/Hips/Spine/Spine1/RightShoulder/RightArm/RightForeArm/RightHand/LSaber/Beam").gameObject; // Hot damn!
+        GameObject saber = anim.GetBoneTransform(HumanBodyBones.RightHand).Find("LSaber/Beam").gameObject;
         saber.tag = "Player" + saber.tag;
     }
 
