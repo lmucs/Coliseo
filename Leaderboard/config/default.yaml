@@ -21,9 +21,11 @@ Logger:
     showLevel: true
 
 Crypto:
-  saltLength: 64
-  iterations: 100000
+  saltLength: 16
+  iterationsBase: 10000
+  iterationsMax: 20000
   hashLength: 512
+
   encoding: base64
 
 Secret:

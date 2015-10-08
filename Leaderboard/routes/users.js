@@ -7,7 +7,14 @@ import log from '../logging';
 import {User} from '../database';
 import {asyncWrap} from '../helper';
 
-const {saltLength, iterations, hashLength, encoding} = config.get('Crypto');
+const {
+  saltLength,
+  iterationsBase,
+  iterationsMax,
+  hashLength,
+  encoding
+} = config.get('Crypto');
+
 const router = express.Router();
 const patterns = {
   usernamePattern: '^[A-Za-z]+$',
@@ -26,6 +33,7 @@ const setErrors = (user, password, confirm, email) => ({
 
 const calculateSaltHash = password => {
   log.profile('Hash calculation');
+  const iterations = _.random(iterationsBase, iterationsMax);
   const salt = crypto.randomBytes(saltLength)
                      .toString(encoding);
   const hash = crypto.pbkdf2Sync(password, salt, iterations, hashLength)
@@ -64,6 +72,7 @@ const handleRegistration = async (req, res, next) => {
       if (e.name !== 'SequelizeValidationError') {
         throw e;
       }
+
       log.exception('Error inserting user into database', e);
       const errorFields = _.pluck(e.errors, 'path');
       errors = setErrors(
@@ -84,17 +93,17 @@ router.get('/', (req, res, next) => {
   res.send('respond with a resource');
 });
 
-router.route('/register')
-      .get((req, res, next) => {
-  // MDL will do client side verification of the input fields as long as we
-  // give them the pattern - this way we can ensure client and server validation
-  // are identical.
-  res.render('register', patterns);
-}).post(asyncWrap(handleRegistration));
+router
+  .route('/register')
+    .get((req, res, next) => {
+      // MDL will do client side verification of the input fields as long as we
+      // give them the pattern - this way we can ensure client and server validation
+      // are identical.
+      res.render('register', patterns);
+    }).post(asyncWrap(handleRegistration));
 
 router.get('/email-verify', (req, res, next) => {
   res.render('email-verify');
-})
-
+});
 
 export default router;

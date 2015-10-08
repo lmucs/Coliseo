@@ -20,7 +20,6 @@ setupLocals(app);
 hbs.localsAsTemplateData(app);
 import './handlebars_helpers';
 
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
@@ -34,7 +33,7 @@ app.use(session({
   store: new SequelizeStore({db,}),
 }));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
