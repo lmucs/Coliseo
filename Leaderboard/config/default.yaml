@@ -25,3 +25,8 @@ Crypto:
   iterations: 100000
   hashLength: 512
   encoding: base64
+
+Secret:
+  filename: secret.file
+  secretLength: 512
+  encoding: base64

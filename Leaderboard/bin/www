@@ -91,4 +91,6 @@ db().then(function() {
                'port ' + addr.port;
     debug('Listening on ' + bind);
   }
+}).catch(function(e) {
+  console.log(e);
 });

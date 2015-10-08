@@ -4,13 +4,17 @@ import favicon from 'serve-favicon';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import hbs from 'hbs';
-
+import session from 'express-session';
+import connectSessionSequelize from 'connect-session-sequelize';
 
 import routes from './routes/index';
 import users from './routes/users';
 import setupLocals from './locals'; // Populate our app with custom locals
 import {errorLogger, requestLogger} from './logging';
+import secret from './secret';
+import {sequelize as db} from './database';
 
+const SequelizeStore = connectSessionSequelize(session.Store);
 const app = express();
 setupLocals(app);
 hbs.localsAsTemplateData(app);
@@ -23,7 +27,12 @@ app.set('view engine', 'hbs');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-// app.use(logger('dev'));
+app.use(session({
+  secret,
+  resave: false,
+  saveUninitialized: false,
+  store: new SequelizeStore({db,}),
+}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());

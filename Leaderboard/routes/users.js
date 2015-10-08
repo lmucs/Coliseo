@@ -75,7 +75,7 @@ const handleRegistration = async (req, res, next) => {
       return handleRegistrationError(errors, req, res, next);
     }
 
-    res.send('respond with a resource');
+    res.redirect('email-verify');
   }
 };
 
@@ -91,6 +91,10 @@ router.route('/register')
   // are identical.
   res.render('register', patterns);
 }).post(asyncWrap(handleRegistration));
+
+router.get('/email-verify', (req, res, next) => {
+  res.render('email-verify');
+})
 
 
 export default router;

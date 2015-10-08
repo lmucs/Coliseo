@@ -7,7 +7,7 @@ import fs from 'fs';
 
 const dbConfig = config.get('Database');
 
-const sequelize = new Sequelize(dbConfig.db, dbConfig.user, dbConfig.password,
+export const sequelize = new Sequelize(dbConfig.db, dbConfig.user, dbConfig.password,
   _.merge(dbConfig, {
     define: {
       allowNull: false,
