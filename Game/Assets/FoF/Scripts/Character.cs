@@ -3,9 +3,11 @@ using System.Collections;
 
 public class Character : MonoBehaviour
 {
-    public float health = 100f;                         // How much health the player has left.
+    private static float MAX_HEALTH = 100f;
+    private static float DAMAGE = 30f;
+
+    public float health = MAX_HEALTH;                         // How much health the player has left.
     public float resetAfterDeathTime = 5f;              // How much time from the player dying to the level reseting.
-    private float DAMAGE = 30f;
 
     private float timer;                                // A timer for counting to the reset of the level once the player is dead.
     private bool playerDead;                            // A bool to show if the player is dead or not.
@@ -65,6 +67,11 @@ public class Character : MonoBehaviour
         // R.I.P.
     }
 
+    public bool IsDead()
+    {
+        return playerDead;
+    }
+
     public void TakeDamage(float amount)
     {
         // Decrement the player's health by amount.
@@ -77,11 +84,15 @@ public class Character : MonoBehaviour
         }
     }
 
+    public void ResetLife()
+    {
+        health = MAX_HEALTH;
+        playerDead = false;
+        updateHealth();
+    }
+
     void OnTriggerEnter(Collider other)
     {
-        //Debug.Log("My tag: " + tag);
-        //Debug.Log("Other tag: " + other.tag);
-        //Debug.Log("IsOpponent(): " + IsOpponent(other.gameObject));
         if (IsOpponent(other.gameObject))
         {
             TakeDamage(DAMAGE);
