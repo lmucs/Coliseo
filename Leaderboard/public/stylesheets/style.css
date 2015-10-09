@@ -1,8 +1,8 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
-
 a {
   color: #00B7FF;
+}
+
+p.form-error {
+  font: 12px "Roboto Regular", sans-serif;
+  color: #DD2C00;
 }
