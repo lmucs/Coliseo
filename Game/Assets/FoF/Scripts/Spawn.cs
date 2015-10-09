@@ -10,6 +10,7 @@ public class Spawn : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         enemy = Instantiate<GameObject>(enemy);
+        enemy.transform.position = transform.position;
         character = enemy.GetComponent<Character>();
 	}
 	

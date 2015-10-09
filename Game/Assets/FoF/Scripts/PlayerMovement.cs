@@ -127,6 +127,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     bool rightTriggerActive = false;
+    //bool leftTriggerActive = false;
 
     void Animating(float h, float v, float a, float b)
     {
@@ -141,6 +142,8 @@ public class PlayerMovement : MonoBehaviour
         anim.SetFloat("Rotation X", a);
         anim.SetFloat("Rotation Y", b);
         bool rightTriggerDown = (Input.GetAxis("RightTrigger") == 1);
+        bool leftTriggerDown = (Input.GetAxis("LeftTrigger") == 1);
+        anim.SetBool("Blocking", leftTriggerDown || Input.GetMouseButton(1));
         bool inSwing = anim.GetCurrentAnimatorStateInfo(0).IsTag("swordswing");
 
         if (!rightTriggerActive && rightTriggerDown && !inSwing || Input.GetMouseButtonDown(0))
