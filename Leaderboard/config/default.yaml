@@ -1,0 +1,34 @@
+Database:
+  # https://sequelize.readthedocs.org/en/latest/api/sequelize/#new-sequelizedatabase-usernamenull-passwordnull-options
+  dialect: sqlite
+  storage: database.sqlite
+  db: database
+  syncOptions:
+    # https://sequelize.readthedocs.org/en/latest/api/sequelize/#sync
+    force: true
+
+Logger:
+  transport:
+    # https://github.com/winstonjs/winston/blob/master/docs/transports.md
+    # We use Console ATM (no possibility to change)
+    level: info
+    silent: false
+    colorize: true
+    json: false
+    prettyPrint: true
+    handleExceptions: true
+    humanReadableUnhandledException: true
+    showLevel: true
+
+Crypto:
+  saltLength: 16
+  iterationsBase: 10000
+  iterationsMax: 20000
+  hashLength: 512
+
+  encoding: base64
+
+Secret:
+  filename: secret.file
+  secretLength: 512
+  encoding: base64
