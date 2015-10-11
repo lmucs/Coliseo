@@ -69,6 +69,8 @@ public class PlayerMovement : MonoBehaviour
         translationZ = (Input.GetKey(KeyCode.S) ? -speed : translationZ);
         translationZ = (Input.GetKey(KeyCode.W) ? speed : translationZ);
 
+        //Debug.Log("DLeftTrigger: " + Input.GetAxis("Desktop_LeftTrigger") + ", DRightTrigger: " + Input.GetAxis("Desktop_RightTrigger"));
+
         // Move the player around the scene.
         Move(translationX, translationZ);
 
@@ -81,6 +83,11 @@ public class PlayerMovement : MonoBehaviour
             Turning(h, v);
             rotationX = h;
             rotationY = v;
+        }
+
+        if(Input.GetAxis("DPad_X_Axis") == -1)
+        {
+            triggerMethodDefault = !triggerMethodDefault;
         }
 
         if(IsGrounded() && (Input.GetButton("Button A") || Input.GetKey(KeyCode.Space)))
@@ -129,6 +136,23 @@ public class PlayerMovement : MonoBehaviour
     bool rightTriggerActive = false;
     //bool leftTriggerActive = false;
 
+    bool triggerMethodDefault = true;
+    int LEFT_TRIGGER = 0;
+    int RIGHT_TRIGGER = 1;
+
+    float GetTrigger(string trigger)
+    {
+        if(triggerMethodDefault)
+        {
+            return Input.GetAxis(trigger);
+        } else
+        {
+            return Input.GetAxis("Desktop_" + trigger);
+        }
+    }
+
+    bool blocking = false;
+
     void Animating(float h, float v, float a, float b)
     {
         // Tell the animator whether or not the player is walking.
@@ -141,9 +165,18 @@ public class PlayerMovement : MonoBehaviour
         anim.SetFloat("Input Z", v);
         anim.SetFloat("Rotation X", a);
         anim.SetFloat("Rotation Y", b);
-        bool rightTriggerDown = (Input.GetAxis("RightTrigger") == 1);
-        bool leftTriggerDown = (Input.GetAxis("LeftTrigger") == 1);
-        anim.SetBool("Blocking", leftTriggerDown || Input.GetMouseButton(1));
+        bool rightTriggerDown = (GetTrigger("RightTrigger") == 1);
+        bool leftTriggerDown = (GetTrigger("LeftTrigger") == 1);
+
+        if(leftTriggerDown || Input.GetMouseButton(1))
+        {
+            anim.SetTrigger("BeginBlock");
+            //anim.SetBool("Blocking", true);
+        } else
+        {
+           anim.SetBool("Blocking", false);
+        }
+        //anim.SetBool("Blocking", leftTriggerDown || Input.GetMouseButton(1));
         bool inSwing = anim.GetCurrentAnimatorStateInfo(0).IsTag("swordswing");
 
         if (!rightTriggerActive && rightTriggerDown && !inSwing || Input.GetMouseButtonDown(0))

@@ -14,10 +14,15 @@ public class Character : MonoBehaviour
 
     TextMesh healthDisplay;
 
+    Animator anim;
+    SaberController saberCont;
+
     void Awake()
     {
         healthDisplay = transform.Find("Health").GetComponent<TextMesh>();
         updateHealth();
+        anim = GetComponent<Animator>();
+        saberCont = anim.GetBoneTransform(HumanBodyBones.RightHand).GetComponentInChildren<SaberController>();
     }
 
     // The angle needed to properly rotate the health toward the player.
@@ -30,7 +35,7 @@ public class Character : MonoBehaviour
 
     void Update()
     {
-        if(tag != "Player")
+        if(/*tag != "Player"*/ healthDisplay != null)
         {
             healthDisplay.transform.rotation = Quaternion.Euler(new Vector3(0, AngleToPlayer(), 0));
         }
@@ -93,9 +98,16 @@ public class Character : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (IsOpponent(other.gameObject))
+        SaberController cont = other.GetComponentInParent<SaberController>();
+        if (IsOpponent(other.gameObject) && cont != null && cont.attacking == true)
         {
-            TakeDamage(DAMAGE);
+            if (saberCont.blocking)
+            {
+                cont.attacking = false;
+            } else {
+                TakeDamage(DAMAGE);
+            }
+            
         }
     }
 
