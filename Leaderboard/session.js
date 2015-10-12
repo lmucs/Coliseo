@@ -17,18 +17,20 @@ export default (app) => {
   }));
 
   app.use((req, res, next) => {
-    req.session.age = req.session.age || moment();
-    const difference = moment().diff(req.session.age, 'minutes');
+    // Session timeout for inactivity
+    const now = moment();
+    req.session.age = req.session.age || now;
+    const difference = now.diff(req.session.age, 'minutes');
     if (difference > 30) {
       return req.session.destroy(next);
     } else if (difference > 15) {
       const session = _.clone(req.session);
-      req.session.regenerate((err) => {
+      return req.session.regenerate((err) => {
         _.merge(req.session, session);
         return next(err);
       });
     } else {
-      next();
+      return next();
     }
   });
 };

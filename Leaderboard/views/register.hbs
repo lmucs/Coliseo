@@ -25,10 +25,10 @@
       {{/isUserError}}
     </div>
     <div class="mdl-cell mdl-cell--12-col">
-      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+      <div id="password-container" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
         <input class="mdl-textfield__input" type="password" name="password" pattern="{{passwordPattern}}" />
         <label class="mdl-textfield__label" for="password">Password</label>
-        <span class="mdl-textfield__error">Password is not long enough</span>
+        <span class="mdl-textfield__error">Password is not strong enough</span>
       </div>
       {{#isPasswordError}}
         <p class="form-error">
@@ -37,10 +37,10 @@
       {{/isPasswordError}}
     </div>
     <div class="mdl-cell mdl-cell--12-col">
-      <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-        <input class="mdl-textfield__input" type="password" name="confirm" pattern="{{passwordPattern}}" />
+      <div id="confirm-container" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <input class="mdl-textfield__input" type="password" name="confirm" />
         <label class="mdl-textfield__label" for="confirm">Confirm Password</label>
-        <span class="mdl-textfield__error">Password is not long enough</span>
+        <span class="mdl-textfield__error">Passwords do not match</span>
       </div>
       {{#isConfirmError}}
         <p class="form-error">
@@ -57,3 +57,6 @@
     </div>
   </div>
 </form>
+{{#extend "scripts"}}
+  <script src="/scripts/register.js"></script>
+{{/extend}}

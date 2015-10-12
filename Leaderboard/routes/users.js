@@ -84,7 +84,7 @@ const handleRegistration = async (req, res, next) => {
       return handleRegistrationError(errors, req, res, next);
     }
 
-    res.redirect('email-verify');
+    return res.redirect('email-verify');
   }
 };
 
@@ -99,11 +99,11 @@ router
       // MDL will do client side verification of the input fields as long as we
       // give them the pattern - this way we can ensure client and server validation
       // are identical.
-      res.render('register', patterns);
+      return res.render('register', patterns);
     }).post(asyncWrap(handleRegistration));
 
 router.get('/email-verify', (req, res, next) => {
-  res.render('email-verify');
+  return res.render('email-verify');
 });
 
 export default router;
