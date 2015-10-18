@@ -3,7 +3,6 @@ import winston from 'winston';
 import expressWinston from 'express-winston';
 
 let winstonConfig;// = config.get('Logger');
-console.log(winstonConfig);
 const loggerConfig = {
   transports: [
     new winston.transports.Console(winstonConfig),

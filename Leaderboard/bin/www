@@ -31,7 +31,6 @@ db().then(function() {
   server.on('error', onError);
   server.on('listening', onListening);
 
-
   /**
    * Normalize a port into a number, string, or false.
    */
@@ -92,5 +91,5 @@ db().then(function() {
     debug('Listening on ' + bind);
   }
 }).catch(function(e) {
-  console.log(e);
+  throw e;
 });

@@ -24,6 +24,7 @@ const usernameRegex = new RegExp(patterns.usernamePattern);
 const passwordRegex = new RegExp(patterns.passwordPattern);
 
 /* Utility Functions */
+
 const setErrors = (user, password, confirm, email) => ({
   isUserError: user,
   isPasswordError: password,
@@ -32,14 +33,19 @@ const setErrors = (user, password, confirm, email) => ({
 });
 
 const calculateSaltHash = password => {
-  log.profile('Hash calculation');
   const iterations = _.random(iterationsBase, iterationsMax);
   const salt = crypto.randomBytes(saltLength)
                      .toString(encoding);
+  const hash = calculateHash(password, salt, iterations);
+  return `${iterations}$${salt}$${hash}`;
+};
+
+const calculateHash = (password, salt, iterations) => {
+  log.profile('Hash calculation');
   const hash = crypto.pbkdf2Sync(password, salt, iterations, hashLength)
                      .toString(encoding);
   log.profile('Hash calculation');
-  return `${iterations}$${salt}$${hash}`;
+  return hash;
 };
 
 /* Handlers */
@@ -101,6 +107,29 @@ router
       // are identical.
       return res.render('register', patterns);
     }).post(asyncWrap(handleRegistration));
+
+const handleLogin = async (req, res, next) => {
+  const userModel = await Users.find({username: req.username});
+  const [iterations, salt, hash] = userModel.password.split('$');
+  if (hash !== calculateHash(req.password, salt, iterations)) {
+    return res.status(401).render('login', {isLoginError: true});
+  } else {
+    req.session.regenrate(function(err) {
+      if (err) {
+        return next(err);
+      } else {
+        req.session.user = userModel;
+        req.session.authenticated = true;
+        return res.redirect('/');
+      }
+    });
+  }
+};
+router
+  .route('/login')
+    .get((req, res, next) => {
+      return res.render('login', patterns);
+    }).post(asyncWrap(handleLogin));
 
 router.get('/email-verify', (req, res, next) => {
   return res.render('email-verify');

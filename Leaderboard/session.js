@@ -9,10 +9,11 @@ import secret from './secret';
 const SequelizeStore = connectSessionSequelize(session.Store);
 moment().format();
 
-export default (app) => {
+export default app => {
   app.use(session({
     secret,
     resave: false,
+    saveUninitialized: false,
     store: new SequelizeStore({db,}),
   }));
 
@@ -32,5 +33,10 @@ export default (app) => {
     } else {
       return next();
     }
+  });
+
+  app.use((req, res, next) => {
+    res.locals.session = req.session;
+    return next();
   });
 };
