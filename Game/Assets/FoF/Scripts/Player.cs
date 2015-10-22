@@ -68,7 +68,7 @@ namespace FoF
 
 		// Now that the camera is directly on the head, we can, for the time being, 
 		// have the controller directly move the head to look down. For now.
-		public void turn (float x, float y)
+		public override void turn (float x, float y)
 		{
 			Vector3 vec = new Vector3(0, x, 0);
 			Quaternion deltaRotation = Quaternion.Euler(vec * Time.deltaTime + transform.rotation.eulerAngles);

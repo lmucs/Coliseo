@@ -22,6 +22,7 @@ namespace FoF
 		protected int attackStrength;
 
 		public abstract void move (float forwardback, float leftright, float vertical);
+		public abstract void turn (float x, float y);
 
 		public void attack (Actor target)
 		{
