@@ -17,6 +17,8 @@ public class Character : MonoBehaviour
     Animator anim;
     SaberController saberCont;
 
+    
+
     void Awake()
     {
         healthDisplay = transform.Find("Health").GetComponent<TextMesh>();
@@ -120,5 +122,29 @@ public class Character : MonoBehaviour
     bool IsOpponent(GameObject other)
     {
         return other.tag == (OpponentTag() + "Beam");
+    }
+
+    //a callback for calculating IK
+    void OnAnimatorIK()
+    {
+        if (anim)
+        {
+            // The next 5 lines are probably unnecessary, but I'm leaving them in for now.
+            // TODO: Check if necessary.
+            anim.SetIKPositionWeight(AvatarIKGoal.RightHand, 0);
+            anim.SetIKRotationWeight(AvatarIKGoal.RightHand, 0);
+
+            anim.SetIKPositionWeight(AvatarIKGoal.LeftHand, 0);
+            anim.SetIKRotationWeight(AvatarIKGoal.LeftHand, 0);
+
+            // Mostly solves head bobbing issue, except when idle. However is currently model-dependent.
+            // TODO: Make model independent. (Can possibly go to root then grab parent)
+            // TODO2: Also may need update to support AdvVRTracker.cs
+            Vector3 lookAt = anim.GetBoneTransform(HumanBodyBones.Head).position;
+            Transform skele = transform.Find("ScientistSkeleton");
+            lookAt += ((skele != null) ? skele : transform.Find("Bip001")).forward;
+            anim.SetLookAtPosition(lookAt);
+            anim.SetLookAtWeight(1.0f);
+        }
     }
 }
