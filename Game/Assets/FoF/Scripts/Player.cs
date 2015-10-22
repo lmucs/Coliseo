@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
-using FoF;
+using Coliseo;
 
-namespace FoF
+namespace Coliseo
 {
 
 	public class Player : Actor

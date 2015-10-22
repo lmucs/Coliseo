@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace FoF
+namespace Coliseo
 {
 	public abstract class Actor : MonoBehaviour
 	{
