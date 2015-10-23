@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
-using FoF;
+using Coliseo;
 
-namespace FoF
+namespace Coliseo
 {
 	public class Controls : Object
 	{
@@ -13,7 +13,7 @@ namespace FoF
 			p = player;
 		}
 
-		public float joystickMoveSensitvity = 10.0F;
+		public float joystickMoveSensitivity = 10.0F;
 		
 		// Controller sensitivity
 		public float joystickRotationSpeedHoriz = 100.0F;
@@ -22,18 +22,18 @@ namespace FoF
 		public float joystickRotationSpeedVert = 10.0F;
 		
 		// Mouse sensitivity
-		public float mouseHorizontalSensitvity = 10.0F;
+		public float mouseHorizontalSensitivity = 10.0F;
 		
 		// Update is called once per frame
 		public void FixedUpdate ()
 		{
-			float translationX = Input.GetAxis("Left_X_Axis") * joystickMoveSensitvity;
-			float translationZ = Input.GetAxis("Left_Y_Axis") * joystickMoveSensitvity;
+			float translationX = Input.GetAxis("Left_X_Axis") * joystickMoveSensitivity;
+			float translationZ = Input.GetAxis("Left_Y_Axis") * joystickMoveSensitivity;
 			
 			float rotationX = Input.GetAxis("Right_X_Axis") * joystickRotationSpeedHoriz;
 			float rotationY = Input.GetAxis("Right_Y_Axis") * joystickRotationSpeedVert;
 			
-			float h = joystickRotationSpeedHoriz * Input.GetAxis("Mouse X") * mouseHorizontalSensitvity;
+			float h = joystickRotationSpeedHoriz * Input.GetAxis("Mouse X") * mouseHorizontalSensitivity;
 			float v = joystickRotationSpeedVert * Input.GetAxis("Mouse Y");
 
 			translationX = (Input.GetKey("a") ? -p.speed : translationX);
