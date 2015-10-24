@@ -170,42 +170,66 @@ SubstanceImporter:
             offset: {x: 0, y: 0}
         data:
           first:
+<<<<<<< HEAD
             name: _ParallaxMap
-          second:
-            texture: {instanceID: 0}
-            scale: {x: 1, y: 1}
-            offset: {x: 0, y: 0}
-        data:
-          first:
-            name: _OcclusionMap
-          second:
-            texture: {instanceID: 0}
-            scale: {x: 1, y: 1}
-            offset: {x: 0, y: 0}
-        data:
-          first:
-            name: _EmissionMap
-          second:
-            texture: {instanceID: 0}
-            scale: {x: 1, y: 1}
-            offset: {x: 0, y: 0}
-        data:
-          first:
-            name: _DetailMask
-          second:
-            texture: {instanceID: 0}
-            scale: {x: 1, y: 1}
-            offset: {x: 0, y: 0}
-        data:
-          first:
-            name: _DetailAlbedoMap
-          second:
-            texture: {instanceID: 0}
-            scale: {x: 1, y: 1}
-            offset: {x: 0, y: 0}
-        data:
-          first:
+=======
             name: _MetallicGlossMap
+>>>>>>> 6877a36b1cfa3946f6d17797adc19125223cdcbf
+          second:
+            texture: {instanceID: 0}
+            scale: {x: 1, y: 1}
+            offset: {x: 0, y: 0}
+        data:
+          first:
+<<<<<<< HEAD
+            name: _OcclusionMap
+=======
+            name: _ParallaxMap
+>>>>>>> 6877a36b1cfa3946f6d17797adc19125223cdcbf
+          second:
+            texture: {instanceID: 0}
+            scale: {x: 1, y: 1}
+            offset: {x: 0, y: 0}
+        data:
+          first:
+<<<<<<< HEAD
+            name: _EmissionMap
+=======
+            name: _OcclusionMap
+>>>>>>> 6877a36b1cfa3946f6d17797adc19125223cdcbf
+          second:
+            texture: {instanceID: 0}
+            scale: {x: 1, y: 1}
+            offset: {x: 0, y: 0}
+        data:
+          first:
+<<<<<<< HEAD
+            name: _DetailMask
+=======
+            name: _EmissionMap
+>>>>>>> 6877a36b1cfa3946f6d17797adc19125223cdcbf
+          second:
+            texture: {instanceID: 0}
+            scale: {x: 1, y: 1}
+            offset: {x: 0, y: 0}
+        data:
+          first:
+<<<<<<< HEAD
+            name: _DetailAlbedoMap
+=======
+            name: _DetailMask
+>>>>>>> 6877a36b1cfa3946f6d17797adc19125223cdcbf
+          second:
+            texture: {instanceID: 0}
+            scale: {x: 1, y: 1}
+            offset: {x: 0, y: 0}
+        data:
+          first:
+<<<<<<< HEAD
+            name: _MetallicGlossMap
+=======
+            name: _DetailAlbedoMap
+>>>>>>> 6877a36b1cfa3946f6d17797adc19125223cdcbf
           second:
             texture: {instanceID: 0}
             scale: {x: 1, y: 1}
@@ -225,10 +249,13 @@ SubstanceImporter:
           second: .5
         data:
           first:
+<<<<<<< HEAD
             name: _Parallax
           second: .0199999996
         data:
           first:
+=======
+>>>>>>> 6877a36b1cfa3946f6d17797adc19125223cdcbf
             name: _ZWrite
           second: 1
         data:
@@ -237,10 +264,24 @@ SubstanceImporter:
           second: .5
         data:
           first:
+<<<<<<< HEAD
+=======
+            name: _Metallic
+          second: 0
+        data:
+          first:
+>>>>>>> 6877a36b1cfa3946f6d17797adc19125223cdcbf
             name: _BumpScale
           second: 1
         data:
           first:
+<<<<<<< HEAD
+=======
+            name: _Parallax
+          second: .0199999996
+        data:
+          first:
+>>>>>>> 6877a36b1cfa3946f6d17797adc19125223cdcbf
             name: _OcclusionStrength
           second: 1
         data:
@@ -255,10 +296,13 @@ SubstanceImporter:
           first:
             name: _Mode
           second: 0
+<<<<<<< HEAD
         data:
           first:
             name: _Metallic
           second: 0
+=======
+>>>>>>> 6877a36b1cfa3946f6d17797adc19125223cdcbf
       colors:
         data:
           first:
