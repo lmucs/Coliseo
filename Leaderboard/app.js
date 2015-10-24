@@ -7,10 +7,13 @@ import hbs from 'hbs';
 
 import routes from './routes';
 import users from './routes/users';
+import leaderboard from './routes/leaderboard';
 import setupLocals from './locals'; // Populate our app with custom locals
 import {errorLogger, requestLogger} from './logging';
 import secret from './secret';
 import setupSession from './session';
+import {User} from './database';
+import {calculateSaltHash} from './cryptography';
 
 const app = express();
 setupLocals(app);
@@ -32,6 +35,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(requestLogger);
 app.use('/', routes);
 app.use('/users', users);
+app.use('/leaderboard', leaderboard);
 app.use(errorLogger);
 
 // catch 404 and forward to error handler
@@ -52,6 +56,12 @@ if (app.get('env') === 'development') {
       message: err.message,
       error: err,
     });
+  });
+  // Setup test user and password
+  User.create({
+    username: 'test',
+    email: 'example@example.com',
+    password: calculateSaltHash('test'),
   });
 }
 

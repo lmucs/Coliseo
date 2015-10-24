@@ -1,19 +1,10 @@
 import express from 'express';
 import _ from 'lodash';
-import crypto from 'crypto';
-import config from 'config';
 
 import log from '../logging';
 import {User} from '../database';
 import {asyncWrap} from '../helper';
-
-const {
-  saltLength,
-  iterationsBase,
-  iterationsMax,
-  hashLength,
-  encoding
-} = config.get('Crypto');
+import {calculateHash, calculateSaltHash} from '../cryptography';
 
 const router = express.Router();
 const patterns = {
@@ -31,22 +22,6 @@ const setErrors = (user, password, confirm, email) => ({
   isConfirmError: confirm,
   isEmailError: email,
 });
-
-const calculateSaltHash = password => {
-  const iterations = _.random(iterationsBase, iterationsMax);
-  const salt = crypto.randomBytes(saltLength)
-                     .toString(encoding);
-  const hash = calculateHash(password, salt, iterations);
-  return `${iterations}$${salt}$${hash}`;
-};
-
-const calculateHash = (password, salt, iterations) => {
-  log.profile('Hash calculation');
-  const hash = crypto.pbkdf2Sync(password, salt, iterations, hashLength)
-                     .toString(encoding);
-  log.profile('Hash calculation');
-  return hash;
-};
 
 /* Handlers */
 
@@ -109,12 +84,13 @@ router
     }).post(asyncWrap(handleRegistration));
 
 const handleLogin = async (req, res, next) => {
-  const userModel = await Users.find({username: req.username});
-  const [iterations, salt, hash] = userModel.password.split('$');
-  if (hash !== calculateHash(req.password, salt, iterations)) {
+  const userModel = await User.find({username: req.username});
+  let [iterations, salt, hash] = userModel.password.split('$');
+  iterations = parseInt(iterations, 10);
+  if (hash !== calculateHash(req.body.password, salt, iterations)) {
     return res.status(401).render('login', {isLoginError: true});
   } else {
-    req.session.regenrate(function(err) {
+    req.session.regenerate(function(err) {
       if (err) {
         return next(err);
       } else {

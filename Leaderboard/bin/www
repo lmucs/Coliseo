@@ -4,12 +4,12 @@
  * Module dependencies.
  */
 require('babel/register');
-var app = require('../app');
 var db = require('../database').default;
 var debug = require('debug')('Leaderboard:server');
 var http = require('http');
 
 db().then(function() {
+  var app = require('../app');
   /**
    * Get port from environment and store in Express.
    */
