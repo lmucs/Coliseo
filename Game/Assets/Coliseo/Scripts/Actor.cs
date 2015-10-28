@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 namespace Coliseo
@@ -7,9 +8,14 @@ namespace Coliseo
     {
         protected float movementSpeed = 6f;
         protected bool isAlreadyDead = false;
+		public Slider HealthSlider;                                 
+		public Image damageImage;
 
         protected static int MAX_HEALTH = 100;
         protected int _health = MAX_HEALTH;
+		public float flashSpeed = 5f;                               
+		public Color flashColour = new Color(1f, 0f, 0f, 0.1f);
+		bool damaged;
         
         protected int DAMAGE = 30;
         public int health
@@ -77,10 +83,15 @@ namespace Coliseo
 
         public void TakeDamage(int amount)
         {
+			damaged = true;
             // Decrement the player's health by amount.
             health -= amount;
-
+			//System.Console.Write(health);
             updateHealth();
+			damageImage.color = flashColour;
+			HealthSlider.value = health;
+			damaged = false;
+			damageImage.color = Color.Lerp (damageImage.color, Color.clear, flashSpeed * Time.deltaTime);
             if (health < 0)
             {
                 die();
