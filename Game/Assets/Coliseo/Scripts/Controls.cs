@@ -36,10 +36,10 @@ namespace Coliseo
             float h = joystickRotationSpeedHoriz * Input.GetAxis("Mouse X") * mouseHorizontalSensitivity;
             float v = joystickRotationSpeedVert * Input.GetAxis("Mouse Y");
 
-            translationX = (Input.GetKey(KeyCode.A) ? -p.speed : translationX);
-            translationX = (Input.GetKey(KeyCode.D) ? p.speed : translationX);
-            translationZ = (Input.GetKey(KeyCode.S) ? -p.speed : translationZ);
-            translationZ = (Input.GetKey(KeyCode.W) ? p.speed : translationZ);
+            translationX = (Input.GetKey(KeyCode.A) ? -Actor.moveSpeed : translationX);
+            translationX = (Input.GetKey(KeyCode.D) ? Actor.moveSpeed : translationX);
+            translationZ = (Input.GetKey(KeyCode.S) ? -Actor.moveSpeed : translationZ);
+            translationZ = (Input.GetKey(KeyCode.W) ? Actor.moveSpeed : translationZ);
             
             // Move the player around the scene.
             p.move(translationX, translationZ, 0f);

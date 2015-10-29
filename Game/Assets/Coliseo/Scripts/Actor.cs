@@ -6,131 +6,109 @@ namespace Coliseo
 {
     public abstract class Actor : MonoBehaviour
     {
-        protected float movementSpeed = 6f;
-        protected bool isAlreadyDead = false;
-		public Slider HealthSlider;                                 
-		public Image damageImage;
+        protected const int MAX_HEALTH = 100;
+        protected const int attackStrength = 30;
+        public const float moveSpeed = 6f;
 
-        protected static int MAX_HEALTH = 100;
-        protected int _health = MAX_HEALTH;
-		public float flashSpeed = 5f;                               
-		public Color flashColour = new Color(1f, 0f, 0f, 0.1f);
-		bool damaged;
+        protected int _health;
+
+        protected TextMesh healthDisplay;
         
-        protected int DAMAGE = 30;
+        private Slider HealthSlider;
+		private Image damageImage;
+
+		private float flashSpeed = 5f;
+		private Color flashColour = new Color(1f, 0f, 0f, 0.1f);
+
+        protected Animator anim;
+        protected SaberController saberCont;
+
         public int health
         {
             get { return _health; }
             set
             {
                 _health = value;
-                if (_health <= 0) { this.die(); }
+
+                if (isDead)
+                {
+                    this.die();
+                }
+
+                healthDisplay.text = "" + health;
             }
         }
 
-        public bool isDead()
+        public bool isDead
         {
-            return _health <= 0;
+            get { return health <= 0; }
         }
 
-        protected int moveSpeed;
-        protected int attackStrength;
+        bool damaged {
+            get { return health != MAX_HEALTH; }
+        }
+
+        public int TakeDamage(int amount)
+        {
+            health -= amount;
+            // playDamagedAnimation();
+            return amount;
+        }
+
+        // I don't think this will ever be used, at least not while the colliders are set up as they are.
+        public void attack(Actor target)
+        {
+            target.TakeDamage(attackStrength);
+        }
+
+        public abstract void die();
 
         public abstract void move (float forwardback, float leftright, float vertical);
         public abstract void turn (float x, float y);
-
-        public void attack (Actor target)
-        {
-            target.health -= attackStrength;
-        }
-
-        public abstract void die ();
-
-        protected TextMesh healthDisplay;
-
-        Animator anim;
-        SaberController saberCont;
-
+        
         void Awake()
         {
             healthDisplay = transform.Find("Health").GetComponent<TextMesh>();
-            updateHealth();
+            health = MAX_HEALTH;
             anim = GetComponent<Animator>();
             saberCont = anim.GetBoneTransform(HumanBodyBones.RightHand).GetComponentInChildren<SaberController>();
         }
 
-        void updateHealth()
+        void playDamagedAnimation()
         {
-            healthDisplay.text = "" + health;
-        }
-
-        protected void checkHealth()
-        {
-            // If health is less than or equal to 0...
-            if (health <= 0f)
-            {
-                // ... and if the player is not yet dead...
-                if (!isAlreadyDead)
-                    // ... call the PlayerDying function.
-                    die();
-                else
-                {
-                    // Otherwise, if the player is dead, call the PlayerDead and LevelReset functions.
-                    //PlayerDead();
-                }
-            }
-        }
-
-        public void TakeDamage(int amount)
-        {
-			damaged = true;
-            // Decrement the player's health by amount.
-            health -= amount;
-			//System.Console.Write(health);
-            updateHealth();
-			damageImage.color = flashColour;
-			HealthSlider.value = health;
-			damaged = false;
-			damageImage.color = Color.Lerp (damageImage.color, Color.clear, flashSpeed * Time.deltaTime);
-            if (health < 0)
-            {
-                die();
-            }
+            damageImage.color = flashColour;
+            HealthSlider.value = health;
+            damageImage.color = Color.Lerp(damageImage.color, Color.clear, flashSpeed * Time.deltaTime);
         }
 
         public void ResetLife()
         {
-            isAlreadyDead = false;
             health = MAX_HEALTH;
-            updateHealth();
         }
 
+        bool IsOpponent(SaberController cont)
+        {
+            return saberCont.IsPlayerSword != cont.IsPlayerSword;
+        }
+
+        bool IsValidAttack(SaberController cont)
+        {
+            return cont && IsOpponent(cont) && cont.attacking;
+        }
+
+        // I know this isn't as pretty as it probably could be.
         void OnTriggerEnter(Collider other)
         {
             SaberController cont = other.GetComponentInParent<SaberController>();
-            if (IsOpponent(other.gameObject) && cont != null && cont.attacking == true)
+            if (IsValidAttack(cont))
             {
                 if (saberCont.blocking)
                 {
                     cont.attacking = false;
+                    return;
                 }
-                else
-                {
-                    TakeDamage(DAMAGE);
-                }
-
+                TakeDamage(attackStrength);
             }
-        }
-
-        string OpponentTag()
-        {
-            return (tag == "Player") ? "Enemy" : "Player";
-        }
-
-        // I know this could be Collider instead, but then it would be unclear what we really are comparing.
-        bool IsOpponent(GameObject other)
-        {
-            return other.tag == (OpponentTag() + "Beam");
         }
 
         //a callback for calculating IK
@@ -150,8 +128,8 @@ namespace Coliseo
                 // TODO: Make model independent. (Can possibly go to root then grab parent)
                 // TODO2: Also may need update to support AdvVRTracker.cs
                 Vector3 lookAt = anim.GetBoneTransform(HumanBodyBones.Head).position;
-                Transform skele = transform.Find("ScientistSkeleton");
-                lookAt += ((skele != null) ? skele : transform.Find("Bip001")).forward;
+                lookAt += (transform.Find("ScientistSkeleton") ?? transform.Find("Bip001")).forward;
+
                 anim.SetLookAtPosition(lookAt);
                 anim.SetLookAtWeight(1.0f);
             }

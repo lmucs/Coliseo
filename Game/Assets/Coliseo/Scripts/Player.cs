@@ -7,10 +7,7 @@ namespace Coliseo
 
     public class Player : Actor
     {
-        public float speed = 6f;
-
         private Rigidbody rb;
-        private Animator anim;
         private Controls controls;
 
         private float distToGround;
@@ -47,7 +44,7 @@ namespace Coliseo
                 VRCenter.Setup();
             }
             player = gameObject;
-            anim = GetComponent<Animator>();
+            anim = GetComponent<Animator>(); // I don't think commenting this out is a problem.
             rb = GetComponent<Rigidbody>();
             distToGround = GetComponent<Collider>().bounds.extents.y;
             cameraTransform = anim.GetBoneTransform(HumanBodyBones.Head).Find("CameraRig/Camera");
@@ -56,6 +53,7 @@ namespace Coliseo
             // This probably doesn't belong here, but oh well. TODO move somewhere else.
             GameObject saber = anim.GetBoneTransform(HumanBodyBones.RightHand).Find("LSaber/Beam").gameObject;
             saber.tag = "Player" + saber.tag;
+            saberCont.IsPlayerSword = true;
 
             controls = new Controls(this);
         }
@@ -63,7 +61,6 @@ namespace Coliseo
         // We shouldn't have to update here. Controls should move us around with its FixedUpdate()
         void FixedUpdate ()
         {
-            checkHealth();
             controls.FixedUpdate ();
         }
 
@@ -73,7 +70,7 @@ namespace Coliseo
             Vector3 movement = new Vector3(h, 0f, v);
             
             // Normalise the movement vector and make it proportional to the speed per second.
-            movement = movement.normalized * speed * Time.deltaTime;
+            movement = movement.normalized * moveSpeed * Time.deltaTime;
             
             // Move the player to it's current position plus the movement.
             rb.MovePosition(transform.position + transform.rotation * movement);
@@ -159,7 +156,6 @@ namespace Coliseo
 
         public override void die ()
         {
-            isAlreadyDead = true;
             gameObject.SetActive(false);
         }
     }

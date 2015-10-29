@@ -13,6 +13,8 @@ public class SaberController : MonoBehaviour {
     public Collider attackCollider;
     public Collider blockCollider;
 
+    public bool IsPlayerSword;
+
 	// Use this for initialization
 	void Start () {
         anim = GetComponent<Animator>();

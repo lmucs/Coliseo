@@ -17,7 +17,7 @@ public class Spawn : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	    if(actor.isDead())
+	    if(actor.isDead)
         {
             killCount++;
             Debug.Log("Enemy Killed. Total killed: " + killCount);

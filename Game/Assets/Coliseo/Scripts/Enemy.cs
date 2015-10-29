@@ -5,17 +5,15 @@ using Coliseo;
 public class Enemy : Actor {
 
     Rigidbody rb;
-    Animator anim;
     private float MIN_DIST = 1.5f;
-
-    float speed = 4f; // make this static and accessible to all characters
 
     // Use this for initialization
     void Start () {
         rb = GetComponent<Rigidbody>();
-        anim = GetComponent<Animator>();
+        //anim = GetComponent<Animator>(); // I don't think commenting this out is a problem.
         GameObject saber = anim.GetBoneTransform(HumanBodyBones.RightHand).Find("LSaber/Beam").gameObject;
         saber.tag = "Enemy" + saber.tag;
+        saberCont.IsPlayerSword = false;
     }
 
     // The angle needed to properly rotate the health toward the player.
@@ -31,17 +29,15 @@ public class Enemy : Actor {
         {
             healthDisplay.transform.rotation = Quaternion.Euler(new Vector3(0, AngleToPlayer(), 0));
         }
-
-        checkHealth();
+        
         Vector3 playerLoc = Player.position; // For now, try to move "close" to this, and face it.
         float dist = Vector3.Distance(playerLoc, transform.position);
         float moveZ = 0;
 
         if (dist > MIN_DIST)
         {
-            //  Debug.Log("Moving toward player");
-            moveZ = speed;
-            Vector3 movement = new Vector3(0, 0, speed * Time.deltaTime);
+            moveZ = moveSpeed;
+            Vector3 movement = new Vector3(0, 0, moveSpeed * Time.deltaTime);
 
             // Move the player to it's current position plus the movement.
             rb.MovePosition(transform.position + transform.rotation * movement);
@@ -69,7 +65,6 @@ public class Enemy : Actor {
 
     public override void die()
     {
-        isAlreadyDead = true;
         gameObject.SetActive(false);
     }
 }
