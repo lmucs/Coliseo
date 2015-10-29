@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Coliseo;
+using System;
 
 public class Enemy : Actor {
 
@@ -21,6 +22,12 @@ public class Enemy : Actor {
     {
         Vector3 localPosition = transform.position - Player.position;
         return 180f - (Mathf.Rad2Deg * Mathf.Atan2(localPosition.z, localPosition.x) + 90f);
+    }
+
+    public override int TakeDamage(int amount)
+    {
+        health -= amount;
+        return amount;
     }
 
     // Update is called once per frame

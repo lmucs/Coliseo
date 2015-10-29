@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using Coliseo;
 
@@ -15,7 +16,34 @@ namespace Coliseo
         private float cameraRotX = 0;
 
         private static GameObject player;
-        
+
+        public Slider HealthSlider;
+        public Image damageImage;
+
+        public float flashSpeed = 1f;
+        public Color flashColour = new Color(1f, 0f, 0f, 0.1f);
+
+        float dt = 1;
+
+        public override int TakeDamage(int amount)
+        {
+            dt = 0;
+            playDamagedAnimation();
+            health -= amount;
+            return health;
+        }
+
+        void playDamagedAnimation()
+        {
+            damageImage.color = flashColour;
+            HealthSlider.value = health;
+            damageImage.color = Color.Lerp(damageImage.color, Color.clear, dt);
+            if (dt < 1)
+            {
+                dt += Time.deltaTime / flashSpeed;
+            }
+        }
+
         // For jumps
         public float jumpStrength = 50.0f;
 
@@ -61,6 +89,7 @@ namespace Coliseo
         // We shouldn't have to update here. Controls should move us around with its FixedUpdate()
         void FixedUpdate ()
         {
+            playDamagedAnimation();
             controls.FixedUpdate ();
         }
 

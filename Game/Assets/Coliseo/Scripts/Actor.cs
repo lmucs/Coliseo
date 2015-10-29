@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using System.Collections;
 
 namespace Coliseo
@@ -13,12 +12,6 @@ namespace Coliseo
         protected int _health;
 
         protected TextMesh healthDisplay;
-        
-        public Slider HealthSlider;
-		public Image damageImage;
-
-		public float flashSpeed = 5f;
-		public Color flashColour = new Color(1f, 0f, 0f, 0.1f);
 
         protected Animator anim;
         protected SaberController saberCont;
@@ -48,12 +41,7 @@ namespace Coliseo
             get { return health != MAX_HEALTH; }
         }
 
-        public int TakeDamage(int amount)
-        {
-            health -= amount;
-            playDamagedAnimation();
-            return amount;
-        }
+        abstract public int TakeDamage(int amount);
 
         // I don't think this will ever be used, at least not while the colliders are set up as they are.
         public void attack(Actor target)
@@ -69,16 +57,9 @@ namespace Coliseo
         void Awake()
         {
             healthDisplay = transform.Find("Health").GetComponent<TextMesh>();
-            health = MAX_HEALTH;
             anim = GetComponent<Animator>();
             saberCont = anim.GetBoneTransform(HumanBodyBones.RightHand).GetComponentInChildren<SaberController>();
-        }
-
-        void playDamagedAnimation()
-        {
-            damageImage.color = flashColour;
-            HealthSlider.value = health;
-            damageImage.color = Color.Lerp(damageImage.color, Color.clear, flashSpeed * Time.deltaTime);
+            health = MAX_HEALTH;
         }
 
         public void ResetLife()
