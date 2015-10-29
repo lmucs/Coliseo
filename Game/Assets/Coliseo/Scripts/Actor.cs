@@ -14,11 +14,11 @@ namespace Coliseo
 
         protected TextMesh healthDisplay;
         
-        private Slider HealthSlider;
-		private Image damageImage;
+        public Slider HealthSlider;
+		public Image damageImage;
 
-		private float flashSpeed = 5f;
-		private Color flashColour = new Color(1f, 0f, 0f, 0.1f);
+		public float flashSpeed = 5f;
+		public Color flashColour = new Color(1f, 0f, 0f, 0.1f);
 
         protected Animator anim;
         protected SaberController saberCont;
@@ -51,7 +51,7 @@ namespace Coliseo
         public int TakeDamage(int amount)
         {
             health -= amount;
-            // playDamagedAnimation();
+            playDamagedAnimation();
             return amount;
         }
 
