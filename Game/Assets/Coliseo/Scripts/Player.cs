@@ -24,8 +24,6 @@ namespace Coliseo
         public float flashSpeed = 1f;
         private float dt = 1f;
 
-        private bool blocking = false;
-
         void Start()
         {
             if (VRCenter.IsVREnabled())

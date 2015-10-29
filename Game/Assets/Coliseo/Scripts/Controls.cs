@@ -85,8 +85,6 @@ namespace Coliseo
         private bool leftTriggerActive = false;
 
         private bool triggerMethodDefault = true;
-        private int LEFT_TRIGGER = 0;
-        private int RIGHT_TRIGGER = 1;
 
         // For now, but soon this should be in controls.
         private bool rightTriggerDown;
