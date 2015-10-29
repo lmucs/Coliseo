@@ -8,9 +8,9 @@ namespace Coliseo
     public class Enemy : Actor
     {
 
-        private float MIN_DIST = 1.5f;
-
-        // Use this for initialization
+        private const float MIN_DIST = 1.5f;
+        private const float TOO_CLOSE = 0.5f;
+        
         void Start()
         {
             saberCont.isPlayerSword = false;
@@ -32,7 +32,7 @@ namespace Coliseo
         // Update is called once per frame
         void Update()
         {
-            if (/*tag != "Player"*/ healthDisplay != null)
+            if (healthDisplay)
             {
                 healthDisplay.transform.rotation = Quaternion.Euler(new Vector3(0, AngleToPlayer(), 0));
             }
@@ -44,6 +44,13 @@ namespace Coliseo
             if (dist > MIN_DIST)
             {
                 moveZ = moveSpeed;
+                Vector3 movement = new Vector3(0, 0, moveSpeed * Time.deltaTime);
+
+                // Move the player to it's current position plus the movement.
+                rb.MovePosition(transform.position + transform.rotation * movement);
+            } else if (dist < TOO_CLOSE)
+            {
+                moveZ = -moveSpeed;
                 Vector3 movement = new Vector3(0, 0, moveSpeed * Time.deltaTime);
 
                 // Move the player to it's current position plus the movement.

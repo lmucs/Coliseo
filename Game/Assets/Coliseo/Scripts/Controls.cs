@@ -19,7 +19,7 @@ namespace Coliseo
         public float joystickRotationSpeedHoriz = 100.0F;
         
         // Controller sensitivity
-        public float joystickRotationSpeedVert = 10.0F;
+        public float joystickRotationSpeedVert = 5.0F;
         
         // Mouse sensitivity
         public float mouseHorizontalSensitivity = 10.0F;

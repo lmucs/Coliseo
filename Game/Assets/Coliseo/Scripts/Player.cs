@@ -129,6 +129,7 @@ namespace Coliseo
             } else
             {
                 anim.SetBool("Blocking", false);
+                saberCont.blocking = false;
             }
         }
 

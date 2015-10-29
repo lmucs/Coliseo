@@ -14,13 +14,13 @@ namespace Coliseo
         private bool _attacking = false;
         private bool _blocking = false;
 
-        public bool inAttack
+        public bool attacking
         {
             get { return _attacking; }
             set
             {
                 _attacking = value;
-                if (inAttack)
+                if (attacking)
                 {
                     attackCollider.enabled = true;
                     blockCollider.enabled = false;
@@ -28,13 +28,13 @@ namespace Coliseo
             }
         }
 
-        public bool inBlock
+        public bool blocking
         {
             get { return _blocking; }
             set
             {
                 _blocking = value;
-                if (inBlock)
+                if (blocking)
                 {
                     attackCollider.enabled = false;
                     blockCollider.enabled = true;
@@ -49,16 +49,6 @@ namespace Coliseo
             anim = GetComponent<Animator>();
             attackCollider = GetComponentInChildren<BoxCollider>();
             blockCollider = GetComponentInChildren<CapsuleCollider>();
-        }
-
-        // These are only here because the stupid animator doesn't like accessors.
-        public bool attacking;
-        public bool blocking;
-        
-        void Update()
-        {
-            inAttack = attacking;
-            inBlock = blocking;
         }
 
         public void ToggleBeam()

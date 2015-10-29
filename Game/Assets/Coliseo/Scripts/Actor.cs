@@ -73,6 +73,21 @@ namespace Coliseo
             health = MAX_HEALTH;
         }
 
+        void initiateAttack()
+        {
+            saberCont.attacking = true;
+        }
+
+        void finishAttack()
+        {
+            saberCont.attacking = false;
+        }
+
+        void initiateBlock()
+        {
+            saberCont.blocking = true;
+        }
+
         bool IsOpponent(SaberController cont)
         {
             return saberCont.isPlayerSword != cont.isPlayerSword;
@@ -89,16 +104,16 @@ namespace Coliseo
             SaberController cont = other.GetComponentInParent<SaberController>();
             if (IsValidAttack(cont))
             {
+                cont.attacking = false;
                 if (saberCont.blocking)
                 {
-                    cont.attacking = false;
                     return;
                 }
                 TakeDamage(attackStrength);
             }
         }
 
-        //a callback for calculating IK
+        // A callback for calculating IK
         void OnAnimatorIK()
         {
             if (anim)
