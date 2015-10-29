@@ -13,7 +13,7 @@ namespace Coliseo
             p = player;
         }
 
-        public float joystickMoveSensitivity = 10.0F;
+        public float joystickMoveSensitivity = 1f;//10.0F;
         
         // Controller sensitivity
         public float joystickRotationSpeedHoriz = 100.0F;
@@ -36,10 +36,10 @@ namespace Coliseo
             float h = joystickRotationSpeedHoriz * Input.GetAxis("Mouse X") * mouseHorizontalSensitivity;
             float v = joystickRotationSpeedVert * Input.GetAxis("Mouse Y");
 
-            translationX = (Input.GetKey(KeyCode.A) ? -Actor.moveSpeed : translationX);
-            translationX = (Input.GetKey(KeyCode.D) ? Actor.moveSpeed : translationX);
-            translationZ = (Input.GetKey(KeyCode.S) ? -Actor.moveSpeed : translationZ);
-            translationZ = (Input.GetKey(KeyCode.W) ? Actor.moveSpeed : translationZ);
+            translationX = (Input.GetKey(KeyCode.A) ? -1 : translationX);
+            translationX = (Input.GetKey(KeyCode.D) ? 1 : translationX);
+            translationZ = (Input.GetKey(KeyCode.S) ? -1 : translationZ);
+            translationZ = (Input.GetKey(KeyCode.W) ? 1 : translationZ);
             
             // Move the player around the scene.
             p.move(translationX, translationZ, 0f);
@@ -60,8 +60,36 @@ namespace Coliseo
                 p.jump();
             }
             
-            // Animate the player.
             p.animate(translationX, translationZ, rotationX, rotationY);
+            
+            rightTriggerDown = (GetTrigger("RightTrigger") == 1);
+            leftTriggerDown = (GetTrigger("LeftTrigger") == 1);
+            
+            p.block(leftTriggerDown || Input.GetMouseButton(1));
+            
+            if (!rightTriggerActive && (rightTriggerDown || Input.GetMouseButtonDown(0) ))
+            {
+                rightTriggerActive = true;
+                p.attack();
+            }
+
+            rightTriggerActive = rightTriggerDown;
+        }
+        
+        private bool rightTriggerActive = false;
+        private bool leftTriggerActive = false;
+
+        private bool triggerMethodDefault = true;
+        private int LEFT_TRIGGER = 0;
+        private int RIGHT_TRIGGER = 1;
+
+        // For now, but soon this should be in controls.
+        private bool rightTriggerDown;
+        private bool leftTriggerDown;
+
+        float GetTrigger(string trigger)
+        {
+            return Input.GetAxis( (triggerMethodDefault ? "" : "Desktop_") + trigger);
         }
     }
 }

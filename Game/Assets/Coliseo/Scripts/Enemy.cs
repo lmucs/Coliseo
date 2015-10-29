@@ -4,16 +4,11 @@ using Coliseo;
 using System;
 
 public class Enemy : Actor {
-
-    Rigidbody rb;
+    
     private float MIN_DIST = 1.5f;
 
     // Use this for initialization
     void Start () {
-        rb = GetComponent<Rigidbody>();
-        //anim = GetComponent<Animator>(); // I don't think commenting this out is a problem.
-        GameObject saber = anim.GetBoneTransform(HumanBodyBones.RightHand).Find("LSaber/Beam").gameObject;
-        saber.tag = "Enemy" + saber.tag;
         saberCont.IsPlayerSword = false;
     }
 

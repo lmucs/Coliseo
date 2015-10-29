@@ -8,6 +8,7 @@ namespace Coliseo
         protected const int MAX_HEALTH = 100;
         protected const int attackStrength = 30;
         public const float moveSpeed = 6f;
+        public const float jumpStrength = 50.0f;
 
         protected int _health;
 
@@ -15,6 +16,8 @@ namespace Coliseo
 
         protected Animator anim;
         protected SaberController saberCont;
+        protected Rigidbody rb;
+        protected GameObject saber;
 
         public int health
         {
@@ -58,7 +61,10 @@ namespace Coliseo
         {
             healthDisplay = transform.Find("Health").GetComponent<TextMesh>();
             anim = GetComponent<Animator>();
-            saberCont = anim.GetBoneTransform(HumanBodyBones.RightHand).GetComponentInChildren<SaberController>();
+            Transform rightHand = anim.GetBoneTransform(HumanBodyBones.RightHand);
+            saber = rightHand.Find("LSaber/Beam").gameObject;
+            saberCont = rightHand.GetComponentInChildren<SaberController>();
+            rb = GetComponent<Rigidbody>();
             health = MAX_HEALTH;
         }
 
