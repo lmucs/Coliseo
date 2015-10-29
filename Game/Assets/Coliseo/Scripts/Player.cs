@@ -33,7 +33,7 @@ namespace Coliseo
                 VRCenter.Setup();
             }
             player = gameObject;
-            saberCont.IsPlayerSword = true;
+            saberCont.isPlayerSword = true;
             distToGround = GetComponent<Collider>().bounds.extents.y;
             cameraTransform = anim.GetBoneTransform(HumanBodyBones.Head).Find("CameraRig/Camera");
             cameraRotX = cameraTransform.localEulerAngles.x;
@@ -140,6 +140,11 @@ namespace Coliseo
         public override void die ()
         {
             gameObject.SetActive(false);
+        }
+
+        public void ToggleBeam()
+        {
+            saberCont.ToggleBeam();
         }
     }
 }

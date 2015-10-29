@@ -74,6 +74,11 @@ namespace Coliseo
             }
 
             rightTriggerActive = rightTriggerDown;
+
+            if (Input.GetButtonDown("Button B") || Input.GetKeyDown(KeyCode.F))
+            {
+                p.ToggleBeam();
+            }
         }
         
         private bool rightTriggerActive = false;

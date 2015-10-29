@@ -1,48 +1,69 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SaberController : MonoBehaviour {
+namespace Coliseo
+{
+    public class SaberController : MonoBehaviour
+    {
 
+        private Animator anim;
 
-    Animator anim;
-    Transform beamTransform;
+        public Collider attackCollider;
+        public Collider blockCollider;
 
-    public bool attacking = false;
-    public bool blocking = false;
+        private bool _attacking = false;
+        private bool _blocking = false;
 
-    public Collider attackCollider;
-    public Collider blockCollider;
+        public bool inAttack
+        {
+            get { return _attacking; }
+            set
+            {
+                _attacking = value;
+                if (inAttack)
+                {
+                    attackCollider.enabled = true;
+                    blockCollider.enabled = false;
+                }
+            }
+        }
 
-    public bool IsPlayerSword;
+        public bool inBlock
+        {
+            get { return _blocking; }
+            set
+            {
+                _blocking = value;
+                if (inBlock)
+                {
+                    attackCollider.enabled = false;
+                    blockCollider.enabled = true;
+                }
+            }
+        }
 
-	// Use this for initialization
-	void Start () {
-        anim = GetComponent<Animator>();
-        //gameObject.SetActive(false);
-        beamTransform = transform.Find("Beam");
-        attackCollider = beamTransform.GetComponent<BoxCollider>();
-        blockCollider = beamTransform.GetComponent<CapsuleCollider>();
-    }
-	
-	// Update is called once per frame
-	void Update () {
-        //Debug.Log("Updating sabercontroller");
-	    if(Input.GetButtonDown("Button B") || Input.GetKeyDown(KeyCode.F))
+        public bool isPlayerSword;
+        
+        void Awake()
+        {
+            anim = GetComponent<Animator>();
+            attackCollider = GetComponentInChildren<BoxCollider>();
+            blockCollider = GetComponentInChildren<CapsuleCollider>();
+        }
+
+        // These are only here because the stupid animator doesn't like accessors.
+        public bool attacking;
+        public bool blocking;
+        
+        void Update()
+        {
+            inAttack = attacking;
+            inBlock = blocking;
+        }
+
+        public void ToggleBeam()
         {
             anim.SetBool("Extended", !anim.GetBool("Extended"));
         }
-        if(attacking)
-        {
-            attackCollider.enabled = true;
-            blockCollider.enabled = false;
-        }
-        if(blocking)
-        {
-            attackCollider.enabled = false;
-            blockCollider.enabled = true;
-        }
-        
-	}
-
-
+    }
 }

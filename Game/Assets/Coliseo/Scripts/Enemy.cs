@@ -3,70 +3,76 @@ using System.Collections;
 using Coliseo;
 using System;
 
-public class Enemy : Actor {
-    
-    private float MIN_DIST = 1.5f;
-
-    // Use this for initialization
-    void Start () {
-        saberCont.IsPlayerSword = false;
-    }
-
-    // The angle needed to properly rotate the health toward the player.
-    public float AngleToPlayer()
+namespace Coliseo
+{
+    public class Enemy : Actor
     {
-        Vector3 localPosition = transform.position - Player.position;
-        return 180f - (Mathf.Rad2Deg * Mathf.Atan2(localPosition.z, localPosition.x) + 90f);
-    }
 
-    public override int TakeDamage(int amount)
-    {
-        health -= amount;
-        return amount;
-    }
+        private float MIN_DIST = 1.5f;
 
-    // Update is called once per frame
-    void Update () {
-        if (/*tag != "Player"*/ healthDisplay != null)
+        // Use this for initialization
+        void Start()
         {
-            healthDisplay.transform.rotation = Quaternion.Euler(new Vector3(0, AngleToPlayer(), 0));
+            saberCont.isPlayerSword = false;
         }
-        
-        Vector3 playerLoc = Player.position; // For now, try to move "close" to this, and face it.
-        float dist = Vector3.Distance(playerLoc, transform.position);
-        float moveZ = 0;
 
-        if (dist > MIN_DIST)
+        // The angle needed to properly rotate the health toward the player.
+        public float AngleToPlayer()
         {
-            moveZ = moveSpeed;
-            Vector3 movement = new Vector3(0, 0, moveSpeed * Time.deltaTime);
-
-            // Move the player to it's current position plus the movement.
-            rb.MovePosition(transform.position + transform.rotation * movement);
+            Vector3 localPosition = transform.position - Player.position;
+            return 180f - (Mathf.Rad2Deg * Mathf.Atan2(localPosition.z, localPosition.x) + 90f);
         }
-        else
+
+        public override int TakeDamage(int amount)
         {
-            anim.SetTrigger("AttackDownTrigger");
+            health -= amount;
+            return amount;
         }
-        anim.SetFloat("Input Z", moveZ); 
-        rb.MoveRotation(Quaternion.Euler(new Vector3(0, 180 + AngleToPlayer(), 0)));
-        // Also, beam should be limited to hurting only during an attack. Just sayin. Can / should do in the animations.
-    }
 
-    public override void move(float h, float v, float ignored) // FIXME: should do movement in 3D, instead of just 2D
-    {
-        
-    }
+        // Update is called once per frame
+        void Update()
+        {
+            if (/*tag != "Player"*/ healthDisplay != null)
+            {
+                healthDisplay.transform.rotation = Quaternion.Euler(new Vector3(0, AngleToPlayer(), 0));
+            }
 
-    // Now that the camera is directly on the head, we can, for the time being, 
-    // have the controller directly move the head to look down. For now.
-    public override void turn(float x, float y)
-    {
-        
-    }
+            Vector3 playerLoc = Player.position; // For now, try to move "close" to this, and face it.
+            float dist = Vector3.Distance(playerLoc, transform.position);
+            float moveZ = 0;
 
-    public override void die()
-    {
-        gameObject.SetActive(false);
+            if (dist > MIN_DIST)
+            {
+                moveZ = moveSpeed;
+                Vector3 movement = new Vector3(0, 0, moveSpeed * Time.deltaTime);
+
+                // Move the player to it's current position plus the movement.
+                rb.MovePosition(transform.position + transform.rotation * movement);
+            }
+            else
+            {
+                anim.SetTrigger("AttackDownTrigger");
+            }
+            anim.SetFloat("Input Z", moveZ);
+            rb.MoveRotation(Quaternion.Euler(new Vector3(0, 180 + AngleToPlayer(), 0)));
+            // Also, beam should be limited to hurting only during an attack. Just sayin. Can / should do in the animations.
+        }
+
+        public override void move(float h, float v, float ignored) // FIXME: should do movement in 3D, instead of just 2D
+        {
+
+        }
+
+        // Now that the camera is directly on the head, we can, for the time being, 
+        // have the controller directly move the head to look down. For now.
+        public override void turn(float x, float y)
+        {
+
+        }
+
+        public override void die()
+        {
+            gameObject.SetActive(false);
+        }
     }
 }

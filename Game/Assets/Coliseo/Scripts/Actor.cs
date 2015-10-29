@@ -75,7 +75,7 @@ namespace Coliseo
 
         bool IsOpponent(SaberController cont)
         {
-            return saberCont.IsPlayerSword != cont.IsPlayerSword;
+            return saberCont.isPlayerSword != cont.isPlayerSword;
         }
 
         bool IsValidAttack(SaberController cont)
