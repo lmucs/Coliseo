@@ -45,9 +45,13 @@ namespace Coliseo
             controls.FixedUpdate();
         }
 
-        public override int TakeDamage(int amount)
+        public override uint TakeDamage(uint amount)
         {
             dt = 0;
+            if(amount > health)
+            {
+                amount = health;
+            }
             health -= amount;
             return health;
         }

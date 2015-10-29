@@ -52,8 +52,12 @@ namespace Coliseo
             return 180f - (Mathf.Rad2Deg * Mathf.Atan2(localPosition.z, localPosition.x) + 90f);
         }
 
-        public override int TakeDamage(int amount)
+        public override uint TakeDamage(uint amount)
         {
+            if (amount > health)
+            {
+                amount = health;
+            }
             health -= amount;
             return amount;
         }

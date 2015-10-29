@@ -5,12 +5,12 @@ namespace Coliseo
 {
     public abstract class Actor : MonoBehaviour
     {
-        protected const int MAX_HEALTH = 100;
-        protected const int attackStrength = 30;
+        protected const uint MAX_HEALTH = 100;
+        protected const uint attackStrength = 30;
         public const float moveSpeed = 6f;
         public const float jumpStrength = 50.0f;
 
-        protected int _health;
+        protected uint _health;
 
         protected TextMesh healthDisplay;
 
@@ -19,7 +19,7 @@ namespace Coliseo
         protected Rigidbody rb;
         protected GameObject saber;
 
-        public int health
+        public uint health
         {
             get { return _health; }
             set
@@ -37,14 +37,14 @@ namespace Coliseo
 
         public bool isDead
         {
-            get { return health <= 0; }
+            get { return health == 0; }
         }
 
         bool damaged {
             get { return health != MAX_HEALTH; }
         }
 
-        abstract public int TakeDamage(int amount);
+        abstract public uint TakeDamage(uint amount);
 
         // I don't think this will ever be used, at least not while the colliders are set up as they are.
         public void attack(Actor target)

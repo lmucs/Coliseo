@@ -67,7 +67,7 @@ public class AdvVRTracker : MonoBehaviour {
 
     // Update is called once per frame
     void LateUpdate () {
-	    if(UnityEngine.VR.VRDevice.isPresent)
+        if(UnityEngine.VR.VRDevice.isPresent)
         {
 
             Quaternion quatRot = UnityEngine.VR.InputTracking.GetLocalRotation(VRHead);
