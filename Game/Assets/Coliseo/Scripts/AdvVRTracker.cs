@@ -1,10 +1,9 @@
 ﻿using System.Diagnostics;
 using System.IO;
 using UnityEngine;
+using Coliseo;
 
 public class AdvVRTracker : MonoBehaviour {
-
-    UnityEngine.VR.VRNode VRHead = UnityEngine.VR.VRNode.Head;
     TextWriterTraceListener listener;
     Transform cameraTransform;
     Transform cameraRigTransform;
@@ -17,6 +16,8 @@ public class AdvVRTracker : MonoBehaviour {
     Vector3 positionNeeded;
 
     Vector3 initHeadRot;
+
+    NoHead decapitate;
     
     bool logging = false;
 
@@ -47,11 +48,13 @@ public class AdvVRTracker : MonoBehaviour {
     void Start()
     {
         anim = GetComponent<Animator>();
+        decapitate = GetComponent<NoHead>();
         // set up listener
         string filename = @"./output.txt";
-        FileStream traceLog = new FileStream(filename, FileMode.OpenOrCreate);
+        FileStream traceLog;
         if (logging)
         {
+            traceLog = new FileStream(filename, FileMode.OpenOrCreate);
             listener = new TextWriterTraceListener(traceLog);
         }
         
@@ -67,11 +70,13 @@ public class AdvVRTracker : MonoBehaviour {
 
     // Update is called once per frame
     void LateUpdate () {
-        if(UnityEngine.VR.VRDevice.isPresent)
+        if(VRCenter.VRPresent)
         {
 
-            Quaternion quatRot = UnityEngine.VR.InputTracking.GetLocalRotation(VRHead);
-            Vector3 vecPos = UnityEngine.VR.InputTracking.GetLocalPosition(VRHead);
+            Quaternion quatRot = VRCenter.rotation;
+            Vector3 vecPos = VRCenter.position;
+
+            Vector3 currHeadRot = headTransform.localRotation.eulerAngles;
 
             // output to listener 
 
@@ -99,14 +104,14 @@ public class AdvVRTracker : MonoBehaviour {
             p = Mathf.Sqrt(Mathf.Abs(Mathf.Pow(distSpineToNeck, 2) - Mathf.Pow(k, 2)));
             q = riftZ - p;
 
-            UnityEngine.Debug.Log("h: " + h + ", k: " + k + ", p: " + p + ", q: " + q );
-            UnityEngine.Debug.Log("vecposz: " + vecPos.z);
+            //UnityEngine.Debug.Log("h: " + h + ", k: " + k + ", p: " + p + ", q: " + q );
+            //UnityEngine.Debug.Log("vecposz: " + vecPos.z);
 
             rotSpine = Mathf.Acos(k / distSpineToNeck) * Mathf.Rad2Deg;
             rotNeck = Mathf.Atan2(q, h) * Mathf.Rad2Deg;
 
-            UnityEngine.Debug.Log("spine: " + rotSpine);
-            UnityEngine.Debug.Log("neck: " + rotNeck);
+            //UnityEngine.Debug.Log("spine: " + rotSpine);
+            //UnityEngine.Debug.Log("neck: " + rotNeck);
 
             //spineTransform.localRotation = Quaternion.Euler(new Vector3(/*spineTransform.localRotation.eulerAngles.x*/0, spineTransform.localRotation.eulerAngles.y, rotSpine/* - 90*/));
             //neckTransform.localRotation = Quaternion.Euler(new Vector3(rotNeck + 90, neckTransform.localRotation.eulerAngles.y, neckTransform.localRotation.eulerAngles.z));
@@ -116,11 +121,12 @@ public class AdvVRTracker : MonoBehaviour {
             
             cameraRigTransform.localRotation = Quaternion.Euler(-rotationNeeded /*+ optionalRigRotation*/);
             rotationNeeded.Set(rotationNeeded.x, rotationNeeded.y /*- rotNeck - rotSpine*/, rotationNeeded.z);
-            headTransform.localRotation = Quaternion.Euler(initHeadRot + rotationNeeded);
-            cameraRigTransform.localPosition = -positionNeeded /*+ optionalRigPosOffset*/ + recRigPosOffset;
+            headTransform.localRotation = Quaternion.Euler(/*initHeadRot +*/ currHeadRot + rotationNeeded);
+            //cameraRigTransform.localPosition = -positionNeeded /*+ optionalRigPosOffset*/ + recRigPosOffset;
 
+            //cameraRigTransform.localPosition = rigPos;
             //UnityEngine.Debug.Log(distSpineToHead);
-            UnityEngine.Debug.Log("HeadPos: " + vecPos);
+            //UnityEngine.Debug.Log("HeadPos: " + vecPos);
 
             if (logging)
             {
@@ -139,12 +145,11 @@ public class AdvVRTracker : MonoBehaviour {
             {
                 listener.WriteLine("----Leaning forward---");
             }
-
-            //UnityEngine.VR.InputTracking.Recenter();
+           
 
             if (Input.GetButtonDown("LeftShoulder"))
             {
-                UnityEngine.VR.InputTracking.Recenter();
+                VRCenter.Recenter();
                 listener.WriteLine("---Recentering InputTracking---");
             }
 
@@ -155,7 +160,7 @@ public class AdvVRTracker : MonoBehaviour {
 
     void OnApplicationQuit()
     {
-        if (UnityEngine.VR.VRDevice.isPresent && logging)
+        if (VRCenter.VRPresent && logging)
         {
             // flush any open output before termination
             //   maybe in an override of Form.OnClosed 

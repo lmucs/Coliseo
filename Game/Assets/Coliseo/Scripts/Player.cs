@@ -26,7 +26,7 @@ namespace Coliseo
 
         void Start()
         {
-            if (VRCenter.IsVREnabled())
+            if (VRCenter.VREnabled)
             {
                 VRCenter.Setup();
             }
@@ -97,7 +97,7 @@ namespace Coliseo
             Vector3 vec = new Vector3(0, x, 0);
             Quaternion deltaRotation = Quaternion.Euler(vec * Time.deltaTime + transform.rotation.eulerAngles);
             
-            if (!VRCenter.IsVREnabled())
+            if (!VRCenter.VREnabled)
             {
                 cameraRotX = Mathf.Clamp(cameraRotX + y, -90, 90);
                 cameraTransform.localEulerAngles = new Vector3(cameraRotX, 0, 0);
@@ -113,6 +113,30 @@ namespace Coliseo
             anim.SetFloat("Input Z", v);
             anim.SetFloat("Rotation X", a);
             anim.SetFloat("Rotation Y", b);
+        }
+
+        // A callback for calculating IK
+        void OnAnimatorIK()
+        {
+            if (anim)
+            {
+                // The next 5 lines are probably unnecessary, but I'm leaving them in for now.
+                // TODO: Check if necessary.
+                anim.SetIKPositionWeight(AvatarIKGoal.RightHand, 0);
+                anim.SetIKRotationWeight(AvatarIKGoal.RightHand, 0);
+
+                anim.SetIKPositionWeight(AvatarIKGoal.LeftHand, 0);
+                anim.SetIKRotationWeight(AvatarIKGoal.LeftHand, 0);
+
+                // Mostly solves head bobbing issue, except when idle. However is currently model-dependent.
+                // TODO: Make model independent. (Can possibly go to root then grab parent)
+                // TODO2: Also may need update to support AdvVRTracker.cs
+                Vector3 lookAt = anim.GetBoneTransform(HumanBodyBones.Head).position;
+                lookAt += (transform.Find("ScientistSkeleton") ?? transform.Find("Bip001")).forward;
+
+                anim.SetLookAtPosition(lookAt);
+                anim.SetLookAtWeight(1.0f);
+            }
         }
 
         public void attack()
