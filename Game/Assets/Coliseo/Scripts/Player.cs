@@ -37,8 +37,7 @@ namespace Coliseo
             cameraRotX = cameraTransform.localEulerAngles.x;
             controls = new Controls(this);
         }
-
-        // We shouldn't have to update here. Controls should move us around with its FixedUpdate()
+        
         void FixedUpdate()
         {
             playDamagedAnimation();
