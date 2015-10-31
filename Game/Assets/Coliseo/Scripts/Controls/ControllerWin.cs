@@ -34,12 +34,16 @@ public class ControllerWin : Controller {
 
         prevState = state;
         state = GamePad.GetState(playerIndex);
-        
+
+        rumble(); // If we wait till the next update, we can call SetVibration only once (it has a bug if we call it multiple times)
     }
 
-    public new bool connected
+    ///<summary>
+    /// Returns true if a controller is connected.
+    ///</summary>
+    public override bool IsConnected()  // IsConnected from state is unreliable.
     {
-        get { return state.IsConnected; }
+        return !(Input.GetJoystickNames().Length == 0 || string.IsNullOrEmpty(Input.GetJoystickNames()[0]));
     }
 
     ///<summary>
@@ -99,7 +103,7 @@ public class ControllerWin : Controller {
             case Controller.LEFT_STICK:
                 return new Vector2(state.ThumbSticks.Left.X, state.ThumbSticks.Left.Y);
             case Controller.RIGHT_STICK:
-                return new Vector2(state.ThumbSticks.Right.X, state.ThumbSticks.Right.Y);
+                return new Vector2(state.ThumbSticks.Right.X, -state.ThumbSticks.Right.Y);
             default:
                 throw new ArgumentException("That is not a valid stick");
         }
@@ -127,7 +131,11 @@ public class ControllerWin : Controller {
             case Controller.BUTTON_LEFT_STICK:
                 return state.Buttons.LeftStick == ButtonState.Pressed;
             case Controller.BUTTON_RIGHT_STICK:
-                return state.Buttons.LeftStick == ButtonState.Pressed;
+                return state.Buttons.RightStick == ButtonState.Pressed;
+            case Controller.BUTTON_LEFT_SHOULDER:
+                return state.Buttons.LeftShoulder == ButtonState.Pressed;
+            case Controller.BUTTON_RIGHT_SHOULDER:
+                return state.Buttons.RightShoulder == ButtonState.Pressed;
             default:
                 throw new ArgumentException("That is not a valid button");
         }
@@ -155,6 +163,10 @@ public class ControllerWin : Controller {
                 return state.Buttons.LeftStick == ButtonState.Pressed && prevState.Buttons.LeftStick == ButtonState.Released;
             case Controller.BUTTON_RIGHT_STICK:
                 return state.Buttons.RightStick == ButtonState.Pressed && prevState.Buttons.RightStick == ButtonState.Released;
+            case Controller.BUTTON_LEFT_SHOULDER:
+                return state.Buttons.LeftShoulder == ButtonState.Pressed && prevState.Buttons.LeftShoulder == ButtonState.Released;
+            case Controller.BUTTON_RIGHT_SHOULDER:
+                return state.Buttons.RightShoulder == ButtonState.Pressed && prevState.Buttons.RightShoulder == ButtonState.Released;
             default:
                 throw new ArgumentException("That is not a valid button");
         }
@@ -183,6 +195,10 @@ public class ControllerWin : Controller {
                 return state.Buttons.LeftStick == ButtonState.Released && prevState.Buttons.LeftStick == ButtonState.Pressed;
             case Controller.BUTTON_RIGHT_STICK:
                 return state.Buttons.RightStick == ButtonState.Released && prevState.Buttons.RightStick == ButtonState.Pressed;
+            case Controller.BUTTON_LEFT_SHOULDER:
+                return state.Buttons.LeftShoulder == ButtonState.Released && prevState.Buttons.LeftShoulder == ButtonState.Pressed;
+            case Controller.BUTTON_RIGHT_SHOULDER:
+                return state.Buttons.RightShoulder == ButtonState.Released && prevState.Buttons.RightShoulder == ButtonState.Pressed;
             default:
                 throw new ArgumentException("That is not a valid button");
         }
@@ -239,7 +255,7 @@ public class ControllerWin : Controller {
     ///<summary>
     /// Returns true while the specified /direction/ is held down.
     ///</summary>
-    public override bool GetDpad(uint direction)
+    public override bool GetDPad(uint direction)
     {
         switch (direction)
         {
@@ -259,7 +275,7 @@ public class ControllerWin : Controller {
     ///<summary>
     /// Returns true during the frame the user pressed the given /direction/.
     ///</summary>
-    public override bool GetDpadDown(uint direction)
+    public override bool GetDPadDown(uint direction)
     {
         switch (direction)
         {
@@ -279,7 +295,7 @@ public class ControllerWin : Controller {
     ///<summary>
     /// Returns true during the frame the user released the given /direction/.
     ///</summary>
-    public override bool GetDpadUp(uint direction)
+    public override bool GetDPadUp(uint direction)
     {
         switch (direction)
         {
@@ -311,7 +327,11 @@ public class ControllerWin : Controller {
                 break;
             default:
                 throw new ArgumentException("That is not a valid motor");
-        }
+        }        
+    }
+
+    private void rumble()
+    {
         GamePad.SetVibration(playerIndex, heavyMotor, lightMotor);
     }
 }

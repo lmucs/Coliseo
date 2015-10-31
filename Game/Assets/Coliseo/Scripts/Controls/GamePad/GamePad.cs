@@ -4,11 +4,12 @@ using System;
 
 namespace Coliseo
 {
-    public class GamePad : UnityEngine.Object
+    public class GamePad
     {
-        public GamePadState GetState()
+        // Pretty useless, yes, but it lets me basically copy ControllerWin.cs to ControllerLinOSX.cs
+        public static GamePadState GetState()
         {
-            throw new NotSupportedException();
+            return new GamePadState();
         }
     }
 }

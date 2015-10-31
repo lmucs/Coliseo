@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public abstract class Controller : Object {
+public abstract class Controller {
     public const uint
                     RIGHT_TRIGGER = 0,
                     LEFT_TRIGGER = 1,
@@ -22,7 +22,9 @@ public abstract class Controller : Object {
                     LIGHT_MOTOR = 16,
                     HEAVY_MOTOR = 17,
                     BUTTON_LEFT_STICK = 18,
-                    BUTTON_RIGHT_STICK = 19;
+                    BUTTON_RIGHT_STICK = 19,
+                    BUTTON_LEFT_SHOULDER = 20,
+                    BUTTON_RIGHT_SHOULDER = 21;
 
     ///<summary>
     /// Must be called each frame to ensure accurate reading of *(Down|Up)
@@ -32,7 +34,7 @@ public abstract class Controller : Object {
     ///<summary>
     /// Returns true if a controller is connected.
     ///</summary>
-    public bool connected;
+    public abstract bool IsConnected();
 
     ///<summary>
     /// Returns true if the specified /trigger/ is fully pressed.
@@ -86,21 +88,25 @@ public abstract class Controller : Object {
     ///<summary>
     /// Returns true while the specified /direction/ is held down.
     ///</summary>
-    public abstract bool GetDpad(uint direction);
+    public abstract bool GetDPad(uint direction);
 
     ///<summary>
     /// Returns true during the frame the user pressed the given /direction/.
     ///</summary>
-    public abstract bool GetDpadDown(uint direction);
+    public abstract bool GetDPadDown(uint direction);
 
     ///<summary>
     /// Returns true during the frame the user released the given /direction/.
     ///</summary>
-    public abstract bool GetDpadUp(uint direction);
+    public abstract bool GetDPadUp(uint direction);
 
     ///<summary>
     /// Sets the vibration intensity (0f-1f) of the motor specified by /motor/.
     ///</summary>
     public abstract void vibrate(uint motor, float intensity);
 
+    public static bool isWindows()
+    {
+        return Application.platform == RuntimePlatform.WindowsEditor || Application.platform == RuntimePlatform.WindowsPlayer;
+    }
 }

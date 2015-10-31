@@ -8,13 +8,15 @@ namespace Coliseo
     public class Controls : Object
     {
         private Player p;
+        private Controller cont;
 
         public Controls (Player player)
         {
             p = player;
+            cont = Controller.isWindows() ? (Controller) new ControllerWin() : (Controller) new ControllerLinOSX();
         }
 
-        public float joystickMoveSensitivity = 1f;//10.0F;
+        public float joystickMoveSensitivity = 1f;
         
         // Controller sensitivity
         public float joystickRotationSpeedHoriz = 100.0F;
@@ -28,11 +30,16 @@ namespace Coliseo
         // Update is called once per frame
         public void FixedUpdate ()
         {
-            float translationX = Input.GetAxis("Left_X_Axis") * joystickMoveSensitivity;
-            float translationZ = Input.GetAxis("Left_Y_Axis") * joystickMoveSensitivity;
+            cont.FixedUpdate();
+
+            Vector2 leftStick = cont.GetStick(Controller.LEFT_STICK);
+            Vector2 rightStick = cont.GetStick(Controller.RIGHT_STICK);
+
+            float translationX =  leftStick.x * joystickMoveSensitivity;
+            float translationZ = leftStick.y * joystickMoveSensitivity;
             
-            float rotationX = Input.GetAxis("Right_X_Axis") * joystickRotationSpeedHoriz;
-            float rotationY = Input.GetAxis("Right_Y_Axis") * joystickRotationSpeedVert;
+            float rotationX = rightStick.x * joystickRotationSpeedHoriz;
+            float rotationY = rightStick.y * joystickRotationSpeedVert;
             
             float h = joystickRotationSpeedHoriz * Input.GetAxis("Mouse X") * mouseHorizontalSensitivity;
             float v = joystickRotationSpeedVert * Input.GetAxis("Mouse Y");
@@ -49,51 +56,31 @@ namespace Coliseo
             p.turn(rotationX, rotationY);
             
             // Turn the player to face the mouse cursor.
-            if(Input.GetJoystickNames().Length == 0 || string.IsNullOrEmpty(Input.GetJoystickNames()[0]))
+            if(!cont.IsConnected())
             {
                 p.turn(h, v);
                 rotationX = h;
                 rotationY = v;
             }
             
-            if(Input.GetButton("Button A") || Input.GetKey(KeyCode.Space))
+            if(cont.GetButton(Controller.BUTTON_A) || Input.GetKey(KeyCode.Space))
             {
                 p.jump();
             }
             
             p.animate(translationX, translationZ, rotationX, rotationY);
+
+            p.block(cont.GetTrigger(Controller.LEFT_TRIGGER) || Input.GetMouseButton(1));
             
-            rightTriggerDown = (GetTrigger("RightTrigger") == 1);
-            leftTriggerDown = (GetTrigger("LeftTrigger") == 1);
-            
-            p.block(leftTriggerDown || Input.GetMouseButton(1));
-            
-            if (!rightTriggerActive && (rightTriggerDown || Input.GetMouseButtonDown(0) ))
+            if ((cont.GetTriggerDown(Controller.RIGHT_TRIGGER) || Input.GetMouseButtonDown(0) ))
             {
-                rightTriggerActive = true;
                 p.attack();
             }
 
-            rightTriggerActive = rightTriggerDown;
-
-            if (Input.GetButtonDown("Button B") || Input.GetKeyDown(KeyCode.F))
+            if (cont.GetButtonDown(Controller.BUTTON_B) || Input.GetKeyDown(KeyCode.F))
             {
                 p.ToggleBeam();
             }
-        }
-        
-        private bool rightTriggerActive = false;
-        private bool leftTriggerActive = false;
-
-        private bool triggerMethodDefault = true;
-
-        // For now, but soon this should be in controls.
-        private bool rightTriggerDown;
-        private bool leftTriggerDown;
-
-        float GetTrigger(string trigger)
-        {
-            return Input.GetAxis( (triggerMethodDefault ? "" : "Desktop_") + trigger);
         }
     }
 }
