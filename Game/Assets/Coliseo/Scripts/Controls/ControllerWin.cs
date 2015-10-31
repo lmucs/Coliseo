@@ -34,6 +34,7 @@ public class ControllerWin : Controller {
 
         prevState = state;
         state = GamePad.GetState(playerIndex);
+        
     }
 
     public new bool connected
@@ -123,6 +124,10 @@ public class ControllerWin : Controller {
                 return state.Buttons.Start == ButtonState.Pressed;
             case Controller.BUTTON_BACK:
                 return state.Buttons.Back == ButtonState.Pressed;
+            case Controller.BUTTON_LEFT_STICK:
+                return state.Buttons.LeftStick == ButtonState.Pressed;
+            case Controller.BUTTON_RIGHT_STICK:
+                return state.Buttons.LeftStick == ButtonState.Pressed;
             default:
                 throw new ArgumentException("That is not a valid button");
         }
@@ -146,6 +151,10 @@ public class ControllerWin : Controller {
                 return state.Buttons.Start == ButtonState.Pressed && prevState.Buttons.Start == ButtonState.Released;
             case Controller.BUTTON_BACK:
                 return state.Buttons.Back == ButtonState.Pressed && prevState.Buttons.Back == ButtonState.Released;
+            case Controller.BUTTON_LEFT_STICK:
+                return state.Buttons.LeftStick == ButtonState.Pressed && prevState.Buttons.LeftStick == ButtonState.Released;
+            case Controller.BUTTON_RIGHT_STICK:
+                return state.Buttons.RightStick == ButtonState.Pressed && prevState.Buttons.RightStick == ButtonState.Released;
             default:
                 throw new ArgumentException("That is not a valid button");
         }
@@ -170,6 +179,10 @@ public class ControllerWin : Controller {
                 return state.Buttons.Start == ButtonState.Released && prevState.Buttons.Start == ButtonState.Pressed;
             case Controller.BUTTON_BACK:
                 return state.Buttons.Back == ButtonState.Released && prevState.Buttons.Back == ButtonState.Pressed;
+            case Controller.BUTTON_LEFT_STICK:
+                return state.Buttons.LeftStick == ButtonState.Released && prevState.Buttons.LeftStick == ButtonState.Pressed;
+            case Controller.BUTTON_RIGHT_STICK:
+                return state.Buttons.RightStick == ButtonState.Released && prevState.Buttons.RightStick == ButtonState.Pressed;
             default:
                 throw new ArgumentException("That is not a valid button");
         }

@@ -125,6 +125,6 @@ public class ControllerLinOSX : Controller {
     ///</summary>
     public override void vibrate(uint motor, float intensity)
     {
-        throw new NotSupportedException();
+        // lulz y3ah r1ght
     }
 }

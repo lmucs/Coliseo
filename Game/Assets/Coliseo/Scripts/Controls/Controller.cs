@@ -20,7 +20,9 @@ public abstract class Controller : Object {
                     BUTTON_START = 14,
                     BUTTON_BACK = 15,
                     LIGHT_MOTOR = 16,
-                    HEAVY_MOTOR = 17;
+                    HEAVY_MOTOR = 17,
+                    BUTTON_LEFT_STICK = 18,
+                    BUTTON_RIGHT_STICK = 19;
 
     ///<summary>
     /// Must be called each frame to ensure accurate reading of *(Down|Up)
