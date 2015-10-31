@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 4dbbec2c621fe364f93681c495d5913b
-timeCreated: 1443160873
+timeCreated: 1444153585
 licenseType: Free
 SubstanceImporter:
   serializedVersion: 5
@@ -161,7 +161,7 @@ SubstanceImporter:
             name: _BumpMap
           second:
             texture: {instanceID: 0}
-            scale: {x: 50, y: 5}
+            scale: {x: 50, y: 50}
             offset: {x: 0, y: 0}
         data:
           first:
@@ -175,7 +175,7 @@ SubstanceImporter:
             name: _ParallaxMap
           second:
             texture: {instanceID: 0}
-            scale: {x: 50, y: 5}
+            scale: {x: 50, y: 50}
             offset: {x: 0, y: 0}
         data:
           first:
@@ -210,7 +210,7 @@ SubstanceImporter:
             name: _SpecGlossMap
           second:
             texture: {instanceID: 0}
-            scale: {x: 50, y: 5}
+            scale: {x: 50, y: 50}
             offset: {x: 0, y: 0}
       floats:
         data:
@@ -228,7 +228,7 @@ SubstanceImporter:
         data:
           first:
             name: _Parallax
-          second: .0199999996
+          second: .0658000037
         data:
           first:
             name: _ZWrite

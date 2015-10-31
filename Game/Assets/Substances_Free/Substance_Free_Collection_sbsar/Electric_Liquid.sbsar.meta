@@ -1,14 +1,16 @@
 fileFormatVersion: 2
 guid: 1e3bfaa4c8080a84ab11b92c542c021d
+timeCreated: 1445653981
+licenseType: Free
 SubstanceImporter:
   serializedVersion: 5
   materialInstances:
   - serializedVersion: 16
     name: Electric_Liquid
     prototypeName: Electric_Liquid
-    shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
+    shader: {fileID: 101, guid: 0000000000000000f000000000000000, type: 0}
     shaderKeywords: 
-    renderQueue: -1
+    renderQueue: 3000
     lightmapFlags: 5
     inputs:
     - name: $time
@@ -101,69 +103,13 @@ SubstanceImporter:
       scale: {x: 1, y: 1}
       generateMipmaps: 1
       generateAllOutputs: 0
-      animationUpdateRate: 0
+      animationUpdateRate: 42
     materialProperties:
       serializedVersion: 2
       texEnvs:
         data:
           first:
             name: _MainTex
-          second:
-            texture: {instanceID: 0}
-            scale: {x: 1, y: 1}
-            offset: {x: 0, y: 0}
-        data:
-          first:
-            name: _BumpMap
-          second:
-            texture: {instanceID: 0}
-            scale: {x: 1, y: 1}
-            offset: {x: 0, y: 0}
-        data:
-          first:
-            name: _DetailNormalMap
-          second:
-            texture: {instanceID: 0}
-            scale: {x: 1, y: 1}
-            offset: {x: 0, y: 0}
-        data:
-          first:
-            name: _MetallicGlossMap
-          second:
-            texture: {instanceID: 0}
-            scale: {x: 1, y: 1}
-            offset: {x: 0, y: 0}
-        data:
-          first:
-            name: _ParallaxMap
-          second:
-            texture: {instanceID: 0}
-            scale: {x: 1, y: 1}
-            offset: {x: 0, y: 0}
-        data:
-          first:
-            name: _OcclusionMap
-          second:
-            texture: {instanceID: 0}
-            scale: {x: 1, y: 1}
-            offset: {x: 0, y: 0}
-        data:
-          first:
-            name: _EmissionMap
-          second:
-            texture: {instanceID: 0}
-            scale: {x: 1, y: 1}
-            offset: {x: 0, y: 0}
-        data:
-          first:
-            name: _DetailMask
-          second:
-            texture: {instanceID: 0}
-            scale: {x: 1, y: 1}
-            offset: {x: 0, y: 0}
-        data:
-          first:
-            name: _DetailAlbedoMap
           second:
             texture: {instanceID: 0}
             scale: {x: 1, y: 1}
@@ -183,6 +129,10 @@ SubstanceImporter:
           second: .5
         data:
           first:
+            name: _Parallax
+          second: .0199999996
+        data:
+          first:
             name: _ZWrite
           second: 1
         data:
@@ -191,16 +141,8 @@ SubstanceImporter:
           second: .5
         data:
           first:
-            name: _Metallic
-          second: 0
-        data:
-          first:
             name: _BumpScale
           second: 1
-        data:
-          first:
-            name: _Parallax
-          second: .0199999996
         data:
           first:
             name: _OcclusionStrength
@@ -216,6 +158,10 @@ SubstanceImporter:
         data:
           first:
             name: _Mode
+          second: 0
+        data:
+          first:
+            name: _Metallic
           second: 0
       colors:
         data:
@@ -235,10 +181,6 @@ SubstanceImporter:
     textureAssignments:
     - shaderProp:
         name: _MainTex
-      material: {instanceID: 0}
-      baseUID: 749476946
-    - shaderProp:
-        name: _EmissionMap
       material: {instanceID: 0}
       baseUID: 749476946
     buildTargetSettings:
