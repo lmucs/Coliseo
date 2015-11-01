@@ -41,7 +41,7 @@ public class ControllerWin : Controller {
     ///<summary>
     /// Returns true if a controller is connected.
     ///</summary>
-    public override bool IsConnected()  // IsConnected from state is unreliable.
+    public override bool IsConnected()  // IsConnected from state is unreliable for the time being.
     {
         return !(Input.GetJoystickNames().Length == 0 || string.IsNullOrEmpty(Input.GetJoystickNames()[0]));
     }
@@ -52,9 +52,9 @@ public class ControllerWin : Controller {
     public override bool GetTrigger(uint trigger)
     {
         switch(trigger) {
-            case Controller.LEFT_TRIGGER:
+            case Controller.LeftTrigger:
                 return state.Triggers.Left == 1;
-            case Controller.RIGHT_TRIGGER:
+            case Controller.RightTrigger:
                 return state.Triggers.Right == 1;
             default:
                 throw new ArgumentException("That is not a valid trigger");
@@ -68,9 +68,9 @@ public class ControllerWin : Controller {
     {
         switch (trigger)
         {
-            case Controller.LEFT_TRIGGER:
+            case Controller.LeftTrigger:
                 return state.Triggers.Left == 1 && state.Triggers.Left != prevState.Triggers.Left;
-            case Controller.RIGHT_TRIGGER:
+            case Controller.RightTrigger:
                 return state.Triggers.Right == 1 && state.Triggers.Right != prevState.Triggers.Right;
             default:
                 throw new ArgumentException("That is not a valid trigger");
@@ -84,9 +84,9 @@ public class ControllerWin : Controller {
     {
         switch (trigger)
         {
-            case Controller.LEFT_TRIGGER:
+            case Controller.LeftTrigger:
                 return state.Triggers.Left == 0 && state.Triggers.Left != prevState.Triggers.Left;
-            case Controller.RIGHT_TRIGGER:
+            case Controller.RightTrigger:
                 return state.Triggers.Right == 0 && state.Triggers.Right != prevState.Triggers.Right;
             default:
                 throw new ArgumentException("That is not a valid trigger");
@@ -100,9 +100,9 @@ public class ControllerWin : Controller {
     {
         switch (stick)
         {
-            case Controller.LEFT_STICK:
+            case Controller.LeftStick:
                 return new Vector2(state.ThumbSticks.Left.X, state.ThumbSticks.Left.Y);
-            case Controller.RIGHT_STICK:
+            case Controller.RightStick:
                 return new Vector2(state.ThumbSticks.Right.X, -state.ThumbSticks.Right.Y);
             default:
                 throw new ArgumentException("That is not a valid stick");
@@ -116,26 +116,22 @@ public class ControllerWin : Controller {
     {
         switch (button)
         {
-            case Controller.BUTTON_A:
+            case Controller.A:
                 return state.Buttons.A == ButtonState.Pressed;
-            case Controller.BUTTON_B:
+            case Controller.B:
                 return state.Buttons.B == ButtonState.Pressed;
-            case Controller.BUTTON_Y:
+            case Controller.Y:
                 return state.Buttons.Y == ButtonState.Pressed;
-            case Controller.BUTTON_X:
+            case Controller.X:
                 return state.Buttons.X == ButtonState.Pressed;
-            case Controller.BUTTON_START:
+            case Controller.Start:
                 return state.Buttons.Start == ButtonState.Pressed;
-            case Controller.BUTTON_BACK:
+            case Controller.Back:
                 return state.Buttons.Back == ButtonState.Pressed;
-            case Controller.BUTTON_LEFT_STICK:
+            case Controller.LeftStickHat:
                 return state.Buttons.LeftStick == ButtonState.Pressed;
-            case Controller.BUTTON_RIGHT_STICK:
+            case Controller.RightStickHat:
                 return state.Buttons.RightStick == ButtonState.Pressed;
-            case Controller.BUTTON_LEFT_SHOULDER:
-                return state.Buttons.LeftShoulder == ButtonState.Pressed;
-            case Controller.BUTTON_RIGHT_SHOULDER:
-                return state.Buttons.RightShoulder == ButtonState.Pressed;
             default:
                 throw new ArgumentException("That is not a valid button");
         }
@@ -147,26 +143,22 @@ public class ControllerWin : Controller {
     {
         switch (button)
         {
-            case Controller.BUTTON_A:
+            case Controller.A:
                 return state.Buttons.A == ButtonState.Pressed && prevState.Buttons.A == ButtonState.Released;
-            case Controller.BUTTON_B:
+            case Controller.B:
                 return state.Buttons.B == ButtonState.Pressed && prevState.Buttons.B == ButtonState.Released;
-            case Controller.BUTTON_Y:
+            case Controller.Y:
                 return state.Buttons.Y == ButtonState.Pressed && prevState.Buttons.Y == ButtonState.Released;
-            case Controller.BUTTON_X:
+            case Controller.X:
                 return state.Buttons.X == ButtonState.Pressed && prevState.Buttons.X == ButtonState.Released;
-            case Controller.BUTTON_START:
+            case Controller.Start:
                 return state.Buttons.Start == ButtonState.Pressed && prevState.Buttons.Start == ButtonState.Released;
-            case Controller.BUTTON_BACK:
+            case Controller.Back:
                 return state.Buttons.Back == ButtonState.Pressed && prevState.Buttons.Back == ButtonState.Released;
-            case Controller.BUTTON_LEFT_STICK:
+            case Controller.LeftStickHat:
                 return state.Buttons.LeftStick == ButtonState.Pressed && prevState.Buttons.LeftStick == ButtonState.Released;
-            case Controller.BUTTON_RIGHT_STICK:
+            case Controller.RightStickHat:
                 return state.Buttons.RightStick == ButtonState.Pressed && prevState.Buttons.RightStick == ButtonState.Released;
-            case Controller.BUTTON_LEFT_SHOULDER:
-                return state.Buttons.LeftShoulder == ButtonState.Pressed && prevState.Buttons.LeftShoulder == ButtonState.Released;
-            case Controller.BUTTON_RIGHT_SHOULDER:
-                return state.Buttons.RightShoulder == ButtonState.Pressed && prevState.Buttons.RightShoulder == ButtonState.Released;
             default:
                 throw new ArgumentException("That is not a valid button");
         }
@@ -179,26 +171,22 @@ public class ControllerWin : Controller {
     {
         switch (button)
         {
-            case Controller.BUTTON_A:
+            case Controller.A:
                 return state.Buttons.A == ButtonState.Released && prevState.Buttons.A == ButtonState.Pressed;
-            case Controller.BUTTON_B:
+            case Controller.B:
                 return state.Buttons.B == ButtonState.Released && prevState.Buttons.B == ButtonState.Pressed;
-            case Controller.BUTTON_Y:
+            case Controller.Y:
                 return state.Buttons.Y == ButtonState.Released && prevState.Buttons.Y == ButtonState.Pressed;
-            case Controller.BUTTON_X:
+            case Controller.X:
                 return state.Buttons.X == ButtonState.Released && prevState.Buttons.X == ButtonState.Pressed;
-            case Controller.BUTTON_START:
+            case Controller.Start:
                 return state.Buttons.Start == ButtonState.Released && prevState.Buttons.Start == ButtonState.Pressed;
-            case Controller.BUTTON_BACK:
+            case Controller.Back:
                 return state.Buttons.Back == ButtonState.Released && prevState.Buttons.Back == ButtonState.Pressed;
-            case Controller.BUTTON_LEFT_STICK:
+            case Controller.LeftStickHat:
                 return state.Buttons.LeftStick == ButtonState.Released && prevState.Buttons.LeftStick == ButtonState.Pressed;
-            case Controller.BUTTON_RIGHT_STICK:
+            case Controller.RightStickHat:
                 return state.Buttons.RightStick == ButtonState.Released && prevState.Buttons.RightStick == ButtonState.Pressed;
-            case Controller.BUTTON_LEFT_SHOULDER:
-                return state.Buttons.LeftShoulder == ButtonState.Released && prevState.Buttons.LeftShoulder == ButtonState.Pressed;
-            case Controller.BUTTON_RIGHT_SHOULDER:
-                return state.Buttons.RightShoulder == ButtonState.Released && prevState.Buttons.RightShoulder == ButtonState.Pressed;
             default:
                 throw new ArgumentException("That is not a valid button");
         }
@@ -211,9 +199,9 @@ public class ControllerWin : Controller {
     {
         switch (bumper)
         {
-            case Controller.LEFT_BUMPER:
+            case Controller.LeftBumper:
                 return state.Buttons.LeftShoulder == ButtonState.Pressed;
-            case Controller.RIGHT_BUMPER:
+            case Controller.RightBumper:
                 return state.Buttons.RightShoulder == ButtonState.Pressed;
             default:
                 throw new ArgumentException("That is not a valid bumper");
@@ -227,9 +215,9 @@ public class ControllerWin : Controller {
     {
         switch (bumper)
         {
-            case Controller.LEFT_BUMPER:
+            case Controller.LeftBumper:
                 return state.Buttons.LeftShoulder == ButtonState.Pressed && prevState.Buttons.LeftShoulder == ButtonState.Released;
-            case Controller.RIGHT_BUMPER:
+            case Controller.RightBumper:
                 return state.Buttons.RightShoulder == ButtonState.Pressed && prevState.Buttons.RightShoulder == ButtonState.Released;
             default:
                 throw new ArgumentException("That is not a valid bumper");
@@ -243,9 +231,9 @@ public class ControllerWin : Controller {
     {
         switch (bumper)
         {
-            case Controller.LEFT_BUMPER:
+            case Controller.LeftBumper:
                 return state.Buttons.LeftShoulder == ButtonState.Released && prevState.Buttons.LeftShoulder == ButtonState.Pressed;
-            case Controller.RIGHT_BUMPER:
+            case Controller.RightBumper:
                 return state.Buttons.RightShoulder == ButtonState.Released && prevState.Buttons.RightShoulder == ButtonState.Pressed;
             default:
                 throw new ArgumentException("That is not a valid bumper");
@@ -259,13 +247,13 @@ public class ControllerWin : Controller {
     {
         switch (direction)
         {
-            case Controller.DPAD_UP:
+            case Controller.DPadUp:
                 return state.DPad.Up == ButtonState.Pressed;
-            case Controller.DPAD_DOWN:
+            case Controller.DPadDown:
                 return state.DPad.Down == ButtonState.Pressed;
-            case Controller.DPAD_LEFT:
+            case Controller.DPadLeft:
                 return state.DPad.Left == ButtonState.Pressed;
-            case Controller.DPAD_RIGHT:
+            case Controller.DPadRight:
                 return state.DPad.Right == ButtonState.Pressed;
             default:
                 throw new ArgumentException("That is not a valid direction");
@@ -279,13 +267,13 @@ public class ControllerWin : Controller {
     {
         switch (direction)
         {
-            case Controller.DPAD_UP:
+            case Controller.DPadUp:
                 return state.DPad.Up == ButtonState.Pressed && prevState.DPad.Up == ButtonState.Released;
-            case Controller.DPAD_DOWN:
+            case Controller.DPadDown:
                 return state.DPad.Down == ButtonState.Pressed && prevState.DPad.Down == ButtonState.Released;
-            case Controller.DPAD_LEFT:
+            case Controller.DPadLeft:
                 return state.DPad.Left == ButtonState.Pressed && prevState.DPad.Left == ButtonState.Released;
-            case Controller.DPAD_RIGHT:
+            case Controller.DPadRight:
                 return state.DPad.Right == ButtonState.Pressed && prevState.DPad.Right == ButtonState.Released;
             default:
                 throw new ArgumentException("That is not a valid direction");
@@ -299,13 +287,13 @@ public class ControllerWin : Controller {
     {
         switch (direction)
         {
-            case Controller.DPAD_UP:
+            case Controller.DPadUp:
                 return state.DPad.Up == ButtonState.Released && prevState.DPad.Up == ButtonState.Pressed;
-            case Controller.DPAD_DOWN:
+            case Controller.DPadDown:
                 return state.DPad.Down == ButtonState.Released && prevState.DPad.Down == ButtonState.Pressed;
-            case Controller.DPAD_LEFT:
+            case Controller.DPadLeft:
                 return state.DPad.Left == ButtonState.Released && prevState.DPad.Left == ButtonState.Pressed;
-            case Controller.DPAD_RIGHT:
+            case Controller.DPadRight:
                 return state.DPad.Right == ButtonState.Released && prevState.DPad.Right == ButtonState.Pressed;
             default:
                 throw new ArgumentException("That is not a valid direction");
@@ -319,10 +307,10 @@ public class ControllerWin : Controller {
     {
         switch (motor)
         {
-            case Controller.LIGHT_MOTOR:
+            case Controller.LightMotor:
                 lightMotor = intensity;
                 break;
-            case Controller.HEAVY_MOTOR:
+            case Controller.HeavyMotor:
                 heavyMotor = intensity;
                 break;
             default:

@@ -2,29 +2,29 @@
 using System.Collections;
 
 public abstract class Controller {
+    // I feel like these would have been better off as an enum, but I  don't know
+    // what to name it. That, and it really should belong to Controller anyways.
     public const uint
-                    RIGHT_TRIGGER = 0,
-                    LEFT_TRIGGER = 1,
-                    LEFT_STICK = 2,
-                    RIGHT_STICK = 3,
-                    BUTTON_A = 4,
-                    BUTTON_B = 5,
-                    BUTTON_Y = 6,
-                    BUTTON_X = 7,
-                    RIGHT_BUMPER = 8,
-                    LEFT_BUMPER = 9,
-                    DPAD_LEFT = 10,
-                    DPAD_RIGHT = 11,
-                    DPAD_UP = 12,
-                    DPAD_DOWN = 13,
-                    BUTTON_START = 14,
-                    BUTTON_BACK = 15,
-                    LIGHT_MOTOR = 16,
-                    HEAVY_MOTOR = 17,
-                    BUTTON_LEFT_STICK = 18,
-                    BUTTON_RIGHT_STICK = 19,
-                    BUTTON_LEFT_SHOULDER = 20,
-                    BUTTON_RIGHT_SHOULDER = 21;
+                    RightTrigger = 0,
+                    LeftTrigger = 1,
+                    LeftStick = 2,
+                    RightStick = 3,
+                    A = 4,
+                    B = 5,
+                    Y = 6,
+                    X = 7,
+                    RightBumper = 8,
+                    LeftBumper = 9,
+                    DPadLeft = 10,
+                    DPadRight = 11,
+                    DPadUp = 12,
+                    DPadDown = 13,
+                    Start = 14,  // The right one
+                    Back = 15,  // The left one
+                    LightMotor = 16,
+                    HeavyMotor = 17,
+                    LeftStickHat = 18, // AKA "clicking" a thumb stick
+                    RightStickHat = 19;
 
     ///<summary>
     /// Must be called each frame to ensure accurate reading of *(Down|Up)

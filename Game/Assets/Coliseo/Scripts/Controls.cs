@@ -32,8 +32,8 @@ namespace Coliseo
         {
             cont.FixedUpdate();
 
-            Vector2 leftStick = cont.GetStick(Controller.LEFT_STICK);
-            Vector2 rightStick = cont.GetStick(Controller.RIGHT_STICK);
+            Vector2 leftStick = cont.GetStick(Controller.LeftStick);
+            Vector2 rightStick = cont.GetStick(Controller.RightStick);
 
             float translationX =  leftStick.x * joystickMoveSensitivity;
             float translationZ = leftStick.y * joystickMoveSensitivity;
@@ -63,21 +63,21 @@ namespace Coliseo
                 rotationY = v;
             }
             
-            if(cont.GetButton(Controller.BUTTON_A) || Input.GetKey(KeyCode.Space))
+            if(cont.GetButton(Controller.A) || Input.GetKey(KeyCode.Space))
             {
                 p.jump();
             }
             
             p.animate(translationX, translationZ, rotationX, rotationY);
 
-            p.block(cont.GetTrigger(Controller.LEFT_TRIGGER) || Input.GetMouseButton(1));
+            p.block(cont.GetTrigger(Controller.LeftTrigger) || Input.GetMouseButton(1));
             
-            if ((cont.GetTriggerDown(Controller.RIGHT_TRIGGER) || Input.GetMouseButtonDown(0) ))
+            if ((cont.GetTriggerDown(Controller.RightTrigger) || Input.GetMouseButtonDown(0) ))
             {
                 p.attack();
             }
 
-            if (cont.GetButtonDown(Controller.BUTTON_B) || Input.GetKeyDown(KeyCode.F))
+            if (cont.GetButtonDown(Controller.B) || Input.GetKeyDown(KeyCode.F))
             {
                 p.ToggleBeam();
             }
