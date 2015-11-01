@@ -103,7 +103,7 @@ public class ControllerWin : Controller {
             case Controller.LeftStick:
                 return new Vector2(state.ThumbSticks.Left.X, state.ThumbSticks.Left.Y);
             case Controller.RightStick:
-                return new Vector2(state.ThumbSticks.Right.X, -state.ThumbSticks.Right.Y);
+                return new Vector2(state.ThumbSticks.Right.X, state.ThumbSticks.Right.Y);
             default:
                 throw new ArgumentException("That is not a valid stick");
         }

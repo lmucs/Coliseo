@@ -98,7 +98,7 @@ namespace Coliseo
             
             if (!VRCenter.VREnabled)
             {
-                cameraRotX = Mathf.Clamp(cameraRotX + y, -90, 90);
+                cameraRotX = Mathf.Clamp(cameraRotX - y, -90, 90);
                 cameraTransform.localEulerAngles = new Vector3(cameraRotX, 0, 0);
             }
             

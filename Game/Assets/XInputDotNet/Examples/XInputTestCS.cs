@@ -8,7 +8,7 @@ public class XInputTestCS : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        cont = Controller.isWindows() ? (Controller)new ControllerWin() : (Controller)new ControllerLinOSX();
+        cont = Controller.isWindows() ? (Controller) new ControllerWin() : (Controller) new ControllerLinOSX();
     }
 
     // Update is called once per frame
@@ -27,8 +27,7 @@ public class XInputTestCS : MonoBehaviour
 
     void OnGUI()
     {
-        string text = "Use left stick to turn the cube, hold A to change color\n";
-        text += string.Format("IsConnected {0}\n", cont.IsConnected());
+        string text = string.Format("IsConnected {0}\n", cont.IsConnected());
         text += string.Format("\tTriggers {0} {1}\n", cont.GetTrigger(Controller.LeftTrigger), cont.GetTrigger(Controller.RightTrigger));
         text += string.Format("\tD-Pad {0} {1} {2} {3}\n", cont.GetDPad(Controller.DPadUp), cont.GetDPad(Controller.DPadRight), cont.GetDPad(Controller.DPadDown), cont.GetDPad(Controller.DPadLeft));
         text += string.Format("\tButtons Start {0} Back {1}\n", cont.GetButton(Controller.Start), cont.GetButton(Controller.Back));

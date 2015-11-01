@@ -13,11 +13,11 @@ namespace Coliseo
         public Controls (Player player)
         {
             p = player;
-            cont = Controller.isWindows() ? (Controller) new ControllerWin() : (Controller) new ControllerLinOSX();
+            cont = Controller.isWindows() ? (Controller) new ControllerWin() :(Controller) new ControllerLinOSX();
         }
 
         public float joystickMoveSensitivity = 1f;
-        
+
         // Controller sensitivity
         public float joystickRotationSpeedHoriz = 100.0F;
         
@@ -40,7 +40,7 @@ namespace Coliseo
             
             float rotationX = rightStick.x * joystickRotationSpeedHoriz;
             float rotationY = rightStick.y * joystickRotationSpeedVert;
-            
+
             float h = joystickRotationSpeedHoriz * Input.GetAxis("Mouse X") * mouseHorizontalSensitivity;
             float v = joystickRotationSpeedVert * Input.GetAxis("Mouse Y");
 
