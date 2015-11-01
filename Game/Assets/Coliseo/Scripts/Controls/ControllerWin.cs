@@ -43,7 +43,21 @@ public class ControllerWin : Controller {
     ///</summary>
     public override bool IsConnected()  // IsConnected from state is unreliable for the time being.
     {
-        return !(Input.GetJoystickNames().Length == 0 || string.IsNullOrEmpty(Input.GetJoystickNames()[0]));
+        string[] names = Input.GetJoystickNames();
+        if (names.Length == 0)
+        {
+            return false;
+        }
+
+        for(int i = 0; i < Input.GetJoystickNames().Length; i++)
+        {
+            if(!string.IsNullOrEmpty(Input.GetJoystickNames()[i]))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     ///<summary>
