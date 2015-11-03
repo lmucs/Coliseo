@@ -40,6 +40,11 @@ namespace Coliseo
             checkBeamToggle();
         }
 
+        public void setVibration(uint motor, float intensity)
+        {
+            cont.vibrate(motor, intensity);
+        }
+
         private Vector2 checkMove()
         {
             Vector2 movement = new Vector2();
