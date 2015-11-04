@@ -137,11 +137,10 @@ namespace Coliseo
             if (IsValidAttack(actor))
             {
                 actor.attacking = false;
-                if (blocking)
+                if (!blocking)
                 {
-                    return;
+                    TakeDamage(attackStrength);
                 }
-                TakeDamage(attackStrength);
             }
         }
     }
