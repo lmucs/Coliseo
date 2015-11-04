@@ -146,13 +146,22 @@ namespace Coliseo
 
         public void block(bool blocking)
         {
-            if(blocking)
+            // Most of the conditions in this method belong in animation transitions 
+            // but the animation controller is about to be changed anyways...
+            if (blocking)
             {
-                anim.SetTrigger("BeginBlock");
+                if (!anim.GetCurrentAnimatorStateInfo(0).IsTag("swordswing"))
+                {
+                    anim.SetTrigger("BeginBlock");
+                } else
+                {
+                    anim.ResetTrigger("BeginBlock");
+                    anim.SetBool("Blocking", false);
+                }
             } else
             {
                 anim.SetBool("Blocking", false);
-                saberCont.blocking = false;
+                //saberCont.blocking = false;
             }
         }
 
