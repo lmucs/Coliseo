@@ -8,7 +8,7 @@ namespace Coliseo
         protected const uint MAX_HEALTH = 100;
         protected const uint attackStrength = 30;
         public const float moveSpeed = 6f;
-        public const float jumpStrength = 50.0f;
+        public const float jumpStrength = 300.0f;
 
         protected uint _health;
 

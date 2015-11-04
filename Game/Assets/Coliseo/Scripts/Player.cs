@@ -10,7 +10,6 @@ namespace Coliseo
     {
 
         private static GameObject player;
-        private float distToGround;
 
         private Controls controls;
         
@@ -32,7 +31,6 @@ namespace Coliseo
             }
             player = gameObject;
             saberCont.isPlayerSword = true;
-            distToGround = GetComponent<Collider>().bounds.extents.y;
             cameraTransform = anim.GetBoneTransform(HumanBodyBones.Head).Find("CameraRig/Camera");
             cameraRotX = cameraTransform.localEulerAngles.x;
             controls = new Controls(this);
@@ -69,7 +67,7 @@ namespace Coliseo
         public bool grounded
         {
             // FIXME: There's a better way to do this involving colliders I think
-            get { return Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.1F); }
+            get { return Physics.Raycast(transform.position, -Vector3.up, 0.01F); }
         }
 
         public static Vector3 position
