@@ -10,39 +10,6 @@ namespace Coliseo
 
         public Collider attackCollider;
         public Collider blockCollider;
-
-        private bool _attacking = false;
-        private bool _blocking = false;
-
-        public bool attacking
-        {
-            get { return _attacking; }
-            set
-            {
-                _attacking = value;
-                if (attacking)
-                {
-                    attackCollider.enabled = true;
-                    blockCollider.enabled = false;
-                }
-            }
-        }
-
-        public bool blocking
-        {
-            get { return _blocking; }
-            set
-            {
-                _blocking = value;
-                if (blocking)
-                {
-                    attackCollider.enabled = false;
-                    blockCollider.enabled = true;
-                }
-            }
-        }
-
-        public bool isPlayerSword;
         
         void Awake()
         {

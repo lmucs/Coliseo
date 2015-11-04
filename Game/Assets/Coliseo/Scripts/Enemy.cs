@@ -13,7 +13,7 @@ namespace Coliseo
         
         void Start()
         {
-            saberCont.isPlayerSword = false;
+            // Nuthin.
         }
 
         // Update is called once per frame

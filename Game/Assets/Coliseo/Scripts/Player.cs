@@ -30,7 +30,6 @@ namespace Coliseo
                 VRCenter.Setup();
             }
             player = gameObject;
-            saberCont.isPlayerSword = true;
             cameraTransform = anim.GetBoneTransform(HumanBodyBones.Head).Find("CameraRig/Camera");
             cameraRotX = cameraTransform.localEulerAngles.x;
             controls = new Controls(this);
@@ -161,7 +160,6 @@ namespace Coliseo
             } else
             {
                 anim.SetBool("Blocking", false);
-                //saberCont.blocking = false;
             }
         }
 

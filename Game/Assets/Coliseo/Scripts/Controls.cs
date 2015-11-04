@@ -83,7 +83,7 @@ namespace Coliseo
         // Temporarily in use.
         private bool checkAttackBegin()
         {
-            bool initAttack = (cont.GetTriggerDown(Controller.RightTrigger) || Input.GetMouseButtonDown(0));
+            bool initAttack = cont.GetTriggerDown(Controller.RightTrigger) || Input.GetMouseButtonDown(0);
             if(initAttack) { p.attack(); }
             return initAttack;
         }

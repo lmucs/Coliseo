@@ -19,6 +19,38 @@ namespace Coliseo
         protected Rigidbody rb;
         protected GameObject saber;
 
+        private bool _attacking = false;
+        private bool _blocking = false;
+
+        public bool attacking
+        {
+            get { return _attacking; }
+            set
+            {
+                _attacking = value;
+                if (attacking)
+                {
+                    saberCont.attackCollider.enabled = true; // These really belong in the animator, but whatever for now.
+                    saberCont.blockCollider.enabled = false;
+                }
+            }
+        }
+
+        public bool blocking
+        {
+            get { return _blocking; }
+            set
+            {
+                _blocking = value;
+                if (blocking)
+                {
+                    saberCont.attackCollider.enabled = false;
+                    saberCont.blockCollider.enabled = true;
+                }
+            }
+        }
+
+
         public uint health
         {
             get { return _health; }
@@ -75,37 +107,37 @@ namespace Coliseo
 
         void initiateAttack()
         {
-            saberCont.attacking = true;
+            attacking = true;
         }
 
         void finishAttack()
         {
-            saberCont.attacking = false;
+            attacking = false;
         }
 
         void initiateBlock()
         {
-            saberCont.blocking = true;
+            blocking = true;
         }
 
-        bool IsOpponent(SaberController cont)
+        bool IsOpponent(Actor other)
         {
-            return saberCont.isPlayerSword != cont.isPlayerSword;
+            return this.GetType() != other.GetType();
         }
 
-        bool IsValidAttack(SaberController cont)
+        bool IsValidAttack(Actor other)
         {
-            return cont && IsOpponent(cont) && cont.attacking;
+            return other && IsOpponent(other) && other.attacking;
         }
 
         // I know this isn't as pretty as it probably could be.
         void OnTriggerEnter(Collider other)
         {
-            SaberController cont = other.GetComponentInParent<SaberController>();
-            if (IsValidAttack(cont))
+            Actor actor = other.transform.root.GetComponent<Actor>();
+            if (IsValidAttack(actor))
             {
-                cont.attacking = false;
-                if (saberCont.blocking)
+                actor.attacking = false;
+                if (blocking)
                 {
                     return;
                 }
