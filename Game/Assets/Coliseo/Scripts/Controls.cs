@@ -37,6 +37,8 @@ namespace Coliseo
             checkJump();
             checkBlock();
             checkAttackBegin();
+            checkAttackHold();
+            checkAttackRelease();
             checkBeamToggle();
         }
 
@@ -83,21 +85,25 @@ namespace Coliseo
         // Temporarily in use.
         private bool checkAttackBegin()
         {
-            bool initAttack = cont.GetTriggerDown(Controller.RightTrigger) || Input.GetMouseButtonDown(0);
-            if(initAttack) { p.attack(); }
+            bool initAttack = cont.GetTriggerDown(Controller.RightTrigger) || Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.T);
+            if(initAttack) { p.raiseWeapon(); }
             return initAttack;
         }
 
         // For near-future use.
         private bool checkAttackHold()
         {
-            throw new NotSupportedException();
+            bool holdAttack = cont.GetTrigger(Controller.RightTrigger) || Input.GetMouseButton(0) || Input.GetKey(KeyCode.T);
+            /*if (holdAttack) { */p.holdWeapon(holdAttack);// }
+            return holdAttack;
         }
 
         // For near-future use.
         private bool checkAttackRelease()
         {
-            throw new NotSupportedException();
+            bool finishAttack = cont.GetTriggerUp(Controller.RightTrigger) || Input.GetMouseButtonUp(0) || Input.GetKeyUp(KeyCode.T);
+            if (finishAttack) { p.swingWeapon(); }
+            return finishAttack;
         }
 
         private bool checkBeamToggle()
