@@ -11,6 +11,6 @@ const locals = {
   regUserError: 'The username was not valid or was already taken',
   regPasswordError: 'The password was not long enough',
   regConfirmError: 'The two passwords did not match',
+  loginError: 'Either the username or the password were invalid',
 };
-const setLocals = app => _.assign(app.locals, locals);
-export default setLocals;
+export default app => _.assign(app.locals, locals);

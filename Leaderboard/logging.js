@@ -2,16 +2,16 @@ import config from 'config';
 import winston from 'winston';
 import expressWinston from 'express-winston';
 
-const winstonConfig = config.get('Logger');
+let winstonConfig;// = config.get('Logger');
 const loggerConfig = {
   transports: [
     new winston.transports.Console(winstonConfig),
   ],
   statusLevels: true,
-  level: winstonConfig.transport.level,
+  // level: winstonConfig.transport.level,
   expressFormat: true,
   meta: false,
-  handleExceptions: true,
+  handleExceptions: false,
   humanReadableUnhandledExceptions: true,
   prettyPrint: true,
   colorize: true,
@@ -31,6 +31,15 @@ Object.defineProperty(logger, 'exception', {
   },
 });
 
-export const errorLogger = expressWinston.errorLogger(loggerConfig);
+// export const errorLogger = expressWinston.errorLogger(loggerConfig);
+export const errorLogger = expressWinston.errorLogger({
+  transports: [
+    new winston.transports.Console({
+      json: false,
+      colorize: true,
+      prettyPrint: true,
+    }),
+  ],
+});
 export const requestLogger = expressWinston.logger(loggerConfig);
 export default logger;

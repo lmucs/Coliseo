@@ -1,19 +1,10 @@
 import express from 'express';
 import _ from 'lodash';
-import crypto from 'crypto';
-import config from 'config';
 
 import log from '../logging';
 import {User} from '../database';
 import {asyncWrap} from '../helper';
-
-const {
-  saltLength,
-  iterationsBase,
-  iterationsMax,
-  hashLength,
-  encoding
-} = config.get('Crypto');
+import {calculateHash, calculateSaltHash} from '../cryptography';
 
 const router = express.Router();
 const patterns = {
@@ -24,23 +15,13 @@ const usernameRegex = new RegExp(patterns.usernamePattern);
 const passwordRegex = new RegExp(patterns.passwordPattern);
 
 /* Utility Functions */
+
 const setErrors = (user, password, confirm, email) => ({
   isUserError: user,
   isPasswordError: password,
   isConfirmError: confirm,
   isEmailError: email,
 });
-
-const calculateSaltHash = password => {
-  log.profile('Hash calculation');
-  const iterations = _.random(iterationsBase, iterationsMax);
-  const salt = crypto.randomBytes(saltLength)
-                     .toString(encoding);
-  const hash = crypto.pbkdf2Sync(password, salt, iterations, hashLength)
-                     .toString(encoding);
-  log.profile('Hash calculation');
-  return `${iterations}$${salt}$${hash}`;
-};
 
 /* Handlers */
 
@@ -84,7 +65,7 @@ const handleRegistration = async (req, res, next) => {
       return handleRegistrationError(errors, req, res, next);
     }
 
-    res.redirect('email-verify');
+    return res.redirect('email-verify');
   }
 };
 
@@ -99,11 +80,35 @@ router
       // MDL will do client side verification of the input fields as long as we
       // give them the pattern - this way we can ensure client and server validation
       // are identical.
-      res.render('register', patterns);
+      return res.render('register', patterns);
     }).post(asyncWrap(handleRegistration));
 
+const handleLogin = async (req, res, next) => {
+  const userModel = await User.find({username: req.username});
+  let [iterations, salt, hash] = userModel.password.split('$');
+  iterations = parseInt(iterations, 10);
+  if (hash !== calculateHash(req.body.password, salt, iterations)) {
+    return res.status(401).render('login', {isLoginError: true});
+  } else {
+    req.session.regenerate(function(err) {
+      if (err) {
+        return next(err);
+      } else {
+        req.session.user = userModel;
+        req.session.authenticated = true;
+        return res.redirect('/');
+      }
+    });
+  }
+};
+router
+  .route('/login')
+    .get((req, res, next) => {
+      return res.render('login', patterns);
+    }).post(asyncWrap(handleLogin));
+
 router.get('/email-verify', (req, res, next) => {
-  res.render('email-verify');
+  return res.render('email-verify');
 });
 
 export default router;
