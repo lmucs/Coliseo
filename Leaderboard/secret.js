@@ -6,7 +6,7 @@ const {filename, secretLength, encoding} = config.get('Secret');
 let secret;
 
 try {
-  secret = fs.readFileSync(filename);
+  secret = fs.readFileSync(filename, 'utf8');
 } catch (e) {
   secret = crypto.randomBytes(secretLength)
                  .toString(encoding);

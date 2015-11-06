@@ -16,8 +16,8 @@ Logger:
     colorize: true
     json: false
     prettyPrint: true
-    handleExceptions: true
-    humanReadableUnhandledException: true
+    # handleExceptions: true
+    # humanReadableUnhandledException: true
     showLevel: true
 
 Crypto:
