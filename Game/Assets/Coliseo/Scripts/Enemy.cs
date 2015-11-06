@@ -39,12 +39,7 @@ namespace Coliseo
             }
             else
             {
-                //anim.SetTrigger("AttackDownTrigger");
-                if (!anim.GetCurrentAnimatorStateInfo(0).IsTag("swordswing"))
-                {
-                    anim.SetTrigger("BeginAttack");
-                }
-                anim.SetBool("RaiseAttack", !anim.GetBool("RaiseAttack"));
+                anim.SetTrigger("AttackDownTrigger");
             }
             anim.SetFloat("Input Z", moveZ);
             rb.MoveRotation(Quaternion.Euler(new Vector3(0, 180 + AngleToPlayer(), 0)));

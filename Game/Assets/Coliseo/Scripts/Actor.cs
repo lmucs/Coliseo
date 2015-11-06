@@ -30,7 +30,7 @@ namespace Coliseo
                 _attacking = value;
                 if (attacking)
                 {
-                    saberCont.attackCollider.enabled = true;
+                    saberCont.attackCollider.enabled = true; // These really belong in the animator, but whatever for now.
                     saberCont.blockCollider.enabled = false;
                 }
             }

@@ -143,25 +143,6 @@ namespace Coliseo
             }
         }
 
-        public void raiseWeapon()
-        {
-            if (!anim.GetCurrentAnimatorStateInfo(0).IsTag("swordswing"))
-            {
-                anim.SetTrigger("BeginAttack");
-            }
-        }
-
-        public void holdWeapon(bool raised)
-        {
-            anim.SetBool("RaiseAttack", raised);
-        }
-
-        public void swingWeapon()
-        {
-            //anim.SetTrigger("ReleaseAttack");
-            anim.SetBool("RaiseAttack", false);
-        }
-
         public void block(bool blocking)
         {
             // Most of the conditions in this method belong in animation transitions 
