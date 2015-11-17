@@ -170,12 +170,14 @@ namespace Coliseo
 
         public override void die ()
         {
-            gameObject.SetActive(false);
+			GameOverManager.manager.Gameover();
+            //gameObject.SetActive(false);
         }
 
         public void ToggleBeam()
         {
             saberCont.ToggleBeam();
         }
+
     }
 }
