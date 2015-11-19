@@ -1,6 +1,6 @@
-import fs from 'fs';
+import * as fs from 'fs';
 import config from 'config';
-import crypto from 'crypto';
+import * as crypto from 'crypto';
 // TODO: Is this the best way to handle application secrets?
 const {filename, secretLength, encoding} = config.get('Secret');
 let secret;

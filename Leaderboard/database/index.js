@@ -1,7 +1,6 @@
 import Sequelize from 'sequelize';
 import config from 'config';
 import _ from 'lodash';
-import log from '../logging';
 import path from 'path';
 import fs from 'fs';
 
@@ -15,7 +14,7 @@ export const sequelize = new Sequelize(
     define: {
       allowNull: false,
     },
-    logging: log.info,
+    logging: console.log,
   })
 );
 
@@ -25,7 +24,7 @@ export const User = model('user.js');
 
 export default async () => {
   await sequelize.sync(_.merge(dbConfig.syncOptions, {
-    logging: log.info,
+    logging: console.log,
   }));
-  log.info('Database initialized');
+  console.log('Database initialized');
 };

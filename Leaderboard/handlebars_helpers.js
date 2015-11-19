@@ -1,5 +1,5 @@
 import hbs from 'hbs';
-import path from 'path';
+import * as path from 'path';
 
 const blocks = {};
 
