@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import config from 'config';
-import crypto from 'crypto';
+import * as crypto from 'crypto';
 const {
   saltLength,
   iterationsBase,

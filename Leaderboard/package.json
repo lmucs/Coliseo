@@ -13,7 +13,7 @@
     ]
   },
   "scripts": {
-    "start": "DEBUG=Leaderboard nodemon ./bin/www",
+    "start": "DEBUG=Leaderboard nodemon ./bin/www.js",
     "test": "mocha --compilers js:babel/register"
   },
   "dependencies": {

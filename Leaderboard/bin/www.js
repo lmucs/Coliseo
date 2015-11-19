@@ -9,7 +9,6 @@ var debug = require('debug')('Leaderboard:server');
 var http = require('http');
 
 db().then(function() {
-  console.log('hi');
   var app = require('../app');
   /**
    * Get port from environment and store in Express.
