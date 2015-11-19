@@ -23,3 +23,5 @@ export default (sequelize, DataTypes) => sequelize.define('user', {
     defaultValue: false,
   },
 });
+
+// module.exports = exports['default'];

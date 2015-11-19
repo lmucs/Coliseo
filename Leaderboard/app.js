@@ -9,7 +9,6 @@ import routes from './routes';
 import users from './routes/users';
 import leaderboard from './routes/leaderboard';
 import setupLocals from './locals'; // Populate our app with custom locals
-import {errorLogger, requestLogger} from './logging';
 import secret from './secret';
 import setupSession from './session';
 import {User} from './database';
@@ -32,11 +31,9 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser(secret));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(requestLogger);
 app.use('/', routes);
 app.use('/users', users);
 app.use('/leaderboard', leaderboard);
-app.use(errorLogger);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

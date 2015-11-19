@@ -1,7 +1,6 @@
 import express from 'express';
 import _ from 'lodash';
 
-import log from '../logging';
 import {User} from '../database';
 import {asyncWrap} from '../helper';
 import {calculateHash, calculateSaltHash} from '../cryptography';
@@ -39,7 +38,7 @@ const handleRegistration = async (req, res, next) => {
     false // TODO
   );
   if (_.any(errors)) {
-    log.warn('User registration validation failed');
+    console.log('User registration validation failed');
     return handleRegistrationError(errors, req, res, next);
   } else {
     // TODO: make sure that no duplicates exist case insensitively
@@ -54,7 +53,7 @@ const handleRegistration = async (req, res, next) => {
         throw e;
       }
 
-      log.exception('Error inserting user into database', e);
+      console.error('Error inserting user into database', e);
       const errorFields = _.pluck(e.errors, 'path');
       errors = setErrors(
         errorFields.indexOf('username') >= 0,
