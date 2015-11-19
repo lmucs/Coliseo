@@ -1,4 +1,4 @@
-![Coliseo](https://cdn.rawgit.com/lmucs/Coliseo/aj/combat-perfection/logo.svg)
+![Coliseo](https://cdn.rawgit.com/lmucs/Coliseo/master/logo.svg)
 
 An Oculus Rift game built in a semester for CMSI 401 at LMU. Consists of an Unity Game and a Node.js leaderboard server.
 
