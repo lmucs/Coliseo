@@ -3,7 +3,7 @@
 /**
  * Module dependencies.
  */
-require('babel/register');
+require('babel-core/register');
 var db = require('../database').default;
 var debug = require('debug')('Leaderboard:server');
 var http = require('http');
@@ -91,5 +91,6 @@ db().then(function() {
     debug('Listening on ' + bind);
   }
 }).catch(function(e) {
+  console.log(e.stack);
   throw e;
 });
