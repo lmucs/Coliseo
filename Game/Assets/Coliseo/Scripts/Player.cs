@@ -11,7 +11,7 @@ namespace Coliseo
 
         private static GameObject player;
 
-        private Controls controls;
+        public Controls controls;
         
         private Transform cameraTransform;
         private float cameraRotX = 0;
@@ -177,5 +177,7 @@ namespace Coliseo
         {
             saberCont.ToggleBeam();
         }
+
+
     }
 }
