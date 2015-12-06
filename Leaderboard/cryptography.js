@@ -1,8 +1,6 @@
 import _ from 'lodash';
 import config from 'config';
-import crypto from 'crypto';
-
-import log from './logging';
+import * as crypto from 'crypto';
 const {
   saltLength,
   iterationsBase,
@@ -19,9 +17,7 @@ export const calculateSaltHash = password => {
 };
 
 export const calculateHash = (password, salt, iterations) => {
-  log.profile('Hash calculation');
   const hash = crypto.pbkdf2Sync(password, salt, iterations, hashLength)
                      .toString(encoding);
-  log.profile('Hash calculation');
   return hash;
 };

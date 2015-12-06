@@ -7,16 +7,18 @@ import {sequelize as db} from './database';
 import secret from './secret';
 
 const SequelizeStore = connectSessionSequelize(session.Store);
+const store = new SequelizeStore({db,});
+store.sync();
 moment().format();
 
 export default app => {
+
   app.use(session({
     secret,
     resave: false,
     saveUninitialized: false,
-    store: new SequelizeStore({db,}),
+    store,
   }));
-
   app.use((req, res, next) => {
     // Session timeout for inactivity
     const now = moment();
