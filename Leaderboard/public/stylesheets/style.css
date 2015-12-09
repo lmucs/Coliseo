@@ -1,5 +1,50 @@
+/*#view-source {
+  position: fixed;
+  display: block;
+  right: 0;
+  bottom: 0;
+  margin-right: 40px;
+  margin-bottom: 40px;
+  z-index: 900;
+}*/
+
+.customContainer {
+  margin: auto;
+}
+
+.title {
+	text-decoration: none;
+}
+
+.wiki, .freepik, .flaticon, .cc, .logomaker {
+	color: grey;
+}
+
+.mdl-data-table {
+  vertical-align: top;
+  width: 100%;
+}
+
 a {
-  color: #00B7FF;
+  color: #000000 !important;
+}
+
+.logo {
+	height: 50px;
+}
+
+.coliseo{
+	margin-top: 15px;
+	padding: 20px;
+}
+
+a.mdl-navigation__link:hover {
+  color: maroon !important;
+  zoom: 150%;
+}
+
+.mdl-layout-title {
+	border: 2px blurry;
 }
 
 p.form-error {
