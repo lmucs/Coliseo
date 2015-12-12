@@ -17,7 +17,7 @@
 }
 
 .wiki, .freepik, .flaticon, .cc, .logomaker {
-	color: grey;
+	color: #FFF;
 }
 
 .mdl-data-table {
@@ -40,14 +40,58 @@ a {
 
 a.mdl-navigation__link:hover {
   color: maroon !important;
+  zoom: 120%;
+}
+
+.intro{
+  margin: auto;
+	text-align: center;
+}
+
+.user {
+  text-align: center;
+  color: #FFF;
+}
+
+.wrapper {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  zoom: 150%;
+  border: 5px solid;
   zoom: 150%;
 }
 
 .mdl-layout-title {
-	border: 2px blurry;
+	border: 2px;
 }
 
 p.form-error {
   font: 12px "Roboto Regular", sans-serif;
   color: #DD2C00;
+}
+
+.demo-card-event.mdl-card {
+  width: 256px;
+  height: 256px;
+  background: #3E4EB8;
+}
+
+.demo-card-event .mdl-card__actions {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.demo-card-event .mdl-card__actions {
+  display: flex;
+  box-sizing:border-box;
+  align-items: center;
+}
+
+.demo-card-event .mdl-card__title,
+.demo-card-event .mdl-card__actions,
+.demo-card-event .mdl-card__actions .mdl-button {
+  color: #fff;
 }
