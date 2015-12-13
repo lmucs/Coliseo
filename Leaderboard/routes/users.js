@@ -41,10 +41,9 @@ const handleRegistration = async (req, res, next) => {
     console.log('User registration validation failed');
     return handleRegistrationError(errors, req, res, next);
   } else {
-    // TODO: make sure that no duplicates exist case insensitively
     try {
       await User.create({
-        username: username,
+        username: username.toLowerCase(),
         password: calculateSaltHash(password),
         email: email,
       });
@@ -83,7 +82,7 @@ router
     }).post(asyncWrap(handleRegistration));
 
 const handleLogin = async (req, res, next) => {
-  const userModel = await User.find({username: req.username});
+  const userModel = await User.find({username: req.username.toLowerCase()});
   let [iterations, salt, hash] = userModel.password.split('$');
   iterations = parseInt(iterations, 10);
   if (hash !== calculateHash(req.body.password, salt, iterations)) {

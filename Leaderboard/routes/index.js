@@ -1,6 +1,7 @@
 import express from 'express';
 import users from './users';
 import leaderboard from './leaderboard';
+import api from './api';
 
 const router = express.Router();
 
@@ -11,5 +12,6 @@ router.get('/', (req, res, next) => {
 
 router.use('/users', users);
 router.use('/leaderboard', leaderboard);
+router.use('/api', api);
 
 export default router;
