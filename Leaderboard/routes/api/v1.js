@@ -4,6 +4,7 @@ import _ from 'lodash';
 import v1 from './v1';
 import {User, Score} from '../../database';
 import {asyncWrap} from '../../helper';
+import {UserNotFoundError} from '../../errors';
 
 const router = express.Router();
 

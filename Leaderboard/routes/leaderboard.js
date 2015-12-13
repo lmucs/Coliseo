@@ -3,6 +3,7 @@ import _ from 'lodash';
 
 import {User, Score} from '../database';
 import {asyncWrap} from '../helper';
+import {UserNotFoundError} from '../errors';
 const router = express.Router();
 
 const handleLeaderboard = async (req, res, next) => {
@@ -24,7 +25,7 @@ router.get('/', asyncWrap(handleLeaderboard));
 const handleUserId = async (req, res, next) => {
   const user = await User.findOne({username: req.params.username});
   if (user === null) {
-    let err = new Error(req.app.locals.userNotFound);
+    let err = new UserNotFoundError();
     err.status = 404;
     return next(err);
   }
