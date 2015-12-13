@@ -14,6 +14,6 @@ export const locals = {
   loginError: 'Either the username or the password were invalid',
 
   // User profile errors
-  userProfileNotFound: 'The requested user profile does not exist',
+  userNotFound: 'The requested user does not exist',
 };
 export default app => _.assign(app.locals, locals);

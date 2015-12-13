@@ -15,30 +15,30 @@ const handleLeaderboard = async (req, res, next) => {
   // Sequelize is dumb and doesn't have an obvious way to select ONLY the data
   // that you're interested in in a query. So we have to do some ugly
   // functional programming on the raw query result to fix it.
-  const scores = _.map(topScoresRaw, obj => ({
-      score: obj.dataValues.score,
-      username: obj.dataValues.user.dataValues.username,
-      userid: obj.dataValues.user.dataValues.id,
-    }));
+  const scores = topScoresRaw.map(obj => ({
+    score: obj.dataValues.score,
+    username: obj.dataValues.user.dataValues.username,
+  }));
   res.render('leaderboard', {scores});
 };
 
 router.get('/', asyncWrap(handleLeaderboard));
 
 const handleUserId = async (req, res, next) => {
-  const user = await User.findById(req.params.id);
+  const user = await User.findOne({username: req.params.username});
   if (user === null) {
-    return res.render('error', {message: req.app.locals.userProfileNotFound});
+    let err = new Error(req.app.locals.userNotFound);
+    err.status = 404;
+    return next(err);
   }
-  const scores = _(await user.getScores())
-                 .map(score => score.get())
-                 .sortBy('score').reverse()
-                 .value();
+  const scores = await user.getScores({scope: {
+    order: [['score', 'DESC']],
+  }}).map(score => score.get());
   const userView = user.get();
   userView.scores = scores;
   res.render('user', userView);
 };
 
-router.get('/user/:id', asyncWrap(handleUserId));
+router.get('/user/:username', asyncWrap(handleUserId));
 
 export default router;
