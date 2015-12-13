@@ -39,6 +39,7 @@ export const locals = {
   // Navigation
   register: 'Register',
   login: 'Login',
+  logout: 'Logout',
   leaderboard: 'Leaderboard',
   userProfile: 'User Profile',
 

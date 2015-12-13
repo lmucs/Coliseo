@@ -15,9 +15,7 @@ const getUser = async (req, res, next) => {
     },
   });
   if (user === null) {
-    const err = new Error(req.app.locals.userNotFound);
-    err.status = 404;
-    return next(err);
+    return next(new UserNotFoundError());
   }
   const sanitizedUser = _.pick(user.get(), ['username', 'biography']);
   return res.json(sanitizedUser);
@@ -34,9 +32,7 @@ const getScores = async (req, res, next) => {
       },
     });
     if (user === null) {
-      const err = new UserNotFoundError();
-      err.status = 404;
-      return next(err);
+      return next(new UserNotFoundError());
     }
     scores = await user.getScores({
       order: [['score', 'DESC']],
