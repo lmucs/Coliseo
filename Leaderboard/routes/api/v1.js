@@ -7,18 +7,29 @@ import {asyncWrap} from '../../helper';
 
 const router = express.Router();
 
-// gethighscoreforuser
-// postscore
+const getUser = async (req, res, next) => {
+  const user = await User.findOne({
+    where: {
+      username: req.params.username.toLowerCase(),
+    },
+  });
+  if (user === null) {
+    const err = new Error(req.app.locals.userNotFound);
+    err.status = 404;
+    return next(err);
+  }
+  const sanitizedUser = _.pick(user.get(), ['username', 'biography']);
+  return res.json(sanitizedUser);
+};
 
-router.get('/user/:username'); //user info
+router.get('/user/:username', asyncWrap(getUser));
 
 const getScores = async (req, res, next) => {
   let scores;
   if (req.params.username) {
-    console.log(req.params.username);
     const user = await User.findOne({
       where: {
-        username: req.params.usernamePattern.toLowerCase(),
+        username: req.params.username.toLowerCase(),
       },
     });
     if (user === null) {
@@ -26,23 +37,26 @@ const getScores = async (req, res, next) => {
       err.status = 404;
       return next(err);
     }
-    scores = user.getScores({scope: {
+    scores = await user.getScores({
       order: [['score', 'DESC']],
-    }});
+    }).map(score => ({
+      username: user.get('username'),
+      score: score.get('score')
+    }));
   } else {
     const topScoresRaw = await Score.findAll({
       include: [{model: User, required: true}],
       order: [['score', 'DESC']],
     });
     scores = topScoresRaw.map(obj => ({
-      score: obj.dataValues.score,
-      username: obj.dataValues.user.dataValues.username,
+      score: obj.get('score'),
+      username: obj.get('user').get('username'),
     }));
   }
-  res.json(scores);
+  return res.json(scores);
 };
 router.get('/scores/:username?', asyncWrap(getScores));
 
-router.post('/scores/:username');
+router.post('/scores/:username'); // TODO!
 
 export default router;
