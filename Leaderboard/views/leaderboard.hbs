@@ -18,10 +18,13 @@
                   to the user profile page. Doing it with just the username
                   doesn't work because the table bounderies aren't very clear}}
               <td class="mdl-data-table__cell--non-numeric">
-                <a href="/leaderboard/user/{{userid}}">{{username}}</a>
+                <a class="mdl-button mdl-js-button mdl-js-ripple-effect"
+                   href="/leaderboard/user/{{userid}}">
+                  {{username}}
+                </a>
               </td>
-              <td class="Score"><a href="/leaderboard/user/{{userid}}">{{score}}</a></td>
-              <td class="Rank"><a href="/leaderboard/user/{{userid}}">{{counter @index}}</a></td>
+              <td class="Score">{{score}}</td>
+              <td class="Rank">{{counter @index}}</td>
             </tr>
           {{/each}}
         </tbody>
