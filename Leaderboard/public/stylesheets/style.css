@@ -21,7 +21,7 @@
 }
 
 .mdl-data-table {
-  vertical-align: top;
+  /*vertical-align: top;*/
   width: 100%;
 }
 
@@ -94,4 +94,10 @@ p.form-error {
 .demo-card-event .mdl-card__actions,
 .demo-card-event .mdl-card__actions .mdl-button {
   color: #fff;
+}
+
+table tr td a {
+  display:block;
+  height:100%;
+  width:100%;
 }
