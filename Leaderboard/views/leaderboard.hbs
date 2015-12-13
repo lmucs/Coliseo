@@ -12,11 +12,6 @@
         <tbody>
           {{#each scores}}
             <tr>
-              {{! Material design light doens't let us make the entire table
-                  row a link, so we have to hack it in by setting the <a>
-                  element width and height to 100%, and linking every attribute
-                  to the user profile page. Doing it with just the username
-                  doesn't work because the table bounderies aren't very clear}}
               <td class="mdl-data-table__cell--non-numeric">
                 <a class="mdl-button mdl-js-button mdl-js-ripple-effect"
                    href="/leaderboard/user/{{username}}">

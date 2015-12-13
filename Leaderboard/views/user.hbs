@@ -1,18 +1,18 @@
 <div>
   <div class="demo-card-event mdl-card mdl-shadow--2dp center wrapper">
     <div>
-      <h4 class="user">User Profile</h4>
+      <h4 class="user">{{userProfile}}</h4>
     </div>
     <div class="mdl-card__title mdl-card--expand">
       <div>
         <p class="username">{{username}}</p>
-        <p class="highscore">High Scores: </p><br>
+        <p class="highscore">{{highScoreTitle}}</p><br>
         <ol>
           {{#each scores}}
             <li>{{score}}</li>
           {{/each}}
         </ol>
-        <p class="bio">Bio: </p>
+        <p class="bio">{{biographyTitle}}</p>
         <p>{{biography}}</p>
       </div>
     </div>
