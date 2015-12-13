@@ -25,8 +25,21 @@ const handleLeaderboard = async (req, res, next) => {
 
 router.get('/', asyncWrap(handleLeaderboard));
 
-router.get('/user', (req, res, next) => {
-  res.render('user');
-});
+const handleUserId = async (req, res, next) => {
+  const user = await User.findById(req.params.id);
+  if (user === null) {
+    return res.render('error', {message: req.app.locals.userProfileNotFound});
+  }
+  const scores = _(await user.getScores())
+                 .map(score => score.get())
+                 .sortBy('score').reverse()
+                 .value();
+  const userView = user.get();
+  userView.scores = scores;
+  console.log(userView);
+  res.render('user', userView);
+};
+
+router.get('/user/:id', asyncWrap(handleUserId));
 
 export default router;
