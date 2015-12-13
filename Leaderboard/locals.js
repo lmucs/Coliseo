@@ -1,8 +1,8 @@
 import _ from 'lodash';
 
-const locals = {
+export const locals = {
   // App configuration
-  appName: 'Fight or Flight',
+  appName: 'Coliseo',
   primaryColor: 'indigo',
   accentColor: 'pink',
 
@@ -12,5 +12,8 @@ const locals = {
   regPasswordError: 'The password was not long enough',
   regConfirmError: 'The two passwords did not match',
   loginError: 'Either the username or the password were invalid',
+
+  // User profile errors
+  userProfileNotFound: 'The requested user profile does not exist',
 };
 export default app => _.assign(app.locals, locals);
