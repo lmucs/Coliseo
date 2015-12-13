@@ -34,7 +34,7 @@ const getScores = async (req, res, next) => {
       },
     });
     if (user === null) {
-      const err = new Error(req.app.locals.userNotFound);
+      const err = new UserNotFoundError();
       err.status = 404;
       return next(err);
     }
