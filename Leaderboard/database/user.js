@@ -22,6 +22,7 @@ export default (sequelize, DataTypes) => sequelize.define('user', {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
   },
+  biography: {
+    type: DataTypes.TEXT,
+  },
 });
-
-// module.exports = exports['default'];
