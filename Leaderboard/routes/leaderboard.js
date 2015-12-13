@@ -12,12 +12,9 @@ const handleLeaderboard = async (req, res, next) => {
     limit: 10,
   });
 
-  // Sequelize is dumb and doesn't have an obvious way to select ONLY the data
-  // that you're interested in in a query. So we have to do some ugly
-  // functional programming on the raw query result to fix it.
   const scores = topScoresRaw.map(obj => ({
-    score: obj.dataValues.score,
-    username: obj.dataValues.user.dataValues.username,
+    score: obj.get('score'),
+    username: obj.get('user').get('username'),
   }));
   res.render('leaderboard', {scores});
 };
@@ -31,9 +28,9 @@ const handleUserId = async (req, res, next) => {
     err.status = 404;
     return next(err);
   }
-  const scores = await user.getScores({scope: {
+  const scores = await user.getScores({
     order: [['score', 'DESC']],
-  }}).map(score => score.get());
+  }).map(score => score.get());
   const userView = user.get();
   userView.scores = scores;
   res.render('user', userView);
