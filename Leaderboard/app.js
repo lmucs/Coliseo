@@ -7,7 +7,7 @@ import hbs from 'hbs';
 import _ from 'lodash';
 
 import routes from './routes';
-import setupLocals from './locals'; // Populate our app with custom locals
+import setupLocals from './locals';
 import secret from './secret';
 import setupSession from './session';
 import {User, Score} from './database';
@@ -23,7 +23,6 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 app.set('json spaces');
 
-// uncomment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 setupSession(app);
 app.use(bodyParser.json());
@@ -31,7 +30,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser(secret));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Ensure user details is in the rendering context
+// Ensure user details are in rendering context
 app.use((req, res, next) => {
   if (req.session.user) {
     res.locals.username = req.session.user.username;
