@@ -35,6 +35,7 @@ const handleGetUser = async (req, res, next) => {
   const userView = user.get();
   userView.scores = scores;
   if (req.session.user && req.session.user.username === userView.username) {
+    console.log(res.locals.isOwnUser);
     res.locals.isOwnUser = true;
   }
   return res.render('user', userView);

@@ -33,7 +33,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Ensure user details are in rendering context
 app.use((req, res, next) => {
   if (req.session.user) {
-    res.locals.username = req.session.user.username;
+    res.locals.ownUsername = req.session.user.username;
   }
   next();
 });
