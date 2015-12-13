@@ -31,6 +31,14 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser(secret));
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Ensure user details is in the rendering context
+app.use((req, res, next) => {
+  if (req.session.user) {
+    res.locals.username = req.session.user.username;
+  }
+  next();
+});
+
 app.use('/', routes);
 
 // catch 404 and forward to error handler

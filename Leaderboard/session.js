@@ -8,7 +8,7 @@ import secret from './secret';
 
 const SequelizeStore = connectSessionSequelize(session.Store);
 const store = new SequelizeStore({db,});
-store.sync();
+store.sync({force: true});
 moment().format();
 
 export default app => {

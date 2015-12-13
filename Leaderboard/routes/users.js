@@ -82,7 +82,12 @@ router
     }).post(asyncWrap(handleRegistration));
 
 const handleLogin = async (req, res, next) => {
-  const userModel = await User.find({username: req.username.toLowerCase()});
+  const userModel = await User.find({
+    username: req.body.username.toLowerCase()
+  });
+  if (userModel === null) {
+    return res.status(401).render('login', {isLoginError: true});
+  }
   let [iterations, salt, hash] = userModel.password.split('$');
   iterations = parseInt(iterations, 10);
   if (hash !== calculateHash(req.body.password, salt, iterations)) {
@@ -107,6 +112,11 @@ router
 
 router.get('/email-verify', (req, res, next) => {
   return res.render('email-verify');
+});
+
+router.get('/logout', (req, res, next) => {
+  req.session.destroy();
+  return res.redirect('/');
 });
 
 export default router;
