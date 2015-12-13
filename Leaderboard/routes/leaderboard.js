@@ -11,13 +11,15 @@ const handleLeaderboard = async (req, res, next) => {
     order: [['score', 'DESC']],
     limit: 10,
   });
-  const scores = _(topScoresRaw)
-    .pluck('dataValues')
-    .map(obj => ({
-      score: obj.score,
-      username: obj.user.dataValues.username,
-      userid: obj.user.dataValues.id,
-    })).value();
+
+  // Sequelize is dumb and doesn't have an obvious way to select ONLY the data
+  // that you're interested in in a query. So we have to do some ugly
+  // functional programming on the raw query result to fix it.
+  const scores = _.map(topScoresRaw, obj => ({
+      score: obj.dataValues.score,
+      username: obj.dataValues.user.dataValues.username,
+      userid: obj.dataValues.user.dataValues.id,
+    }));
   res.render('leaderboard', {scores});
 };
 

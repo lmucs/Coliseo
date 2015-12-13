@@ -21,8 +21,9 @@
 }
 
 .mdl-data-table {
-  /*vertical-align: top;*/
-  width: 100%;
+  vertical-align: top;
+  width: 50%;
+  margin: auto;
 }
 
 a {
@@ -100,4 +101,10 @@ table tr td a {
   display:block;
   height:100%;
   width:100%;
+  text-decoration: none;
+}
+
+table tr td {
+    padding-left: 0;
+    padding-right: 0;
 }
