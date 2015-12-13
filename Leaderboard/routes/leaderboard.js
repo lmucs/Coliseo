@@ -36,7 +36,6 @@ const handleUserId = async (req, res, next) => {
                  .value();
   const userView = user.get();
   userView.scores = scores;
-  console.log(userView);
   res.render('user', userView);
 };
 
