@@ -17,12 +17,12 @@ const handleLeaderboard = async (req, res, next) => {
     score: obj.get('score'),
     username: obj.get('user').get('username'),
   }));
-  res.render('leaderboard', {scores});
+  return res.render('leaderboard', {scores});
 };
 
 router.get('/', asyncWrap(handleLeaderboard));
 
-const handleUserId = async (req, res, next) => {
+const handleGetUser = async (req, res, next) => {
   const user = await User.findOne({username: req.params.username});
   if (user === null) {
     let err = new UserNotFoundError();
@@ -34,9 +34,16 @@ const handleUserId = async (req, res, next) => {
   }).map(score => score.get());
   const userView = user.get();
   userView.scores = scores;
-  res.render('user', userView);
+  if (req.session.user && req.session.user.username === userView.username) {
+    res.locals.isOwnUser = true;
+  }
+  return res.render('user', userView);
 };
 
-router.get('/user/:username', asyncWrap(handleUserId));
+const handlePostUser = async (req, res, next) => {
+
+};
+
+router.get('/user/:username', asyncWrap(handleGetUser));
 
 export default router;

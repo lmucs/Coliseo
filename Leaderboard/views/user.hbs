@@ -13,7 +13,23 @@
           {{/each}}
         </ol>
         <p class="bio">{{biographyTitle}}</p>
-        <p>{{biography}}</p>
+        {{#unless isOwnUser}}
+          <p>{{biography}}</p>
+        {{/unless}}
+        {{#if isOwnUser}}
+          <form action="#" method='POST'>
+            <div class="mdl-textfield mdl-js-textfield">
+              <textarea class="mdl-textfield__input" type="text" rows= "3" id="sample5" >{{biography}}</textarea>
+              <label class="mdl-textfield__label" for="sample5">Text lines...</label>
+            </div>
+            <div class="mdl-cell mdl-cell--12-col">
+              <div id="password-container" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="password" name="password" />
+                <label class="mdl-textfield__label" for="password">{{passwordTitle}}</label>
+              </div>
+            </div>
+          </form>
+        {{/if}}
       </div>
     </div>
   </div>
