@@ -14,12 +14,12 @@
           <span class="mdl-layout-title"><a class="title" href="/"><img class="logo" src="https://camo.githubusercontent.com/41a71af7a568072aef542a3676aded5c7764efe6/68747470733a2f2f63646e2e7261776769742e636f6d2f6c6d7563732f436f6c6973656f2f6d61737465722f6c6f676f2e737667"></a></span>
           <div class="mdl-layout-spacer"></div>
           <nav class="mdl-navigation">
-            {{#unless username}}
+            {{#unless ownUsername}}
               <a class="mdl-navigation__link" href="/users/register">{{register}}</a>
               <a class="mdl-navigation__link" href="/users/login">{{login}}</a>
             {{/unless}}
-            {{#if username}}
-              <a class="mdl-navigation__link" href="/leaderboard/user/{{username}}">{{username}}</a>
+            {{#if ownUsername}}
+              <a class="mdl-navigation__link" href="/leaderboard/user/{{ownUsername}}">{{ownUsername}}</a>
               <a class="mdl-navigation__link" href="/users/logout">{{logout}}</a>
             {{/if}}
        <!--      <a class="mdl-navigation__link" href="/leaderboard">Leaderboard</a>
@@ -30,13 +30,13 @@
       <div class="mdl-layout__drawer">
         <span class="mdl-layout-title"><a class="title" href="/"><img class="logo" src="https://camo.githubusercontent.com/41a71af7a568072aef542a3676aded5c7764efe6/68747470733a2f2f63646e2e7261776769742e636f6d2f6c6d7563732f436f6c6973656f2f6d61737465722f6c6f676f2e737667"></a></span>
         <nav class="mdl-navigation">
-          {{#unless username}}
+          {{#unless ownUsername}}
             <a class="mdl-navigation__link" href="/users/register">{{register}}</a>
             <a class="mdl-navigation__link" href="/users/login">{{login}}</a>
           {{/unless}}
           <a class="mdl-navigation__link" href="/leaderboard">{{leaderboard}}</a>
-          {{#if username}}
-            <a class="mdl-navigation__link" href="/leaderboard/user/{{username}}">{{userProfile}}</a>
+          {{#if ownUsername}}
+            <a class="mdl-navigation__link" href="/leaderboard/user/{{ownUsername}}">{{userProfile}}</a>
             <a class="mdl-navigation__link" href="/users/logout">{{logout}}</a>
           {{/if}}
         </nav>
