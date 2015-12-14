@@ -77,11 +77,12 @@ const getScores = async (req, res, next) => {
     });
     scores = topScoresRaw.map(obj => ({
       score: obj.get('score'),
+      scoreId: obj.get('id'),
       username: obj.get('user').get('username'),
     }));
   }
   res.set('Content-Type', 'text/xml');
-  return res.send(js2xmlparser('scores', {scores}));
+  return res.send(js2xmlparser('leaderboard', {scores}));
 };
 
 router.get('/scores/:username?', asyncWrap(getScores));
@@ -135,13 +136,13 @@ const postScore = async (req, res, next) => {
         const user = obj.get('user') || userModel;
         return {
           score: obj.get('score'),
-          user: user.get('username'),
+          username: user.get('username'),
           scoreId: obj.get('id'),
         };
       });
     res.set('Content-Type', 'text/xml');
     return res.send(js2xmlparser('scoresAround', {
-      scoresAround,
+      score: scoresAround,
       submittedScoreId: newScore.get('id'),
     }));
   }
