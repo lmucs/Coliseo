@@ -139,20 +139,19 @@ const arabicLocals = {
 
   aboutColiseo: 'لعبة كوة المتصدع التي بنيت في فصل دراسي لCMSI 401 في LMU.' +
                  'يتكون من لعبة الوحدة وخادم المتصدرين Node.js.',
-  /*wikiLocation: "إن يكي يقع: <فئة =" ويكي "" +
-                 '"<a href =" https://github.com/lmucs/Coliseo/wiki "> هنا </a>'
-   graphicLocation: 'استاد الرسم بواسطة <فئة = "freepik"' +
-                    "<a href =" http://www.freepik.com/ "> Freepik </A> من '+
-                    "<a class="flaticon" href="http://www.flaticon.com"> '+
-                    'مرخص Flaticon </A> تحت <فئة = "سي سي" "+
-                    "أ href =" http://creativecommons.org/licenses/by/3.0/ ">" +
-                    "المشاع الإبداعي 3.0" </A>. قدمت مع '+
-                    "<a class="logomaker" href="http://logomakr.com"> '+
-                    "صانع شعار" </A>،*/
+  wikiLocation: '<a class="wiki href="https://github.com/lmucs/Coliseo/wiki">هنا</a> إن يكي يقع',
+  graphicLocation: 'Coliseum graphic by <a class="freepik" ' +
+                   'href="http://www.freepik.com/">Freepik</a> from ' +
+                   '<a class="flaticon" href="http://www.flaticon.com">' +
+                   'Flaticon</a> is licensed under <a class="cc" ' +
+                   'href="http://creativecommons.org/licenses/by/3.0/">' +
+                   '"Creative Commons BY 3.0"</a>. Made with ' +
+                   '<a class="logomaker" href="http://logomakr.com">' +
+                   '"Logo Maker"</a>',
 
-  //  تسجيل: 'التسجيل'،
-  //  تسجيل الدخول: 'تسجيل الدخول'،
-  //  اليافطة: "المتصدرين,
+  register: 'التسجيل',
+  login: 'تسجيل الدخول',
+  leaderboard: 'المتصدرين',
 
   userProfile: 'العضو',
   highScoreTitle: 'أعلى النتائج:',
@@ -164,7 +163,7 @@ const arabicLocals = {
   emailTitle: 'البريد الإلكتروني',
   passwordTitle: 'كلمة المرور',
   confirmPasswordTitle: 'تأكيد كلمة المرور'
-  //  تقديم: "إرسال"
+  submit: "إرسال"
 };
 
 const russianLocals = {
