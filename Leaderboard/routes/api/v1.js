@@ -1,6 +1,7 @@
 import express from 'express';
 import _ from 'lodash';
 import js2xmlparser from 'js2xmlparser';
+import auth from 'basic-auth';
 
 import v1 from './v1';
 import {User, Score} from '../../database';
@@ -59,6 +60,26 @@ const getScores = async (req, res, next) => {
 };
 router.get('/scores/:username?', asyncWrap(getScores));
 
-router.post('/scores/:username'); // TODO!
+const postScore = async (req, res, next) => {
+  const user = auth(req);
+  const userModel = await User.findOne({
+    where: {
+      username: user.name.toLowerCase(),
+    }
+  });
+  if (userModel === null) {
+    res.status(401);
+    res.send();
+  }
+  let [iterations, salt, hash] = userModel.password.split('$');
+  iterations = parseInt(iterations, 10);
+  if (hash !== calculateHash(req.body.password, salt, iterations)) {
+    return res.status(401).send();
+  } else {
+    console.log('SCORE POSTING SUCCESS!!!!!!!!!!!')
+  }
+};
+
+router.post('/scores/:username', asyncWrap(postScore)); // TODO!
 
 export default router;
