@@ -75,6 +75,10 @@ a.mdl-navigation__link:hover {
   zoom: 120%;
 }
 
+.about {
+  margin-left: 20px;
+}
+
 .intro{
   margin: auto;
 	text-align: center;

@@ -14,7 +14,6 @@ import {User, Score} from './database';
 import {calculateSaltHash} from './cryptography';
 
 const app = express();
-setupLocals(app);
 hbs.localsAsTemplateData(app);
 import './handlebars_helpers';
 
@@ -38,6 +37,11 @@ app.use((req, res, next) => {
   next();
 });
 
+<<<<<<< HEAD
+=======
+app.use(setupLocals);
+
+>>>>>>> e5bce80a4638f33bb2b2f628f30fa5dbe7b42675
 app.use('/', routes);
 
 // catch 404 and forward to error handler
