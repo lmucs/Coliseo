@@ -1,10 +1,14 @@
 import _ from 'lodash';
 
-export const locals = {
+const appConfig = {
   // App configuration
   appName: 'Coliseo',
   primaryColor: 'brown',
   accentColor: 'blue',
+};
+
+const englishLocals = {
+  english: true,
 
   // Confirmation  errors
   regEmailError: 'The email is not valid or is already taken',
@@ -58,4 +62,75 @@ export const locals = {
   confirmPasswordTitle: 'Confirm Password',
   submit: 'Submit',
 };
-export default app => _.assign(app.locals, locals);
+
+const spanishLocals = {
+  spanish: true,
+  regEmailError: 'El correo electrónico es inválido o ya fue usado',
+  regUserError: 'El nombre de usuario es inválido o ya fue usado',
+  regPasswordError: 'La contraseña no es lo suficientemente segura',
+  regConfirmError: 'Las dos contraseñas no coinciden',
+  loginError: 'O el nombre de usuario o la contraseña son inválidos',
+  clientSideUserInvalid: 'El nombre de usuario solo puede contener caracteres' +
+                         ' alfabéticos',
+  clientSideEmailInvalid: 'La dirección proveída no es una dirección de ' +
+                          'correo electrónico válida',
+
+  // Application Errors
+  userNotFound: 'El usuario es inexistente',
+
+  // Success
+  regSuccess: 'Inscripción exitosa',
+  regSuccess2: 'Por favor, revise su correo electrónico para verificar su ' +
+               'cuenta',
+
+  // Info
+  aboutColiseo: 'Videojuego con soporte de Oculus Rift creado en un semestre ' +
+                'para CMSI 401 en LMU' +
+                ' Consiste de un videojuego creado en Unity y una ' +
+                'clasificación en Node.js',
+  wikiLocation: 'La Wiki se encuentra en: <a class="wiki" ' +
+                'href="https://github.com/lmucs/Coliseo/wiki">here</a>',
+  graphicLocation: 'Gráfico del Coliseo hecho por <a class="freepik" ' +
+                   'href="http://www.freepik.com/">Freepik</a> from ' +
+                   '<a class="flaticon" href="http://www.flaticon.com">' +
+                   'Flaticon</a> está bajo la licencia <a class="cc" ' +
+                   'href="http://creativecommons.org/licenses/by/3.0/">' +
+                   '"Creative Commons BY 3.0"</a>. Made with ' +
+                   '<a class="logomaker" href="http://logomakr.com">' +
+                   '"Logo Maker"</a>',
+
+  // Navigation
+  register: 'Inscripción' ,
+  login: 'Iniciar sesión',
+  logout: 'Cerrar sesión',
+  leaderboard: 'Clasificación',
+  userProfile: 'Perfil de usuario',
+
+  // User profile
+
+  highScoreTitle: 'Puntajes máximos:',
+  biographyTitle: 'Biografía',
+
+  // Definitions
+
+  usernameTitle: 'Nombre de usuario',
+  scoreTitle: 'Puntuación',
+  rankTitle: 'Categoría',
+  emailTitle: 'Correo electrónico',
+  passwordTitle: 'Contraseña',
+  confirmPasswordTitle: 'Confirmar contraseña',
+  submit: 'Enviar',
+};
+
+export default (req, res, next) => {
+  if (req.query.language) {
+    req.session.language = req.query.language;
+  }
+  _.assign(res.locals, appConfig);
+  if (req.session.language === 'spanish') {
+    _.assign(res.locals, spanishLocals);
+  } else {
+    _.assign(res.locals, englishLocals);
+  }
+  next();
+};

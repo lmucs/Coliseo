@@ -95,8 +95,6 @@ const handleLogin = async (req, res, next) => {
       username: req.body.username.toLowerCase(),
     }
   });
-  console.log(req.body.username.toLowerCase());
-  console.log(userModel);
   if (userModel === null) {
     return res.status(401).render('login', {isLoginError: true});
   }
