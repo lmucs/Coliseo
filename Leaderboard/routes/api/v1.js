@@ -104,11 +104,49 @@ const postScore = async (req, res, next) => {
     console.log('Error confirming password');
     return res.status(401).send();
   } else {
-    console.log('SCORE POSTING SUCCESS!!!!!!!!!!!');
-    res.send();
+    const {score} = req.body;
+    const intScore = parseInt(score); // so we have an int
+    console.log(intScore);
+    const scoresAbove = await Score.findAll({
+      include: [{model: User, required: true}],
+      where: {
+        score: {
+          gte: intScore
+        },
+      },
+      order: [['score', 'ASC']],
+      limit: 5,
+    });
+    const scoresBelow = await Score.findAll({
+      include: [{model: User, required: true}],
+      where: {
+        score: {
+          lt: intScore,
+        },
+      },
+      order: [['score', 'DESC']],
+      limit: 5,
+    });
+    const newScore = await userModel.createScore({score});
+    const scoresAround = scoresAbove
+      .reverse()
+      .concat(newScore, scoresBelow)
+      .map(obj => {
+        const user = obj.get('user') || userModel;
+        return {
+          score: obj.get('score'),
+          user: user.get('username'),
+          scoreId: obj.get('id'),
+        };
+      });
+    res.set('Content-Type', 'text/xml');
+    return res.send(js2xmlparser('scoresAround', {
+      scoresAround,
+      submittedScoreId: newScore.get('id'),
+    }));
   }
 };
 
-router.post('/scores/:username', asyncWrap(postScore));
+router.post('/scores/', asyncWrap(postScore));
 
 export default router;
