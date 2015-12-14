@@ -22,6 +22,23 @@
               <a class="mdl-navigation__link" href="/leaderboard/user/{{ownUsername}}">{{ownUsername}}</a>
               <a class="mdl-navigation__link" href="/users/logout">{{logout}}</a>
             {{/if}}
+            <button id="demo-menu-lower-right" class="mdl-button mdl-js-button mdl-button--icon">
+              <i class="material-icons">language</i>
+            </button>
+
+            <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+                for="demo-menu-lower-right">
+              {{#unless english}}<a class="languageLink" href="?language=english">{{/unless}}
+                <li {{#if english}}disabled{{/if}} class="mdl-menu__item">
+                English
+                </li>
+              {{#unless english}}</a>{{/unless}}
+              {{#unless spanish}}<a class="languageLink" href="?language=spanish">{{/unless}}
+                <li {{#if spanish}}disabled{{/if}} class="mdl-menu__item">
+                  Espa&ntilde;ol
+                </li>
+              {{#unless spanish}}</a>{{/unless}}
+            </ul>
        <!--      <a class="mdl-navigation__link" href="/leaderboard">Leaderboard</a>
             <a class="mdl-navigation__link" href="/leaderboard/user">User Profile</a> -->
           </nav>
