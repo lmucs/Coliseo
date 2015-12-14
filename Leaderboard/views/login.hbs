@@ -7,7 +7,7 @@
     {{/isLoginError}}
     <div class="mdl-cell mdl-cell--12-col">
       <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-        <input class="mdl-textfield__input" type="text" name="username" pattern="{{usernamePattern}}" value="{{username}}" />
+        <input class="mdl-textfield__input" type="text" name="username" value="{{username}}" />
         <label class="mdl-textfield__label" for="username">{{usernameTitle}}</label>
         <span class="mdl-textfield__error">{{clientSideUserInvalid}}</span>
       </div>
@@ -27,6 +27,3 @@
     </div>
   </div>
 </form>
-{{#extend "scripts"}}
-  <script src="/scripts/register.js"></script>
-{{/extend}}
