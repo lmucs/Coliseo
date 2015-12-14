@@ -6,7 +6,7 @@ using System.Xml.Serialization;
 using System.IO;
 using Coliseo;
 
-public class LevelManager : MonoBehaviour 
+public class LevelManager : MonoBehaviour
 {
 	public GameObject Scoreboard;
 	public GameObject LoginPanel;
@@ -16,13 +16,13 @@ public class LevelManager : MonoBehaviour
 	public UnityEngine.UI.Text ErrorText;
 
     // Use this for initialization
-    public void LoadScene (string name) 
+    public void LoadScene (string name)
 	{
 		Application.LoadLevel (name);
 	}
-	
+
 	// Update is called once per frame
-	public void QuitGame () 
+	public void QuitGame ()
 	{
 		Application.Quit ();
 	}
@@ -41,7 +41,7 @@ public class LevelManager : MonoBehaviour
 	{
 		LoginPanel.SetActive (true);
 	}
-	
+
 	public void LoginPanelOff ()
 	{
 		Debug.Log ("logging in " + UsernameText.text + " with pass " + PasswordText.text);
@@ -50,7 +50,7 @@ public class LevelManager : MonoBehaviour
 		headers["Authorization"] = "Basic " + System.Convert.ToBase64String(System.Text.Encoding.ASCII.GetBytes(UsernameText.text + ":" + PasswordText.text));
 		WWW www = new WWW("http://localhost:3000/api/v1/auth", null,  headers);
 		while (!www.isDone) { }
-		if (www.responseHeaders.Count > 0) // 
+		if (www.responseHeaders.Count > 0) //
 		{
 			foreach (KeyValuePair<string, string> entry in www.responseHeaders)
 			{
@@ -101,7 +101,16 @@ public class LevelManager : MonoBehaviour
 		[XmlElement("scores")]
 		public List<ScoreItem> Items { get; set; }
 	}
-	
+
+	[XmlRoot("scoresAround")]
+	public class ScoresAroundList
+	{
+		public ScoresAroundList() {Items = new List<ScoreItem>();}
+
+		[XmlElement("score")]
+		public List<ScoreItem> Items { get; set; }
+	}
+
 	public class ScoreItem
 	{
 		[XmlElement("score")]
@@ -109,5 +118,8 @@ public class LevelManager : MonoBehaviour
 
 		[XmlElement("username")]
 		public string username { get; set; }
+
+		[XmlElement("scoreId")]
+		public int id { get; set; }
 	}
 }
