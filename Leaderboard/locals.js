@@ -188,6 +188,7 @@ const russianLocals = {
   userProfile: 'Профиль пользователя',
 
   highScoreTitle: 'Рекорд',
+  usernameTitle: 'имя',
   scoreTitle: 'Оценка',
   rankTitle: 'Ранг',
   emailTitle: 'E-Почта',
