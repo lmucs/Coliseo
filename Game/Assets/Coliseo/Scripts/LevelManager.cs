@@ -5,13 +5,16 @@ using System.Xml;
 using System.Xml.Serialization;
 using System.IO;
 
+
 public class LevelManager : MonoBehaviour {
 	public GameObject Scoreboard;
 	public GameObject LoginPanel;
 	public UnityEngine.UI.Text HighScoreText;
+    public UnityEngine.UI.Text UsernameText;
+    public UnityEngine.UI.Text PasswordText;
 
-	// Use this for initialization
-	public void LoadScene (string name) {
+    // Use this for initialization
+    public void LoadScene (string name) {
 		Application.LoadLevel (name);
 	}
 	
@@ -35,6 +38,24 @@ public class LevelManager : MonoBehaviour {
 	public void LoginPanelOff (){
 		LoginPanel.SetActive (false);
 	}
+
+    public void RequestLogin()
+    {
+        WWWForm scoreForm = new WWWForm();
+        var headers = scoreForm.headers;
+        headers["Authorization"] = "Basic " + System.Convert.ToBase64String(System.Text.Encoding.ASCII.GetBytes(UsernameText.text + ":" + PasswordText.text));
+        WWW www = new WWW("http://localhost:3000/api/v1/auth", scoreForm.data, headers);
+        while (!www.isDone) { }
+
+        if (www.responseHeaders.Count > 0)
+        {
+            foreach (KeyValuePair<string, string> entry in www.responseHeaders)
+            {
+                Debug.Log(entry.Value + "=" + entry.Key);
+            }
+        }
+    }
+
 	public void FetchScoreboard(){
 		XmlSerializer ser = new XmlSerializer (typeof(ScoreList));
 		WWW scoreRequest = new WWW ("http://localhost:3000/api/v1/scores");
@@ -56,9 +77,7 @@ public class LevelManager : MonoBehaviour {
 		{
 			string rankStr = rank++ + "";
 			string scoreStr = score.score + "";
-			HighScoreText.text += string.Format ("{0}\t\t{1}\t\t{2}\n", rankStr.PadLeft(4,' ')
-			                                     				  , score.username//.PadRight(10, ' ')
-			                                     , scoreStr);//.PadLeft(10, ' '));
+            HighScoreText.text += string.Format("{0}\t\t{1}\t\t{2}\n", rankStr.PadLeft(4, ' '), score.username, scoreStr);
 		}
 	}
 
