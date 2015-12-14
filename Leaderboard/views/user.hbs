@@ -2,7 +2,7 @@
   <div class="highscore">
     <div class="demo-card-wide mdl-card mdl-shadow--2dp">
       <div class="mdl-card__title">
-        <h2 class="mdl-card__title-text">{{highScoreTitle}}:</h2>
+        <h2 class="mdl-card__title-text">{{highScoreTitle}}</h2>
       </div>
       <div class="mdl-card__supporting-text scores">
         <ol>
@@ -26,9 +26,9 @@
         </div>
       {{/unless}}
       {{#if isOwnUser}}
-        <form action="#" method='POST'>
+        <form class="about" action="#" method='POST'>
           <div class="mdl-textfield mdl-js-textfield">
-            <textarea class="mdl-textfield__input" type="text" rows= "3" id="sample5" >{{biography}}</textarea>
+            <textarea class="mdl-textfield__input" type="text" rows= "6" id="sample5" >{{biography}}</textarea>
             <label class="mdl-textfield__label" for="sample5">Text lines...</label>
           </div>
           <div class="mdl-cell mdl-cell--12-col">

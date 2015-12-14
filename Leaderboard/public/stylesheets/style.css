@@ -42,6 +42,10 @@
   float: left;
 }
 
+.about {
+  margin-left: 20px;
+}
+
 a {
   color: #000000 !important;
 }
@@ -133,9 +137,24 @@ p.form-error {
 
 .demo-card-wide.mdl-card {
   width: 100%;
+  height: 450px;
 }
 
 .demo-card-wide.mdl-card__title {
   color: black;
   overflow: auto;
+}
+
+textarea {
+  max-height: 50%
+}
+
+button {
+  float: right;
+}
+
+.scores{
+  max-height: 80%;
+  overflow: auto;
+  margin-bottom: 20px;
 }
