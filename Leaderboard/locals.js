@@ -162,7 +162,7 @@ const arabicLocals = {
   rankTitle: 'الرتبة',
   emailTitle: 'البريد الإلكتروني',
   passwordTitle: 'كلمة المرور',
-  confirmPasswordTitle: 'تأكيد كلمة المرور'
+  confirmPasswordTitle: 'تأكيد كلمة المرور',
   submit: "إرسال"
 };
 
