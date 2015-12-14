@@ -169,30 +169,30 @@ const arabicLocals = {
 const russianLocals = {
   russian: true,
 
-  regEmailError: '',
-  regUserError: '',
-  regPasswordError: '',
-  regConfirmError: '',
-  loginError: '',
-  clientSideUserValidation: '',
-  clientSideEmailValidation: '',
+  regEmailError: 'Электронная почта не действует или уже принято',
+  regUserError: 'Имя пользователя, не действует или уже принято',
+  regPasswordError: 'Пароль не достаточно сильны',
+  regConfirmError: 'Пароли не совпадают',
+  loginError: 'Либо имя пользователя или пароль являются недопустимыми',
+  clientSideUserValidation: 'Имя пользователя должно содержать только символы алфавита',
+  clientSideEmailValidation: 'Учитывая адрес не является действительным адресом электронной почты',
 
-  userNotFound: '',
+  userNotFound: 'Запрашиваемая пользователь не существует',
 
   aboutColiseo: 'Мы построили эту игру в школе (ЛМЮ). Класс КМСИ 401', // TODO?
 
   register: 'регистр',
-  login: '',
-  logout: '',
-  leaderboard: '',
-  userProfile: '',
+  login: 'логин',
+  logout: 'выйти',
+  leaderboard: 'Лидеры',
+  userProfile: 'Профиль пользователя',
 
   highScoreTitle: 'Рекорд',
   scoreTitle: 'Оценка',
-  rankTitle: '',
+  rankTitle: 'Ранг',
   emailTitle: 'E-Почта',
-  passwordTitle: '',
-  confirmPasswordTitle: '',
+  passwordTitle: 'Пароль',
+  confirmPasswordTitle: 'Подтвердите Пароль',
   submit: 'Представить',
 };
 
