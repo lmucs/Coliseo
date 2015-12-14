@@ -14,7 +14,6 @@ import {User, Score} from './database';
 import {calculateSaltHash} from './cryptography';
 
 const app = express();
-setupLocals(app);
 hbs.localsAsTemplateData(app);
 import './handlebars_helpers';
 
@@ -37,6 +36,8 @@ app.use((req, res, next) => {
   }
   next();
 });
+
+app.use(setupLocals);
 
 app.use('/', routes);
 
