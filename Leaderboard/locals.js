@@ -205,6 +205,8 @@ export default (req, res, next) => {
     _.assign(res.locals, spanishLocals);
   } else if (req.session.language === 'arabic') {
     _.assign(res.locals, arabicLocals);
+  } else if (req.session.language === 'russian') {
+    _.assign(res.locals, russianLocals);
   } else {
     _.assign(res.locals, englishLocals);
   }

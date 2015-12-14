@@ -42,6 +42,11 @@
                   العربية
                 </li>
               {{#unless arabic}}</a>{{/unless}}
+              {{#unless russian}}<a class="languageLink" href="?language=russian">{{/russian}}
+                <li {{#if russian}}disabled{{/if}} class="mdl-menu__item">
+                  العربية
+                </li>
+              {{#unless russian}}</a>{{/unless}}
             </ul>
        <!--      <a class="mdl-navigation__link" href="/leaderboard">Leaderboard</a>
             <a class="mdl-navigation__link" href="/leaderboard/user">User Profile</a> -->
