@@ -95,7 +95,7 @@ const spanishLocals = {
                    '<a class="flaticon" href="http://www.flaticon.com">' +
                    'Flaticon</a> está bajo la licencia <a class="cc" ' +
                    'href="http://creativecommons.org/licenses/by/3.0/">' +
-                   '"Creative Commons BY 3.0"</a>. Made with ' +
+                   '"Creative Commons BY 3.0"</a>. Hecho con ' +
                    '<a class="logomaker" href="http://logomakr.com">' +
                    '"Logo Maker"</a>',
 
@@ -122,6 +122,51 @@ const spanishLocals = {
   submit: 'Enviar',
 };
 
+const arabicLocals = {
+  arabic: true,
+  regEmailError: 'إن البريد الإلكتروني غير صالح أو اتخذت بالفعل',
+  regUserError: 'اسم المستخدم غير صالح أو اتخذت بالفعل',
+  regPasswordError: 'كلمة المرور ليست قوية بما فيه الكفاية',
+  regConfirmError: 'إن كلمات السر اثنين لا تتطابق',
+  loginError: 'إما اسم المستخدم أو كلمة المرور غير صالحة',
+  clientSideUserInvalid: 'يجب أن اسم المستخدم يحتوي على أحرف أبجدية فقط',
+  clientSideEmailInvalid: 'نظرا عنوان ليس عنوان بريد إلكتروني صالح',
+
+  userNotFound: 'لا وجود للمستخدم طلب',
+
+  regSuccess: 'التسجيل نجحت',
+  regSuccess2: 'الرجاء التحقق من بريدك الالكتروني للتحقق من حسابك،',
+
+  aboutColiseo: 'لعبة كوة المتصدع التي بنيت في فصل دراسي لCMSI 401 في LMU.' +
+                 'يتكون من لعبة الوحدة وخادم المتصدرين Node.js.',
+  /*wikiLocation: "إن يكي يقع: <فئة =" ويكي "" +
+                 '"<a href =" https://github.com/lmucs/Coliseo/wiki "> هنا </a>'
+   graphicLocation: 'استاد الرسم بواسطة <فئة = "freepik"' +
+                    "<a href =" http://www.freepik.com/ "> Freepik </A> من '+
+                    "<a class="flaticon" href="http://www.flaticon.com"> '+
+                    'مرخص Flaticon </A> تحت <فئة = "سي سي" "+
+                    "أ href =" http://creativecommons.org/licenses/by/3.0/ ">" +
+                    "المشاع الإبداعي 3.0" </A>. قدمت مع '+
+                    "<a class="logomaker" href="http://logomakr.com"> '+
+                    "صانع شعار" </A>،*/
+
+  //  تسجيل: 'التسجيل'،
+  //  تسجيل الدخول: 'تسجيل الدخول'،
+  //  اليافطة: "المتصدرين,
+
+  userProfile: 'العضو',
+  highScoreTitle: 'أعلى النتائج:',
+  biographyTitle: 'السيرة الذاتية',
+
+  usernameTitle: 'اسم المستخدم',
+  scoreTitle: 'النتيجة',
+  rankTitle: 'الرتبة',
+  emailTitle: 'البريد الإلكتروني',
+  passwordTitle: 'كلمة المرور',
+  confirmPasswordTitle: 'تأكيد كلمة المرور'
+  //  تقديم: "إرسال"
+};
+
 export default (req, res, next) => {
   if (req.query.language) {
     req.session.language = req.query.language;
@@ -129,6 +174,8 @@ export default (req, res, next) => {
   _.assign(res.locals, appConfig);
   if (req.session.language === 'spanish') {
     _.assign(res.locals, spanishLocals);
+  } else if (req.session.language === 'arabic') {
+    _.assign(res.locals, arabicLocals);
   } else {
     _.assign(res.locals, englishLocals);
   }
