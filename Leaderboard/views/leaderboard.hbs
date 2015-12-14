@@ -1,6 +1,6 @@
 <div class="mdl-layout mdl-layout--fixed-header mdl-js-layout mdl-color--grey-400">
-  <main class="mdl-layout__content">
-    <div class="customContainer">
+  <main class="mdl-layout__content customContainer">
+    <div class="leaderboard">
       <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
         <thead>
           <tr>
@@ -10,33 +10,24 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td class="mdl-data-table__cell--non-numeric">Akrs</td>
-            <td class="Score">2500</td>
-            <td class="Rank">1</td>
-          </tr>
-          <tr>
-            <td class="mdl-data-table__cell--non-numeric">Alex</td>
-            <td class="Score">2280</td>
-            <td class="Rank">2</td>
-          </tr>
-          <tr>
-            <td class="mdl-data-table__cell--non-numeric">Albert</td>
-            <td class="Score">1970</td>
-            <td class=-"Rank">3</td>
-          </tr>
-          <!-- Template for any new inserted rows in table:
+          {{#each scores}}
             <tr>
-            <td class="mdl-data-table__cell--non-numeric">Username</td>
-            <td class="Score">Score</td>
-            <td class="Rank">Rank</td>
-          </tr> -->
+              <td class="mdl-data-table__cell--non-numeric">
+                <a class="mdl-button mdl-js-button mdl-js-ripple-effect"
+                   href="/leaderboard/user/{{username}}">
+                  {{username}}
+                </a>
+              </td>
+              <td class="Score">{{score}}</td>
+              <td class="Rank">{{counter @index}}</td>
+            </tr>
+          {{/each}}
         </tbody>
       </table>
     </div>
   </main>
 </div>
-<!-- 
+<!--
 {{#extend "scripts"}}
   <script src="/scripts/register.js"></script>
 {{/extend}}

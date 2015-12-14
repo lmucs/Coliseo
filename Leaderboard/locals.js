@@ -3,8 +3,8 @@ import _ from 'lodash';
 const locals = {
   // App configuration
   appName: 'Fight or Flight',
-  primaryColor: 'indigo',
-  accentColor: 'pink',
+  primaryColor: 'brown',
+  accentColor: 'blue',
 
   // Confirmation  errors
   regEmailError: 'The email was not valid or is already taken',
