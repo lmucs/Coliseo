@@ -37,11 +37,7 @@ app.use((req, res, next) => {
   next();
 });
 
-<<<<<<< HEAD
-=======
 app.use(setupLocals);
-
->>>>>>> e5bce80a4638f33bb2b2f628f30fa5dbe7b42675
 app.use('/', routes);
 
 // catch 404 and forward to error handler
