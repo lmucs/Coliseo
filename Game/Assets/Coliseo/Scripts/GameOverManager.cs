@@ -9,6 +9,8 @@
 // ------------------------------------------------------------------------------
 using UnityEngine;
 using Coliseo;
+using System.Xml;
+using System.IO;
 using System.Xml.Serialization;
 using System.Collections;
 using System.Collections.Generic;
@@ -51,17 +53,33 @@ namespace Coliseo{
 		public void Gameover ()
 		{
 			// If the player has run out of health...
+			anim.SetTrigger ("GameOver");
+
 			string username = Player.username;
 			string auth = username + ":" + Player.password;
 			WWWForm scoreForm = new WWWForm ();
-			scoreForm.AddField ("score", Spawn.killCount + 100000000);
+			scoreForm.AddField ("score", ScoreManager.score);
 			var headers = scoreForm.headers;
 			headers ["Authorization"] = "Basic " + System.Convert.ToBase64String (System.Text.Encoding.ASCII.GetBytes (auth));
 			WWW w = new WWW ("http://localhost:3000/api/v1/scores/" + username, scoreForm.data, headers);
 			while (!w.isDone) { };
+
+			XmlSerializer ser = new XmlSerializer (typeof(LevelManager.ScoresAroundList));
+			LevelManager.ScoresAroundList s = new LevelManager.ScoresAroundList();
+			using (TextReader r = new StringReader(w.text))
+			{
+				s = (LevelManager.ScoresAroundList)ser.Deserialize(r);
+			}
+			//HighScoreText.text = "";
+			int rank = 1;
+			foreach (LevelManager.ScoreItem score in s.Items)
+			{
+				string scoreStr = score.score + "";
+				//HighScoreText.text += string.Format("t{1}\t\t{2}\n", score.username, scoreStr);
+			}
+
 			Debug.Log ("Submiting score for " + Player.username + " with pass " + Player.password);
-			Application.LoadLevel ("StartMenu");
-			//anim.SetTrigger ("GameOver");
+			//Application.LoadLevel ("StartMenu");
 				
 			restart = true;
 		}
