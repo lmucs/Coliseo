@@ -51,7 +51,7 @@ namespace Coliseo{
 		public void Gameover ()
 		{
 			// If the player has run out of health...
-
+			//WWW w2 = new WWW ("http://localhost:3000/api/v1/auth", headers);
 				// ... tell the animator the game is over.
 			//XmlSerializer ser = new XmlSerializer (typeof(ScoreList));
 			WWWForm scoreForm = new WWWForm ();

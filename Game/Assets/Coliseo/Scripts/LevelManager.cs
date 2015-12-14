@@ -7,6 +7,7 @@ using System.IO;
 
 public class LevelManager : MonoBehaviour {
 	public GameObject Scoreboard;
+	public GameObject LoginPanel;
 	public UnityEngine.UI.Text HighScoreText;
 
 	// Use this for initialization
@@ -27,6 +28,13 @@ public class LevelManager : MonoBehaviour {
 		Scoreboard.SetActive (false);
 	}
 
+	public void LoginPanelOn (){
+		LoginPanel.SetActive (true);
+	}
+	
+	public void LoginPanelOff (){
+		LoginPanel.SetActive (false);
+	}
 	public void FetchScoreboard(){
 		XmlSerializer ser = new XmlSerializer (typeof(ScoreList));
 		WWW scoreRequest = new WWW ("http://localhost:3000/api/v1/scores");
