@@ -167,6 +167,36 @@ const arabicLocals = {
   //  تقديم: "إرسال"
 };
 
+const russianLocals = {
+  russian: true,
+
+  regEmailError: '',
+  regUserError: '',
+  regPasswordError: '',
+  regConfirmError: '',
+  loginError: '',
+  clientSideUserValidation: '',
+  clientSideEmailValidation: '',
+
+  userNotFound: '',
+
+  aboutColiseo: 'Мы построили эту игру в школе (ЛМЮ). Класс КМСИ 401', // TODO?
+
+  register: 'регистр',
+  login: '',
+  logout: '',
+  leaderboard: '',
+  userProfile: '',
+
+  highScoreTitle: 'Рекорд',
+  scoreTitle: 'Оценка',
+  rankTitle: '',
+  emailTitle: 'E-Почта',
+  passwordTitle: '',
+  confirmPasswordTitle: '',
+  submit: 'Представить',
+};
+
 export default (req, res, next) => {
   if (req.query.language) {
     req.session.language = req.query.language;
