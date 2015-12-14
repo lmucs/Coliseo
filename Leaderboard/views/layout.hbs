@@ -17,10 +17,32 @@
             {{#unless ownUsername}}
               <a class="mdl-navigation__link" href="/users/register">{{register}}</a>
               <a class="mdl-navigation__link" href="/users/login">{{login}}</a>
+              <button id="demo-menu-lower-right" class="mdl-button mdl-js-button mdl-button--icon">
+                <i class="material-icons">language</i>
+              </button>
+
+              <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+                  for="demo-menu-lower-right">
+                <li class="mdl-menu__item"></li>
+                <li class="mdl-menu__item">Another Action</li>
+                <li disabled class="mdl-menu__item">Disabled Action</li>
+                <li class="mdl-menu__item">Yet Another Action</li>
+              </ul>
             {{/unless}}
             {{#if ownUsername}}
               <a class="mdl-navigation__link" href="/leaderboard/user/{{ownUsername}}">{{ownUsername}}</a>
               <a class="mdl-navigation__link" href="/users/logout">{{logout}}</a>
+              <button id="demo-menu-lower-right" class="mdl-button mdl-js-button mdl-button--icon">
+                <i class="material-icons">language</i>
+              </button>
+
+              <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+                  for="demo-menu-lower-right">
+                <li class="mdl-menu__item"></li>
+                <li class="mdl-menu__item">Another Action</li>
+                <li disabled class="mdl-menu__item">Disabled Action</li>
+                <li class="mdl-menu__item">Yet Another Action</li>
+              </ul>
             {{/if}}
        <!--      <a class="mdl-navigation__link" href="/leaderboard">Leaderboard</a>
             <a class="mdl-navigation__link" href="/leaderboard/user">User Profile</a> -->
