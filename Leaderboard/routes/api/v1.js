@@ -7,6 +7,7 @@ import v1 from './v1';
 import {User, Score} from '../../database';
 import {asyncWrap} from '../../helper';
 import {UserNotFoundError} from '../../errors';
+import {calculateHash} from '../../cryptography';
 
 const router = express.Router();
 
@@ -62,21 +63,25 @@ router.get('/scores/:username?', asyncWrap(getScores));
 
 const postScore = async (req, res, next) => {
   const user = auth(req);
+console.log(user);
   const userModel = await User.findOne({
     where: {
       username: user.name.toLowerCase(),
     }
   });
   if (userModel === null) {
+    console.log('Error finding user');
     res.status(401);
-    res.send();
+    return res.send();
   }
   let [iterations, salt, hash] = userModel.password.split('$');
   iterations = parseInt(iterations, 10);
-  if (hash !== calculateHash(req.body.password, salt, iterations)) {
+  if (hash !== calculateHash(user.pass, salt, iterations)) {
+    console.log('Error confirming password');
     return res.status(401).send();
   } else {
     console.log('SCORE POSTING SUCCESS!!!!!!!!!!!')
+    res.send();
   }
 };
 

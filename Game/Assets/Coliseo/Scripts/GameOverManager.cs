@@ -10,6 +10,8 @@
 using UnityEngine;
 using Coliseo;
 using System.Xml.Serialization;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Coliseo{
 
@@ -54,7 +56,9 @@ namespace Coliseo{
 			//XmlSerializer ser = new XmlSerializer (typeof(ScoreList));
 			WWWForm scoreForm = new WWWForm ();
 			scoreForm.AddField ("score", Spawn.killCount + 100000000);
-			WWW w = new WWW ("http://localhost:3000/api/v1/scores/" + "Mattie", scoreForm);
+			var headers = scoreForm.headers;
+			headers ["Authorization"] = "Basic " + System.Convert.ToBase64String (System.Text.Encoding.ASCII.GetBytes ("test:test"));
+			WWW w = new WWW ("http://localhost:3000/api/v1/scores/" + "test", scoreForm.data, headers);
 			Application.LoadLevel ("StartMenu");
 			//anim.SetTrigger ("GameOver");
 				
