@@ -1,5 +1,6 @@
 import express from 'express';
 import _ from 'lodash';
+import js2xmlparser from 'js2xmlparser';
 
 import v1 from './v1';
 import {User, Score} from '../../database';
@@ -18,7 +19,10 @@ const getUser = async (req, res, next) => {
     return next(new UserNotFoundError());
   }
   const sanitizedUser = _.pick(user.get(), ['username', 'biography']);
-  return res.json(sanitizedUser);
+  console.log(sanitizedUser);
+
+  res.set('Content-Type', 'text/xml');
+  return res.send(js2xmlparser('user', sanitizedUser));
 };
 
 router.get('/user/:username', asyncWrap(getUser));
@@ -50,7 +54,8 @@ const getScores = async (req, res, next) => {
       username: obj.get('user').get('username'),
     }));
   }
-  return res.json(scores);
+  res.set('Content-Type', 'text/xml');
+  return res.send(js2xmlparser('scores', {scores}));
 };
 router.get('/scores/:username?', asyncWrap(getScores));
 
