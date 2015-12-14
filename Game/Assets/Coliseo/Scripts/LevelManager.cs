@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Xml;
 using System.Xml.Serialization;
 using System.IO;
-
+using Coliseo;
 
 public class LevelManager : MonoBehaviour 
 {
@@ -13,6 +13,7 @@ public class LevelManager : MonoBehaviour
 	public UnityEngine.UI.Text HighScoreText;
     public UnityEngine.UI.Text UsernameText;
     public UnityEngine.UI.Text PasswordText;
+	public UnityEngine.UI.Text ErrorText;
 
     // Use this for initialization
     public void LoadScene (string name) 
@@ -43,20 +44,27 @@ public class LevelManager : MonoBehaviour
 	
 	public void LoginPanelOff ()
 	{
+		Debug.Log ("logging in " + UsernameText.text + " with pass " + PasswordText.text);
 		WWWForm scoreForm = new WWWForm();
 		var headers = scoreForm.headers;
 		headers["Authorization"] = "Basic " + System.Convert.ToBase64String(System.Text.Encoding.ASCII.GetBytes(UsernameText.text + ":" + PasswordText.text));
-		WWW www = new WWW("http://localhost:3000/api/v1/auth", scoreForm.data, headers);
+		WWW www = new WWW("http://localhost:3000/api/v1/auth", null,  headers);
 		while (!www.isDone) { }
-		
-		if (www.responseHeaders.Count > 0)
+		if (www.responseHeaders.Count > 0) // 
 		{
 			foreach (KeyValuePair<string, string> entry in www.responseHeaders)
 			{
 				Debug.Log(entry.Value + "=" + entry.Key);
 			}
 		}
-		LoginPanel.SetActive (false);
+		if (www.responseHeaders ["STATUS"] == "HTTP/1.1 200 OK") {
+			Player.username = UsernameText.text;
+			Player.password = PasswordText.text;
+			LoginPanel.SetActive (false);
+		} else {
+			ErrorText.text = "Username/Password combo is invalid.";
+		}
+		//LoginPanel.SetActive (false);
 	}
 
 	public void FetchScoreboard()

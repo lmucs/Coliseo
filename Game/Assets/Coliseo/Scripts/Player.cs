@@ -22,6 +22,8 @@ namespace Coliseo
 
         public float flashSpeed = 1f;
         private float dt = 1f;
+		public static string username;
+		public static string password;
 
         void Start()
         {

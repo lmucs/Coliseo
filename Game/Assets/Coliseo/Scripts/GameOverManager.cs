@@ -51,14 +51,15 @@ namespace Coliseo{
 		public void Gameover ()
 		{
 			// If the player has run out of health...
-			//WWW w2 = new WWW ("http://localhost:3000/api/v1/auth", headers);
-				// ... tell the animator the game is over.
-			//XmlSerializer ser = new XmlSerializer (typeof(ScoreList));
+			string username = Player.username;
+			string auth = username + ":" + Player.password;
 			WWWForm scoreForm = new WWWForm ();
 			scoreForm.AddField ("score", Spawn.killCount + 100000000);
 			var headers = scoreForm.headers;
-			headers ["Authorization"] = "Basic " + System.Convert.ToBase64String (System.Text.Encoding.ASCII.GetBytes ("test:test"));
-			WWW w = new WWW ("http://localhost:3000/api/v1/scores/" + "test", scoreForm.data, headers);
+			headers ["Authorization"] = "Basic " + System.Convert.ToBase64String (System.Text.Encoding.ASCII.GetBytes (auth));
+			WWW w = new WWW ("http://localhost:3000/api/v1/scores/" + username, scoreForm.data, headers);
+			while (!w.isDone) { };
+			Debug.Log ("Submiting score for " + Player.username + " with pass " + Player.password);
 			Application.LoadLevel ("StartMenu");
 			//anim.SetTrigger ("GameOver");
 				
