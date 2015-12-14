@@ -23,7 +23,11 @@ const handleLeaderboard = async (req, res, next) => {
 router.get('/', asyncWrap(handleLeaderboard));
 
 const handleGetUser = async (req, res, next) => {
-  const user = await User.findOne({username: req.params.username});
+  const user = await User.findOne({
+    where: {
+      username: req.params.username,
+    },
+  });
   if (user === null) {
     let err = new UserNotFoundError();
     err.status = 404;
