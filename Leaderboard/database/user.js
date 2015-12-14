@@ -18,10 +18,6 @@ export default (sequelize, DataTypes) => sequelize.define('user', {
       isEmail: true,
     },
   },
-  verifiedEmail: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: false,
-  },
   biography: {
     type: DataTypes.TEXT,
   },
