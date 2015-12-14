@@ -22,7 +22,8 @@ namespace Coliseo
         {
             if (actor.isDead)
             {
-                killCount++;
+				killCount+=10;
+				ScoreManager.score+= killCount;
                 Debug.Log("Enemy Killed. Total killed: " + killCount);
                 enemy.transform.position = transform.position;
                 enemy.transform.rotation = transform.rotation;
