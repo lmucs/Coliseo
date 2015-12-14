@@ -9,7 +9,7 @@ namespace Coliseo
 
         public GameObject enemy;
         Actor actor;
-        int killCount = 0;
+        public static int killCount = 0;
         
         void Start()
         {

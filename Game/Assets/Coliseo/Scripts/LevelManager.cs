@@ -43,9 +43,14 @@ public class LevelManager : MonoBehaviour {
 		}
 
 		HighScoreText.text = "";
+		int rank = 1;
 		foreach (ScoreItem score in s.Items)
 		{
-			HighScoreText.text += string.Format ("{0}\t\t{1}\n", score.username, score.score);
+			string rankStr = rank++ + "";
+			string scoreStr = score.score + "";
+			HighScoreText.text += string.Format ("{0}\t\t{1}\t\t{2}\n", rankStr.PadLeft(4,' ')
+			                                     				  , score.username//.PadRight(10, ' ')
+			                                     , scoreStr);//.PadLeft(10, ' '));
 		}
 	}
 

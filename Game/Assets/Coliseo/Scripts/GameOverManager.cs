@@ -9,6 +9,7 @@
 // ------------------------------------------------------------------------------
 using UnityEngine;
 using Coliseo;
+using System.Xml.Serialization;
 
 namespace Coliseo{
 
@@ -50,9 +51,14 @@ namespace Coliseo{
 			// If the player has run out of health...
 
 				// ... tell the animator the game is over.
-				anim.SetTrigger ("GameOver");
+			//XmlSerializer ser = new XmlSerializer (typeof(ScoreList));
+			WWWForm scoreForm = new WWWForm ();
+			scoreForm.AddField ("score", Spawn.killCount + 100000000);
+			WWW w = new WWW ("http://localhost:3000/api/v1/scores/" + "Mattie", scoreForm);
+			Application.LoadLevel ("StartMenu");
+			//anim.SetTrigger ("GameOver");
 				
-				restart = true;
+			restart = true;
 		}
 	}
 }
