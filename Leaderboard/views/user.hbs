@@ -2,9 +2,10 @@
   <div class="highscore">
     <div class="demo-card-wide mdl-card mdl-shadow--2dp">
       <div class="mdl-card__title">
-        <h2 class="mdl-card__title-text">{{highScoreTitle}}</h2>
+        <h2 class="mdl-card__title-text">{{highScoreTitle}} {{username}}</h2>
       </div>
       <div class="mdl-card__supporting-text scores">
+        Ranked Scores
         <ol>
           {{#each scores}}
             <li>{{score}}</li>
@@ -18,7 +19,7 @@
   <div class="bio">
     <div class="demo-card-wide mdl-card mdl-shadow--2dp">
       <div class="mdl-card__title">
-        <h2 class="mdl-card__title-text">{{biographyTitle}}:</h2>
+        <h2 class="mdl-card__title-text">{{biographyTitle}}: {{username}}</h2>
       </div>
       {{#unless isOwnUser}}
         <div class="mdl-card__supporting-text about">
@@ -31,10 +32,18 @@
             <textarea class="mdl-textfield__input" type="text" rows= "6" id="sample5" >{{biography}}</textarea>
             <label class="mdl-textfield__label" for="sample5">Text lines...</label>
           </div>
-          <div class="mdl-cell mdl-cell--12-col">
+          <div class="mdl-cell mdl-cell--12-col resetPassword">
+            <p>Reset Password:<p>
             <div id="password-container" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
               <input class="mdl-textfield__input" type="password" name="password" />
               <label class="mdl-textfield__label" for="password">{{passwordTitle}}</label>
+            </div>
+            <div class="mdl-cell mdl-cell--12-col">
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+                  {{submit}}
+                </button>
+              </div>
             </div>
           </div>
         </form>

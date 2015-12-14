@@ -3,8 +3,8 @@ import _ from 'lodash';
 export const locals = {
   // App configuration
   appName: 'Coliseo',
-  primaryColor: 'indigo',
-  accentColor: 'pink',
+  primaryColor: 'brown',
+  accentColor: 'blue',
 
   // Confirmation  errors
   regEmailError: 'The email is not valid or is already taken',
