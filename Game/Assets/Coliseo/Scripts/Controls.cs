@@ -1,98 +1,110 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Coliseo;
+using System;
+
 
 namespace Coliseo
 {
-    public class Controls : Object
+    public class Controls : UnityEngine.Object
     {
         private Player p;
+        private Controller cont;
 
         public Controls (Player player)
         {
             p = player;
+            cont = Controller.isWindows() ? (Controller) new ControllerWin() :(Controller) new ControllerLinOSX();
         }
 
-        public float joystickMoveSensitivity = 1f;//10.0F;
+        // Currently 1 so that controller is more precise.
+        public float moveSensitivity = 1f;
+
+        // Controller sensitivity
+        public float rotationSpeedHoriz = 100.0F;
         
         // Controller sensitivity
-        public float joystickRotationSpeedHoriz = 100.0F;
+        public float rotationSpeedVert = 5.0F;
         
-        // Controller sensitivity
-        public float joystickRotationSpeedVert = 5.0F;
-        
-        // Mouse sensitivity
-        public float mouseHorizontalSensitivity = 10.0F;
-        
-        // Update is called once per frame
         public void FixedUpdate ()
         {
-            float translationX = Input.GetAxis("Left_X_Axis") * joystickMoveSensitivity;
-            float translationZ = Input.GetAxis("Left_Y_Axis") * joystickMoveSensitivity;
-            
-            float rotationX = Input.GetAxis("Right_X_Axis") * joystickRotationSpeedHoriz;
-            float rotationY = Input.GetAxis("Right_Y_Axis") * joystickRotationSpeedVert;
-            
-            float h = joystickRotationSpeedHoriz * Input.GetAxis("Mouse X") * mouseHorizontalSensitivity;
-            float v = joystickRotationSpeedVert * Input.GetAxis("Mouse Y");
+            cont.FixedUpdate();
 
-            translationX = (Input.GetKey(KeyCode.A) ? -1 : translationX);
-            translationX = (Input.GetKey(KeyCode.D) ? 1 : translationX);
-            translationZ = (Input.GetKey(KeyCode.S) ? -1 : translationZ);
-            translationZ = (Input.GetKey(KeyCode.W) ? 1 : translationZ);
-            
-            // Move the player around the scene.
-            p.move(translationX, translationZ, 0f);
-            
-            // Turn the player according to controller input
-            p.turn(rotationX, rotationY);
-            
-            // Turn the player to face the mouse cursor.
-            if(Input.GetJoystickNames().Length == 0 || string.IsNullOrEmpty(Input.GetJoystickNames()[0]))
-            {
-                p.turn(h, v);
-                rotationX = h;
-                rotationY = v;
-            }
-            
-            if(Input.GetButton("Button A") || Input.GetKey(KeyCode.Space))
-            {
-                p.jump();
-            }
-            
-            p.animate(translationX, translationZ, rotationX, rotationY);
-            
-            rightTriggerDown = (GetTrigger("RightTrigger") == 1);
-            leftTriggerDown = (GetTrigger("LeftTrigger") == 1);
-            
-            p.block(leftTriggerDown || Input.GetMouseButton(1));
-            
-            if (!rightTriggerActive && (rightTriggerDown || Input.GetMouseButtonDown(0) ))
-            {
-                rightTriggerActive = true;
-                p.attack();
-            }
+            Vector2 move = checkMove();
+            Vector2 turn = checkTurn();
+            p.animate(move.x, move.y, turn.x, turn.y);
 
-            rightTriggerActive = rightTriggerDown;
+            checkJump();
+            checkBlock();
+            checkAttackBegin();
+            checkBeamToggle();
+        }
 
-            if (Input.GetButtonDown("Button B") || Input.GetKeyDown(KeyCode.F))
-            {
-                p.ToggleBeam();
-            }
+        public void setVibration(uint motor, float intensity)
+        {
+            cont.vibrate(motor, intensity);
+        }
+
+        private Vector2 checkMove()
+        {
+            Vector2 movement = new Vector2();
+            movement.x = Input.GetKey(KeyCode.A) ? -1 : Input.GetKey(KeyCode.D) ? 1 : 0;
+            movement.y = Input.GetKey(KeyCode.S) ? -1 : Input.GetKey(KeyCode.W) ? 1 : 0;
+            movement = cont.IsConnected() ? cont.GetStick(Controller.LeftStick) : movement;
+            movement *= moveSensitivity;
+            p.move(movement.x, movement.y, 0f);
+            return movement;
+        }
+
+        private Vector2 checkTurn()
+        {
+            Vector2 turn = new Vector3(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
+            turn = cont.IsConnected() ? cont.GetStick(Controller.RightStick) : turn;
+            turn.x *= rotationSpeedHoriz;
+            turn.y *= rotationSpeedVert;
+            p.turn(turn.x, turn.y);
+            return turn;
+        }
+
+        private bool checkJump()
+        {
+            bool doJump = cont.GetButton(Controller.A) || Input.GetKey(KeyCode.Space);
+            if(doJump) { p.jump(); }
+            return doJump;
+        }
+
+        private bool checkBlock()
+        {
+            bool blocking = cont.GetTrigger(Controller.LeftTrigger) || Input.GetMouseButton(1);
+            p.block(blocking);
+            return blocking;
         }
         
-        private bool rightTriggerActive = false;
-        private bool leftTriggerActive = false;
-
-        private bool triggerMethodDefault = true;
-
-        // For now, but soon this should be in controls.
-        private bool rightTriggerDown;
-        private bool leftTriggerDown;
-
-        float GetTrigger(string trigger)
+        // Temporarily in use.
+        private bool checkAttackBegin()
         {
-            return Input.GetAxis( (triggerMethodDefault ? "" : "Desktop_") + trigger);
+            bool initAttack = cont.GetTriggerDown(Controller.RightTrigger) || Input.GetMouseButtonDown(0);
+            if(initAttack) { p.attack(); }
+            return initAttack;
+        }
+
+        // For near-future use.
+        private bool checkAttackHold()
+        {
+            throw new NotSupportedException();
+        }
+
+        // For near-future use.
+        private bool checkAttackRelease()
+        {
+            throw new NotSupportedException();
+        }
+
+        private bool checkBeamToggle()
+        {
+            bool doToggle = cont.GetButtonDown(Controller.B) || Input.GetKeyDown(KeyCode.F);
+            if(doToggle) { p.ToggleBeam(); }
+            return doToggle;
         }
     }
 }

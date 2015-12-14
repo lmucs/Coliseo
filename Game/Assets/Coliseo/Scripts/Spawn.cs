@@ -9,7 +9,7 @@ namespace Coliseo
 
         public GameObject enemy;
         Actor actor;
-        int killCount = 0;
+        public static int killCount = 0;
         
         void Start()
         {
@@ -22,7 +22,8 @@ namespace Coliseo
         {
             if (actor.isDead)
             {
-                killCount++;
+				killCount+=10;
+				ScoreManager.score+= killCount;
                 Debug.Log("Enemy Killed. Total killed: " + killCount);
                 enemy.transform.position = transform.position;
                 enemy.transform.rotation = transform.rotation;

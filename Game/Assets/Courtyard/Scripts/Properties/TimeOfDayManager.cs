@@ -18,7 +18,7 @@ public class TimeOfDayManager : MonoBehaviour {
 	public Vector2 speedCurveMinMax;
 	public Toggle autoCycleTimeToggle;
 
-	public float defaultTime = 0.2f;
+	public float defaultTime = 0.741f;
 	public Gradient updateCurve;
 
 	[Tooltip("--- AllFacesAtOnce - render all faces at once spread remaining work over next 8 frames. total take 9 frames. \r" +
@@ -78,6 +78,7 @@ public class TimeOfDayManager : MonoBehaviour {
 		hasSetup = true;
 		SeekItems();
 		StaggeredUpdate();
+		autoCycleTime = true;
 	}
 
 	public void SeekItems() {
@@ -96,7 +97,8 @@ public class TimeOfDayManager : MonoBehaviour {
 
 	// called on slider change value
 	public void ChangeTime() {
-		if(timeSlider!=null)time = timeSlider.value;
+		//if (timeSlider != null)
+			time = defaultTime; //timeSlider.value;
 		//UpdateLabel(time.ToString());
 		//Debug.Log("ChangeTime:"+time);
 		StaggeredUpdate();
@@ -117,14 +119,14 @@ public class TimeOfDayManager : MonoBehaviour {
 
 	// called on toggle change value
 	public void ChangeContinuousUpdates(bool value) {
-		autoCycleTime = value;
+		autoCycleTime = true;//value;
 	}
 
 	public void Update() {
 		if (CrossPlatformInputManager.GetButtonDown("AutoTimeOfDay")) {
 			autoCycleTime = !autoCycleTime;
 		}
-		autoCycleTimeToggle.isOn = autoCycleTime;
+		//autoCycleTimeToggle.isOn = autoCycleTime;
 		if (CrossPlatformInputManager.GetButton("TimeReverse")) {
 			SetTime(time - 0.005f);
 		}
@@ -146,7 +148,7 @@ public class TimeOfDayManager : MonoBehaviour {
 		if (debug) Debug.Log("timeOfDay: " + timeIn,this);
 
 		var ttime = timeIn;
-		var tmax = timeSlider.maxValue;
+		var tmax = 0f;//timeSlider.maxValue;
 
 		if (ttime < 0) {
 			ttime = ((ttime%tmax) + tmax)%tmax; // Ugh math, this is how you keep in 0-1 range when a number goes negative, tip of the day ;-)
@@ -155,7 +157,7 @@ public class TimeOfDayManager : MonoBehaviour {
 		}
 
 		//UpdateLabel(time.ToString());
-		timeSlider.value = ttime;
+		//timeSlider.value = ttime;
 		time = ttime;
 
 
@@ -284,7 +286,7 @@ public class TimeOfDayManager : MonoBehaviour {
 		if (hasSetup) {
 			//Debug.Log("lastTime:" + lastTime + ":" + time);
 			//lastTime = time;
-			timeSlider.value = time;
+			//timeSlider.value = time;
 			//UpdateLabel(time.ToString());
 			StaggeredUpdate();
 		}
