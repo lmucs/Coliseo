@@ -161,10 +161,6 @@ button {
   float: right;
 }
 
-.about {
-  box-shadow: 1px;
-}
-
 .scores{
   height: 80%;
   overflow: auto;
