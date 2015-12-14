@@ -79,12 +79,30 @@ eget arcu lorem. Sed sit amet interdum sapien.
 `.trim(),
 
     });
+    const testUser2 = await User.create({
+      username: 'testy',
+      email: 'example2@example.com',
+      password: calculateSaltHash('testy'),
+      biography: `
+Lorm ipsum dolor sit amet, consectetur adipiscing elit. Duis pharetra ex
+consequat velit finibus dapibus. Morbi vulputate sapien et purus placerat,
+eget tristique urna hendrerit. Mauris et orci ullamcorper, porta enim
+quis, consectetur dolor. Sed ullamcorper, ligula vel maximus feugiat, ex
+turpis facilisis risus, eu commodo lacus risus id ante. Curabitur bibendum
+ante lorem, nec ullamcorper nisi placerat ac. Aliquam erat volutpat.
+Praesent facilisis, lorem eget accumsan convallis, tortor diam cursus
+orci, eu semper tortor odio id arcu. Pellentesque non nibh elit. Vivamus
+eget arcu lorem. Sed sit amet interdum sapien.
+`.trim(),
+    });
     const scores = [];
     for (let i = 0; i < 100; i++) {
       scores.push({score: _.random(9000)});
     }
     await Score.bulkCreate(scores);
     testUser.addScores(await Score.findAll());
+    await Score.bulkCreate(scores);
+    testUser2.addScores(await Score.findAll({where: {userId: null}}));
   })();
 }
 
