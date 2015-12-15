@@ -19,6 +19,7 @@ hbs.localsAsTemplateData(app);
 import './handlebars_helpers';
 
 // view engine setup
+app.set('trust proxy', 1);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 app.set('json spaces');
