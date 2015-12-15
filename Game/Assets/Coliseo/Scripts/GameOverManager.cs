@@ -61,7 +61,7 @@ namespace Coliseo{
 			scoreForm.AddField ("score", ScoreManager.score);
 			var headers = scoreForm.headers;
 			headers ["Authorization"] = "Basic " + System.Convert.ToBase64String (System.Text.Encoding.ASCII.GetBytes (auth));
-			WWW w = new WWW ("http://localhost:3000/api/v1/scores/" + username, scoreForm.data, headers);
+			WWW w = new WWW (LevelManager.BASE_URI + "/scores/" + username, scoreForm.data, headers);
 			while (!w.isDone) { };
 
 			XmlSerializer ser = new XmlSerializer (typeof(LevelManager.ScoresAroundList));

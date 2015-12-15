@@ -16,6 +16,7 @@ namespace Coliseo
 	    public UnityEngine.UI.Text UsernameText;
 	    public UnityEngine.UI.Text PasswordText;
 		public UnityEngine.UI.Text ErrorText;
+		public static string BASE_URI = "https://coliseo.cs.lmu.edu";
 
 	    // Use this for initialization
 	    public void LoadScene (string name) 
@@ -44,13 +45,13 @@ namespace Coliseo
 			LoginPanel.SetActive (true);
 		}
 		
-		public void LoginPanelOff ()
+		public void Login ()
 		{
 			Debug.Log ("logging in " + UsernameText.text + " with pass " + PasswordText.text);
 			WWWForm scoreForm = new WWWForm();
 			var headers = scoreForm.headers;
 			headers["Authorization"] = "Basic " + System.Convert.ToBase64String(System.Text.Encoding.ASCII.GetBytes(UsernameText.text + ":" + PasswordText.text));
-			WWW www = new WWW("http://localhost:3000/api/v1/auth", null,  headers);
+			WWW www = new WWW(BASE_URI + "/auth", null,  headers);
 			while (!www.isDone) { }
 			if (www.responseHeaders.Count > 0) // 
 			{
@@ -69,10 +70,14 @@ namespace Coliseo
 			//LoginPanel.SetActive (false);
 		}
 
+		public void LoginPanelOff ()
+		{
+			LoginPanel.SetActive (false);
+		}
 		public void FetchScoreboard()
 		{
 			XmlSerializer ser = new XmlSerializer (typeof(ScoreList));
-			WWW scoreRequest = new WWW ("http://localhost:3000/api/v1/scores");
+			WWW scoreRequest = new WWW (BASE_URI + "/scores");
 
 			while (!scoreRequest.isDone)
 			{
