@@ -17,6 +17,7 @@ export default app => {
     secret,
     resave: false,
     saveUninitialized: false,
+    cookie: {secure: true},
     store,
   }));
   app.use((req, res, next) => {
