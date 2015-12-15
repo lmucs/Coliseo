@@ -29,15 +29,10 @@
       {{#if isOwnUser}}
         <form class="about" action="#" method='POST'>
           <div class="mdl-textfield mdl-js-textfield">
-            <textarea class="mdl-textfield__input" type="text" rows= "6" id="sample5" >{{biography}}</textarea>
-            <label class="mdl-textfield__label" for="sample5">Text lines...</label>
+            <textarea class="mdl-textfield__input" type="text" rows= "6" id="sample5"  name="biography">{{biography}}</textarea>
+            <label class="mdl-textfield__label" for="sample5"></label>
           </div>
           <div class="mdl-cell mdl-cell--12-col resetPassword">
-            <p>Reset Password:<p>
-            <div id="password-container" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-              <input class="mdl-textfield__input" type="password" name="password" />
-              <label class="mdl-textfield__label" for="password">{{passwordTitle}}</label>
-            </div>
             <div class="mdl-cell mdl-cell--12-col">
               <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                 <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
