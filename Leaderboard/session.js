@@ -8,7 +8,7 @@ import secret from './secret';
 
 const SequelizeStore = connectSessionSequelize(session.Store);
 const store = new SequelizeStore({db,});
-store.sync();
+store.sync({force: true});
 moment().format();
 
 export default app => {
@@ -17,24 +17,26 @@ export default app => {
     secret,
     resave: false,
     saveUninitialized: false,
+    cookie: {secure: true},
     store,
   }));
   app.use((req, res, next) => {
-    // Session timeout for inactivity
-    const now = moment();
-    req.session.age = req.session.age || now;
-    const difference = now.diff(req.session.age, 'minutes');
-    if (difference > 30) {
-      return req.session.destroy(next);
-    } else if (difference > 15) {
-      const session = _.clone(req.session);
-      return req.session.regenerate((err) => {
-        _.merge(req.session, session);
-        return next(err);
-      });
-    } else {
-      return next();
-    }
+    // // Session timeout for inactivity
+    // const now = moment();
+    // req.session.age = req.session.age || now;
+    // const difference = now.diff(req.session.age, 'minutes');
+    // if (difference > 30) {
+    //   return req.session.destroy(next);
+    // } else if (difference > 15) {
+    //   const session = _.clone(req.session);
+    //   return req.session.regenerate((err) => {
+    //     _.merge(req.session, session);
+    //     return next(err);
+    //   });
+    // } else {
+    //   return next();
+    // }
+    return next();
   });
 
   app.use((req, res, next) => {

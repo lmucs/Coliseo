@@ -7,27 +7,23 @@
     {{/isLoginError}}
     <div class="mdl-cell mdl-cell--12-col">
       <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-        <input class="mdl-textfield__input" type="text" name="username" pattern="{{usernamePattern}}" value="{{username}}" />
-        <label class="mdl-textfield__label" for="username">Username</label>
-        <span class="mdl-textfield__error">Username must contain alphabetic characters only</span>
+        <input class="mdl-textfield__input" type="text" name="username" value="{{username}}" />
+        <label class="mdl-textfield__label" for="username">{{usernameTitle}}</label>
+        <span class="mdl-textfield__error">{{clientSideUserInvalid}}</span>
       </div>
     </div>
     <div class="mdl-cell mdl-cell--12-col">
       <div id="password-container" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
         <input class="mdl-textfield__input" type="password" name="password" />
-        <label class="mdl-textfield__label" for="password">Password</label>
-        <span class="mdl-textfield__error">Password is not strong enough</span>
+        <label class="mdl-textfield__label" for="password">{{passwordTitle}}</label>
       </div>
     </div>
     <div class="mdl-cell mdl-cell--12-col">
       <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
-          Submit
+          {{submit}}
         </button>
       </div>
     </div>
   </div>
 </form>
-{{#extend "scripts"}}
-  <script src="/scripts/register.js"></script>
-{{/extend}}
