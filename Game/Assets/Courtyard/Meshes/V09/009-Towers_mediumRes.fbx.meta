@@ -1,0 +1,173 @@
+fileFormatVersion: 2
+guid: 7e78d21f470dd3f49a18613100c3bbab
+timeCreated: 1450057400
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Cloner_Tower
+    100004: ClonerSteps_BottomToMid_1
+    100006: ClonerStepsToBasement
+    100008: ClonerStepsToBasement_2
+    100010: Connectbevel_1
+    100012: ConnectTowerPatchUp
+    100014: Holder_Tower_0
+    100016: Holder_Tower_1_^TowersHolder@Cloner_Tower@Holder_Tower_0^
+    100018: Holder_Tower_2_^TowersHolder@Cloner_Tower@Holder_Tower_0^
+    100020: Holder_Tower_2_^TowersHolder@Cloner_Tower@Holder_Tower_0^ 1
+    100022: Null
+    100024: Null_1
+    100026: Null_2
+    100028: Null_Instance
+    100030: Null_Instance_1
+    100032: PatchUp
+    100034: ScaleDown
+    100036: ScaleDown_Instance
+    100038: Step_0
+    100040: Step_0_2
+    100042: Step_33_Instance
+    100044: StepsBevel_2
+    100046: StepsMiddle
+    100048: StepsMiddleBend
+    100050: StepsUVD
+    100052: TheBrouchoudBlocker
+    100054: TheBrouchoudBlocker2
+    100056: TInnerPanel
+    100058: Tower_2
+    100060: TowerBent
+    100062: TowerBent_Instance_^Towery@Tower@TowerBent^
+    100064: TowerHolder
+    100066: TowerPatchUp003
+    100068: TowerPatchUp2
+    100070: TowerPatchUpConnect
+    100072: Towers
+    100074: TowersHolder
+    100076: Towery
+    100078: transform1
+    100080: transform10
+    100082: transform2
+    100084: transform3
+    100086: transform4
+    100088: transform5
+    100090: transform6
+    100092: transform7
+    100094: transform8
+    100096: transform9
+    400000: //RootNode
+    400002: Cloner_Tower
+    400004: ClonerSteps_BottomToMid_1
+    400006: ClonerStepsToBasement
+    400008: ClonerStepsToBasement_2
+    400010: Connectbevel_1
+    400012: ConnectTowerPatchUp
+    400014: Holder_Tower_0
+    400016: Holder_Tower_1_^TowersHolder@Cloner_Tower@Holder_Tower_0^
+    400018: Holder_Tower_2_^TowersHolder@Cloner_Tower@Holder_Tower_0^
+    400020: Holder_Tower_2_^TowersHolder@Cloner_Tower@Holder_Tower_0^ 1
+    400022: Null
+    400024: Null_1
+    400026: Null_2
+    400028: Null_Instance
+    400030: Null_Instance_1
+    400032: PatchUp
+    400034: ScaleDown
+    400036: ScaleDown_Instance
+    400038: Step_0
+    400040: Step_0_2
+    400042: Step_33_Instance
+    400044: StepsBevel_2
+    400046: StepsMiddle
+    400048: StepsMiddleBend
+    400050: StepsUVD
+    400052: TheBrouchoudBlocker
+    400054: TheBrouchoudBlocker2
+    400056: TInnerPanel
+    400058: Tower_2
+    400060: TowerBent
+    400062: TowerBent_Instance_^Towery@Tower@TowerBent^
+    400064: TowerHolder
+    400066: TowerPatchUp003
+    400068: TowerPatchUp2
+    400070: TowerPatchUpConnect
+    400072: Towers
+    400074: TowersHolder
+    400076: Towery
+    400078: transform1
+    400080: transform10
+    400082: transform2
+    400084: transform3
+    400086: transform4
+    400088: transform5
+    400090: transform6
+    400092: transform7
+    400094: transform8
+    400096: transform9
+    2300000: Holder_Tower_2_^TowersHolder@Cloner_Tower@Holder_Tower_0^
+    3300000: Holder_Tower_2_^TowersHolder@Cloner_Tower@Holder_Tower_0^
+    4300000: Holder_Tower_2_^TowersHolder@Cloner_Tower@Holder_Tower_0^
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
