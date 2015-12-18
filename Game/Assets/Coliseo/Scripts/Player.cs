@@ -34,6 +34,7 @@ namespace Coliseo
             player = gameObject;
             cameraTransform = anim.GetBoneTransform(HumanBodyBones.Head).Find("CameraRig/Camera");
             cameraRotX = cameraTransform.localEulerAngles.x;
+			canMove = false;
             controls = new Controls(this);
         }
         
@@ -75,9 +76,18 @@ namespace Coliseo
         {
             get { return player.transform.position; }
         }
+
+		public void beginMovement() {
+			Debug.Log ("working");
+			startMove ();
+			Enemy en = (Enemy) FindObjectOfType (typeof(Enemy));
+			en.startMove ();
+		}
         
         public override void move (float h, float v, float ignored) // FIXME: should do movement in 3D, instead of just 2D
         {
+			if (!canMove)
+				return;
             // Set the movement vector based on the axis input.
             Vector3 movement = new Vector3(h, 0f, v);
             
@@ -107,6 +117,8 @@ namespace Coliseo
         
         public void animate (float h, float v, float a, float b) 
         {
+			if (!canMove)
+				return;
             anim.SetFloat("Input X", h);
             anim.SetFloat("Input Z", v);
             anim.SetFloat("Rotation X", a);

@@ -88,6 +88,12 @@ namespace Coliseo
 
         public abstract void move (float forwardback, float leftright, float vertical);
         public abstract void turn (float x, float y);
+
+		public bool canMove = false;
+		public void startMove() {
+            Debug.Log("Can Move");
+			canMove = true;
+		}
         
         void Awake()
         {
