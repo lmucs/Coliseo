@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Coliseo;
 
 public class UIManager : MonoBehaviour {
 
@@ -18,7 +19,7 @@ public class UIManager : MonoBehaviour {
 			PauseGame (false);
 		}
 
-		if (Input.GetButtonDown ("Start") || Input.GetButtonDown("Desktop_Start")|| Input.GetButtonDown("Cancel")) {
+		if (Player.controls.checkPause()) {
 			switchPause ();
 		}
 	

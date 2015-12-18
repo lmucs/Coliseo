@@ -88,6 +88,11 @@ namespace Coliseo
             return initAttack;
         }
 
+        public bool checkPause()
+        {
+            return cont.GetButtonDown(Controller.Start) || Input.GetKeyDown(KeyCode.Escape);
+        }
+
         // For near-future use.
         private bool checkAttackHold()
         {

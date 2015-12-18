@@ -9,9 +9,9 @@ namespace Coliseo
     public class Player : Actor
     {
 
-        private static GameObject player;
+        public static GameObject player;
 
-        private Controls controls;
+        public static Controls controls;
         
         private Transform cameraTransform;
         private float cameraRotX = 0;
