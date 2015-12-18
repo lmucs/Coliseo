@@ -89,6 +89,7 @@ router.get('/scores/:username?', asyncWrap(getScores));
 
 const postScore = async (req, res, next) => {
   const user = auth(req);
+console.log(user);
   const userModel = await User.findOne({
     where: {
       username: user.name.toLowerCase(),

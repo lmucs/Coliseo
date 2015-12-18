@@ -13,7 +13,7 @@ namespace Coliseo
         
         void Start()
         {
-            saberCont.isPlayerSword = false;
+			canMove = false;
         }
 
         // Update is called once per frame
@@ -25,6 +25,9 @@ namespace Coliseo
             float dist = Vector3.Distance(playerLoc, transform.position);
             float moveZ = 0;
 
+			rb.MoveRotation(Quaternion.Euler(new Vector3(0, 180 + AngleToPlayer(), 0)));
+			if (!canMove)
+				return;
             if (dist > MIN_DIST)
             {
                 moveZ = moveSpeed;
@@ -42,7 +45,7 @@ namespace Coliseo
                 anim.SetTrigger("AttackDownTrigger");
             }
             anim.SetFloat("Input Z", moveZ);
-            rb.MoveRotation(Quaternion.Euler(new Vector3(0, 180 + AngleToPlayer(), 0)));
+            
         }
 
         // The angle needed to properly rotate the health toward the player.
