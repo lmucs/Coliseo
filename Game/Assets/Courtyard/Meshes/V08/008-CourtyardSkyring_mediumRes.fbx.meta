@@ -1,0 +1,142 @@
+fileFormatVersion: 2
+guid: 7232c3f7278318946958a74c28c80f85
+timeCreated: 1450057400
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Boole
+    100004: Cloner_SkyRing_Gap
+    100006: Filler
+    100008: Filler_2
+    100010: Filler_3
+    100012: Filler_4
+    100014: Filler_Instance
+    100016: Holder_SkyRing_10_^CourtyardSkyring@Cloner_SkyRing_Gap@Holder_SkyRing_EndCap^
+    100018: Holder_SkyRing_2_1
+    100020: Holder_SkyRing_2_^CourtyardSkyring@Cloner_SkyRing_Gap@Holder_SkyRing_Hollow^
+    100022: Holder_SkyRing_3_^CourtyardSkyring@Cloner_SkyRing_Gap@Holder_SkyRing_Hollow^
+    100024: Holder_SkyRing_4_^CourtyardSkyring@Cloner_SkyRing_Gap@Holder_SkyRing_Hollow^
+    100026: Holder_SkyRing_5_^CourtyardSkyring@Cloner_SkyRing_Gap@Holder_SkyRing_Hollow^
+    100028: Holder_SkyRing_6_^CourtyardSkyring@Cloner_SkyRing_Gap@Holder_SkyRing_Hollow^
+    100030: Holder_SkyRing_7_^CourtyardSkyring@Cloner_SkyRing_Gap@Holder_SkyRing_Hollow^
+    100032: Holder_SkyRing_8_^CourtyardSkyring@Cloner_SkyRing_Gap@Holder_SkyRing_Hollow^
+    100034: Holder_SkyRing_9_^CourtyardSkyring@Cloner_SkyRing_Gap@Holder_SkyRing_Hollow^
+    100036: Holder_SkyRing_EndCap
+    100038: Holder_SkyRing_Hollow
+    100040: Skyring
+    100042: SkyRing_2
+    100044: Skyring_2
+    100046: SkyRing_2_2
+    100048: SkyRing_2_3
+    100050: SkyRing_2_4
+    100052: Skyring_3
+    100054: SkyRing_ScaleDown
+    100056: SkyRing_ScaleDown_2
+    400000: //RootNode
+    400002: Boole
+    400004: Cloner_SkyRing_Gap
+    400006: Filler
+    400008: Filler_2
+    400010: Filler_3
+    400012: Filler_4
+    400014: Filler_Instance
+    400016: Holder_SkyRing_10_^CourtyardSkyring@Cloner_SkyRing_Gap@Holder_SkyRing_EndCap^
+    400018: Holder_SkyRing_2_1
+    400020: Holder_SkyRing_2_^CourtyardSkyring@Cloner_SkyRing_Gap@Holder_SkyRing_Hollow^
+    400022: Holder_SkyRing_3_^CourtyardSkyring@Cloner_SkyRing_Gap@Holder_SkyRing_Hollow^
+    400024: Holder_SkyRing_4_^CourtyardSkyring@Cloner_SkyRing_Gap@Holder_SkyRing_Hollow^
+    400026: Holder_SkyRing_5_^CourtyardSkyring@Cloner_SkyRing_Gap@Holder_SkyRing_Hollow^
+    400028: Holder_SkyRing_6_^CourtyardSkyring@Cloner_SkyRing_Gap@Holder_SkyRing_Hollow^
+    400030: Holder_SkyRing_7_^CourtyardSkyring@Cloner_SkyRing_Gap@Holder_SkyRing_Hollow^
+    400032: Holder_SkyRing_8_^CourtyardSkyring@Cloner_SkyRing_Gap@Holder_SkyRing_Hollow^
+    400034: Holder_SkyRing_9_^CourtyardSkyring@Cloner_SkyRing_Gap@Holder_SkyRing_Hollow^
+    400036: Holder_SkyRing_EndCap
+    400038: Holder_SkyRing_Hollow
+    400040: Skyring
+    400042: SkyRing_2
+    400044: Skyring_2
+    400046: SkyRing_2_2
+    400048: SkyRing_2_3
+    400050: SkyRing_2_4
+    400052: Skyring_3
+    400054: SkyRing_ScaleDown
+    400056: SkyRing_ScaleDown_2
+    2300000: Filler_2
+    2300002: Filler_4
+    2300004: SkyRing_2_2
+    2300006: SkyRing_2_4
+    3300000: Filler_2
+    3300002: Filler_4
+    3300004: SkyRing_2_2
+    3300006: SkyRing_2_4
+    4300000: Filler_2
+    4300002: SkyRing_2_2
+    4300004: Filler_4
+    4300006: SkyRing_2_4
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

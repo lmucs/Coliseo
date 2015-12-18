@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import hbs from 'hbs';
 import _ from 'lodash';
+import * as crypto from 'crypto';
 
 import routes from './routes';
 import setupLocals from './locals';
@@ -18,6 +19,7 @@ hbs.localsAsTemplateData(app);
 import './handlebars_helpers';
 
 // view engine setup
+app.set('trust proxy', 1);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 app.set('json spaces');
@@ -38,7 +40,6 @@ app.use((req, res, next) => {
 });
 
 app.use(setupLocals);
-
 app.use('/', routes);
 
 // catch 404 and forward to error handler
@@ -104,6 +105,54 @@ eget arcu lorem. Sed sit amet interdum sapien.
     testUser.addScores(await Score.findAll());
     await Score.bulkCreate(scores);
     testUser2.addScores(await Score.findAll({where: {userId: null}}));
+  })();
+} else {
+  // populate data for production
+  (async () => {
+    let names = `
+Kenyatta
+Lucas
+Luana
+Jacques
+Linette
+Major
+Kai
+Joslyn
+Nella
+Shawn
+Leonila
+Janel
+Kira
+Eddie
+Maribel
+Neda
+Dia
+Wai
+Joaquin
+Eleni
+    `.trim().split('\n');
+    for (let x = 0; x < 20; x++) {
+      const [name, score] = [names[x], _.random(12) * 10];
+      const sampleUser = await User.create({
+        username: name,
+        email: crypto.randomBytes(10)
+                           .toString('hex') + '@example.com',
+        password: calculateSaltHash(crypto.randomBytes(10)
+                           .toString('hex')),
+        biography: `
+Lorm ipsum dolor sit amet, consectetur adipiscing elit. Duis pharetra ex
+consequat velit finibus dapibus. Morbi vulputate sapien et purus placerat,
+eget tristique urna hendrerit. Mauris et orci ullamcorper, porta enim
+quis, consectetur dolor. Sed ullamcorper, ligula vel maximus feugiat, ex
+turpis facilisis risus, eu commodo lacus risus id ante. Curabitur bibendum
+ante lorem, nec ullamcorper nisi placerat ac. Aliquam erat volutpat.
+Praesent facilisis, lorem eget accumsan convallis, tortor diam cursus
+orci, eu semper tortor odio id arcu. Pellentesque non nibh elit. Vivamus
+eget arcu lorem. Sed sit amet interdum sapien.
+`.trim(),
+      });
+      await sampleUser.createScore({score});
+    }
   })();
 }
 

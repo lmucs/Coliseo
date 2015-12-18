@@ -3,11 +3,13 @@ import _ from 'lodash';
 const appConfig = {
   // App configuration
   appName: 'Coliseo',
-  primaryColor: 'indigo',
-  accentColor: 'pink',
+  primaryColor: 'brown',
+  accentColor: 'blue',
 };
+
 const englishLocals = {
   english: true,
+
   // Confirmation  errors
   regEmailError: 'The email is not valid or is already taken',
   regUserError: 'The username is not valid or is already taken',
@@ -93,7 +95,7 @@ const spanishLocals = {
                    '<a class="flaticon" href="http://www.flaticon.com">' +
                    'Flaticon</a> está bajo la licencia <a class="cc" ' +
                    'href="http://creativecommons.org/licenses/by/3.0/">' +
-                   '"Creative Commons BY 3.0"</a>. Made with ' +
+                   '"Creative Commons BY 3.0"</a>. Hecho con ' +
                    '<a class="logomaker" href="http://logomakr.com">' +
                    '"Logo Maker"</a>',
 
@@ -120,6 +122,81 @@ const spanishLocals = {
   submit: 'Enviar',
 };
 
+const arabicLocals = {
+  arabic: true,
+  regEmailError: 'إن البريد الإلكتروني غير صالح أو اتخذت بالفعل',
+  regUserError: 'اسم المستخدم غير صالح أو اتخذت بالفعل',
+  regPasswordError: 'كلمة المرور ليست قوية بما فيه الكفاية',
+  regConfirmError: 'إن كلمات السر اثنين لا تتطابق',
+  loginError: 'إما اسم المستخدم أو كلمة المرور غير صالحة',
+  clientSideUserInvalid: 'يجب أن اسم المستخدم يحتوي على أحرف أبجدية فقط',
+  clientSideEmailInvalid: 'نظرا عنوان ليس عنوان بريد إلكتروني صالح',
+
+  userNotFound: 'لا وجود للمستخدم طلب',
+
+  regSuccess: 'التسجيل نجحت',
+  regSuccess2: 'الرجاء التحقق من بريدك الالكتروني للتحقق من حسابك،',
+
+  aboutColiseo: 'لعبة كوة المتصدع التي بنيت في فصل دراسي لCMSI 401 في LMU.' +
+                 'يتكون من لعبة الوحدة وخادم المتصدرين Node.js.',
+  wikiLocation: '<a class="wiki href="https://github.com/lmucs/Coliseo/wiki">هنا</a> إن يكي يقع',
+  graphicLocation: 'Coliseum graphic by <a class="freepik" ' +
+                   'href="http://www.freepik.com/">Freepik</a> from ' +
+                   '<a class="flaticon" href="http://www.flaticon.com">' +
+                   'Flaticon</a> is licensed under <a class="cc" ' +
+                   'href="http://creativecommons.org/licenses/by/3.0/">' +
+                   '"Creative Commons BY 3.0"</a>. Made with ' +
+                   '<a class="logomaker" href="http://logomakr.com">' +
+                   '"Logo Maker"</a>',
+
+  register: 'التسجيل',
+  login: 'تسجيل الدخول',
+  leaderboard: 'المتصدرين',
+
+  userProfile: 'العضو',
+  highScoreTitle: 'أعلى النتائج:',
+  biographyTitle: 'السيرة الذاتية',
+
+  usernameTitle: 'اسم المستخدم',
+  scoreTitle: 'النتيجة',
+  rankTitle: 'الرتبة',
+  emailTitle: 'البريد الإلكتروني',
+  passwordTitle: 'كلمة المرور',
+  confirmPasswordTitle: 'تأكيد كلمة المرور',
+  submit: "إرسال"
+};
+
+const russianLocals = {
+  russian: true,
+
+  regEmailError: 'Электронная почта не действует или уже принято',
+  regUserError: 'Имя пользователя, не действует или уже принято',
+  regPasswordError: 'Пароль не достаточно сильны',
+  regConfirmError: 'Пароли не совпадают',
+  loginError: 'Либо имя пользователя или пароль являются недопустимыми',
+  clientSideUserValidation: 'Имя пользователя должно содержать только символы алфавита',
+  clientSideEmailValidation: 'Учитывая адрес не является действительным адресом электронной почты',
+
+  userNotFound: 'Запрашиваемая пользователь не существует',
+
+  aboutColiseo: 'Мы построили эту игру в школе (ЛМЮ). Класс КМСИ 401', // TODO?
+
+  register: 'регистр',
+  login: 'логин',
+  logout: 'выйти',
+  leaderboard: 'Лидеры',
+  userProfile: 'Профиль пользователя',
+
+  highScoreTitle: 'Рекорд',
+  usernameTitle: 'имя',
+  scoreTitle: 'Оценка',
+  rankTitle: 'Ранг',
+  emailTitle: 'E-Почта',
+  passwordTitle: 'Пароль',
+  confirmPasswordTitle: 'Подтвердите Пароль',
+  submit: 'Представить',
+};
+
 export default (req, res, next) => {
   if (req.query.language) {
     req.session.language = req.query.language;
@@ -127,6 +204,10 @@ export default (req, res, next) => {
   _.assign(res.locals, appConfig);
   if (req.session.language === 'spanish') {
     _.assign(res.locals, spanishLocals);
+  } else if (req.session.language === 'arabic') {
+    _.assign(res.locals, arabicLocals);
+  } else if (req.session.language === 'russian') {
+    _.assign(res.locals, russianLocals);
   } else {
     _.assign(res.locals, englishLocals);
   }

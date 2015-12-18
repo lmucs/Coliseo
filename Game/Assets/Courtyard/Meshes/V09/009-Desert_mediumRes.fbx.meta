@@ -1,0 +1,148 @@
+fileFormatVersion: 2
+guid: 6d4fb3048078f4440888af38182f1819
+timeCreated: 1450057400
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Connect_BigRound
+    100004: Displacer
+    100006: Displacer_1
+    100008: Dunes
+    100010: LowResproxy_Dynamic
+    100012: Null
+    100014: Round
+    100016: Sand
+    100018: Sand_2
+    100020: Sand_PreTes_Quad_1a
+    100022: Sand_PreTes_Quad_1a_2
+    100024: Sand_PreTes_Quad_1b
+    100026: Sand_PreTes_Quad_1b_2
+    100028: Sand_PreTes_Quad_2
+    100030: Sand_PreTes_Quad_2_2
+    100032: Sand_PreTes_Quad_2b
+    100034: Sand_PreTes_Quad_2b_2
+    100036: Sand_PreTes_Quad_3
+    100038: Sand_PreTes_Quad_3_2
+    100040: Sand_PreTes_Quad_3b
+    100042: Sand_PreTes_Quad_3b_2
+    100044: SandHolder
+    100046: SandHolder_2
+    100048: Source
+    100050: Subdivision_Surface_1
+    400000: //RootNode
+    400002: Connect_BigRound
+    400004: Displacer
+    400006: Displacer_1
+    400008: Dunes
+    400010: LowResproxy_Dynamic
+    400012: Null
+    400014: Round
+    400016: Sand
+    400018: Sand_2
+    400020: Sand_PreTes_Quad_1a
+    400022: Sand_PreTes_Quad_1a_2
+    400024: Sand_PreTes_Quad_1b
+    400026: Sand_PreTes_Quad_1b_2
+    400028: Sand_PreTes_Quad_2
+    400030: Sand_PreTes_Quad_2_2
+    400032: Sand_PreTes_Quad_2b
+    400034: Sand_PreTes_Quad_2b_2
+    400036: Sand_PreTes_Quad_3
+    400038: Sand_PreTes_Quad_3_2
+    400040: Sand_PreTes_Quad_3b
+    400042: Sand_PreTes_Quad_3b_2
+    400044: SandHolder
+    400046: SandHolder_2
+    400048: Source
+    400050: Subdivision_Surface_1
+    2300000: Null
+    2300002: Sand_2
+    2300004: Sand_PreTes_Quad_1a_2
+    2300006: Sand_PreTes_Quad_1b_2
+    2300008: Sand_PreTes_Quad_2_2
+    2300010: Sand_PreTes_Quad_2b_2
+    2300012: Sand_PreTes_Quad_3_2
+    2300014: Sand_PreTes_Quad_3b_2
+    3300000: Null
+    3300002: Sand_2
+    3300004: Sand_PreTes_Quad_1a_2
+    3300006: Sand_PreTes_Quad_1b_2
+    3300008: Sand_PreTes_Quad_2_2
+    3300010: Sand_PreTes_Quad_2b_2
+    3300012: Sand_PreTes_Quad_3_2
+    3300014: Sand_PreTes_Quad_3b_2
+    4300000: Sand_2
+    4300002: Sand_PreTes_Quad_1a_2
+    4300004: Sand_PreTes_Quad_1b_2
+    4300006: Sand_PreTes_Quad_2_2
+    4300008: Sand_PreTes_Quad_2b_2
+    4300010: Sand_PreTes_Quad_3_2
+    4300012: Sand_PreTes_Quad_3b_2
+    4300014: Null
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -46,9 +46,18 @@ const handleGetUser = async (req, res, next) => {
 };
 
 const handlePostUser = async (req, res, next) => {
-
+  if (req.session.user.username === req.params.username) {
+    console.log(req.body);
+    const user = await User.findOne({
+      where: {username: req.params.username.toLowerCase(),}}
+    );
+    user.biography = req.body.biography;
+    await user.save();
+  }
+  return res.redirect('/leaderboard/user/' + req.params.username);
 };
 
 router.get('/user/:username', asyncWrap(handleGetUser));
+router.post('/user/:username', asyncWrap(handlePostUser));
 
 export default router;

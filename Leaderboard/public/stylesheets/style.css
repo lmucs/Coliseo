@@ -8,6 +8,14 @@
   z-index: 900;
 }*/
 
+/*html, body
+{
+    height: 100%;
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+}*/
+
 .customContainer {
   background: white;
 }
@@ -22,28 +30,37 @@
 
 .leaderboard {
   max-width: 100%;
+  min-height: 100%;
 }
 
 .mdl-data-table {
   vertical-align: top;
   width: 100%;
+  font-size: 14px;
 }
 
 .highscore, .bio {
+  margin-top: 1%;
   width: 100%;
   display: inline-block;
 }
 
 .bio {
+  margin-left: .5%;
   float: right;
 }
 
 .highscore {
+  margin-left: .5%;
   float: left;
 }
 
 .about {
   margin-left: 20px;
+}
+
+.about, .resetPassword {
+  margin-top: 20px;
 }
 
 a {
@@ -69,6 +86,10 @@ a {
  color: rgba(0, 0, 0, 0.54);
 }
 
+.reset {
+  margin-top: 5vh;
+}
+
 .coliseo{
 	margin-top: 15px;
 	padding: 20px;
@@ -79,8 +100,13 @@ a.mdl-navigation__link:hover {
   zoom: 120%;
 }
 
-.intro{
+.languageLink {
+  text-decoration: none;
+}
+
+.intro {
   margin: auto;
+  margin-top: 5%;
 	text-align: center;
 }
 
@@ -101,16 +127,14 @@ a.mdl-navigation__link:hover {
   zoom: 150%;
 }
 
-.mdl-layout-title {
-	border: 2px;
-}
-
 .userPage {
   width: 49%;
   float: center;
   padding:.3%;
   margin: 0px;
   display: inline-block;
+  height: 100%;
+  min-height: 100%;
 }
 
 p.form-error {
@@ -118,26 +142,9 @@ p.form-error {
   color: #DD2C00;
 }
 
-/*.demo-card-event.mdl-card {
-  width: 256px;
-  height: 256px;
-  background-color: SaddleBrown;
-  overflow: auto;
-}
-
-.demo-card-event .mdl-card__actions {
-  border-color: rgba(255, 255, 255, 0.2);
-}
-
-.demo-card-event .mdl-card__actions {
-  display: flex;
-  box-sizing:border-box;
-  align-items: center;
-}*/
-
 .demo-card-wide.mdl-card {
   width: 100%;
-  height: 450px;
+  height: 100vh;
 }
 
 .demo-card-wide.mdl-card__title {
@@ -146,7 +153,8 @@ p.form-error {
 }
 
 textarea {
-  max-height: 50%
+  vertical-align: center;
+  max-height: 45vh;
 }
 
 button {
@@ -154,7 +162,7 @@ button {
 }
 
 .scores{
-  max-height: 80%;
+  height: 80%;
   overflow: auto;
   margin-bottom: 20px;
 }

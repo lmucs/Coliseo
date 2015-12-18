@@ -21,7 +21,6 @@ const getUser = async (req, res, next) => {
     return next(new UserNotFoundError());
   }
   const sanitizedUser = _.pick(user.get(), ['username', 'biography']);
-  console.log(sanitizedUser);
 
   res.set('Content-Type', 'text/xml');
   return res.send(js2xmlparser('user', sanitizedUser));
@@ -78,11 +77,12 @@ const getScores = async (req, res, next) => {
     });
     scores = topScoresRaw.map(obj => ({
       score: obj.get('score'),
+      scoreId: obj.get('id'),
       username: obj.get('user').get('username'),
     }));
   }
   res.set('Content-Type', 'text/xml');
-  return res.send(js2xmlparser('scores', {scores}));
+  return res.send(js2xmlparser('leaderboard', {scores}));
 };
 
 router.get('/scores/:username?', asyncWrap(getScores));
@@ -106,11 +106,49 @@ console.log(user);
     console.log('Error confirming password');
     return res.status(401).send();
   } else {
-    console.log('SCORE POSTING SUCCESS!!!!!!!!!!!');
-    res.send();
+    const {score} = req.body;
+    const intScore = parseInt(score); // so we have an int
+    console.log(intScore);
+    const scoresAbove = await Score.findAll({
+      include: [{model: User, required: true}],
+      where: {
+        score: {
+          gte: intScore
+        },
+      },
+      order: [['score', 'ASC']],
+      limit: 5,
+    });
+    const scoresBelow = await Score.findAll({
+      include: [{model: User, required: true}],
+      where: {
+        score: {
+          lt: intScore,
+        },
+      },
+      order: [['score', 'DESC']],
+      limit: 5,
+    });
+    const newScore = await userModel.createScore({score});
+    const scoresAround = scoresAbove
+      .reverse()
+      .concat(newScore, scoresBelow)
+      .map(obj => {
+        const user = obj.get('user') || userModel;
+        return {
+          score: obj.get('score'),
+          username: user.get('username'),
+          scoreId: obj.get('id'),
+        };
+      });
+    res.set('Content-Type', 'text/xml');
+    return res.send(js2xmlparser('scoresAround', {
+      score: scoresAround,
+      submittedScoreId: newScore.get('id'),
+    }));
   }
 };
 
-router.post('/scores/:username', asyncWrap(postScore)); // TODO!
+router.post('/scores/', asyncWrap(postScore));
 
 export default router;
