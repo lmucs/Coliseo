@@ -3,8 +3,8 @@
     <div class="mdl-cell mdl-cell--12-col">
       <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
         <input class="mdl-textfield__input" type="email" name="email" value="{{email}}">
-        <label class="mdl-textfield__label" for="email">Email</label>
-        <span class="mdl-textfield__error">Given address is not a valid email address</span>
+        <label class="mdl-textfield__label" for="email">{{emailTitle}}</label>
+        <span class="mdl-textfield__error">{{clientSideEmailInvalid}}</span>
       </div>
       {{#isEmailError}}
         <p class="form-error">
@@ -15,8 +15,8 @@
     <div class="mdl-cell mdl-cell--12-col">
       <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
         <input class="mdl-textfield__input" type="text" name="username" pattern="{{usernamePattern}}" value="{{username}}" />
-        <label class="mdl-textfield__label" for="username">Username</label>
-        <span class="mdl-textfield__error">Username must contain alphabetic characters only</span>
+        <label class="mdl-textfield__label" for="username">{{usernameTitle}}</label>
+        <span class="mdl-textfield__error">{{clientSideUserInvalid}}</span>
       </div>
       {{#isUserError}}
         <p class="form-error">
@@ -27,8 +27,8 @@
     <div class="mdl-cell mdl-cell--12-col">
       <div id="password-container" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
         <input class="mdl-textfield__input" type="password" name="password">
-        <label class="mdl-textfield__label" for="password">Password</label>
-        <span class="mdl-textfield__error">Password is not strong enough</span>
+        <label class="mdl-textfield__label" for="password">{{passwordTitle}}</label>
+        <span class="mdl-textfield__error">{{regPasswordError}}</span>
       </div>
       {{#isPasswordError}}
         <p class="form-error">
@@ -39,8 +39,8 @@
     <div class="mdl-cell mdl-cell--12-col">
       <div id="confirm-container" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
         <input class="mdl-textfield__input" type="password" name="confirm">
-        <label class="mdl-textfield__label" for="confirm">Confirm Password</label>
-        <span class="mdl-textfield__error">Passwords do not match</span>
+        <label class="mdl-textfield__label" for="confirm">{{confirmPasswordTitle}}</label>
+        <span class="mdl-textfield__error">{{regConfirmError}}</span>
       </div>
       {{#isConfirmError}}
         <p class="form-error">
@@ -51,7 +51,7 @@
     <div class="mdl-cell mdl-cell--12-col">
       <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
         <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
-          Submit
+          {{submit}}
         </button>
       </div>
     </div>

@@ -11,11 +11,13 @@ $.getScript('/scripts/zxcvbn.js').done(function() {
       }
     });
 
-    $('input[name=confirm]').keyup(function() {
-      if ($(this).val() !== $('input[name=password]').val()) {
-        $(this).parent().addClass('is-invalid');
+    $('input').keyup(function() {
+      var $password = $('input[name=password]');
+      var $confirm = $('input[name=confirm]');
+      if ($password.val() !== $confirm.val()) {
+        $('input[name=confirm]').parent().addClass('is-invalid');
       } else {
-        $(this).parent().removeClass('is-invalid');
+        $('input[name=confirm]').parent().removeClass('is-invalid');
       }
     });
   });

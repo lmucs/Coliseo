@@ -1,0 +1,34 @@
+<div class="mdl-layout mdl-layout--fixed-header mdl-js-layout mdl-color--grey-400">
+  <main class="mdl-layout__content customContainer">
+    <div class="leaderboard">
+      <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+        <thead>
+          <tr>
+            <th class="mdl-data-table__cell--non-numeric">{{usernameTitle}}</th>
+            <th>{{scoreTitle}}</th>
+            <th>{{rankTitle}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each scores}}
+            <tr>
+              <td class="mdl-data-table__cell--non-numeric">
+                <a class="mdl-button mdl-js-button mdl-js-ripple-effect"
+                   href="/leaderboard/user/{{username}}">
+                  {{username}}
+                </a>
+              </td>
+              <td class="Score">{{score}}</td>
+              <td class="Rank">{{counter @index}}</td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </main>
+</div>
+<!--
+{{#extend "scripts"}}
+  <script src="/scripts/register.js"></script>
+{{/extend}}
+-->

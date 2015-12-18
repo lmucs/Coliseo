@@ -91,6 +91,6 @@ db().then(function() {
     debug('Listening on ' + bind);
   }
 }).catch(function(e) {
-  console.log(e.stack);
+  console.error(e.stack);
   throw e;
 });

@@ -1,0 +1,48 @@
+<div class="userPage">
+  <div class="highscore">
+    <div class="demo-card-wide mdl-card mdl-shadow--2dp">
+      <div class="mdl-card__title">
+        <h2 class="mdl-card__title-text">{{highScoreTitle}} {{username}}</h2>
+      </div>
+      <div class="mdl-card__supporting-text scores">
+        Ranked Scores
+        <ol>
+          {{#each scores}}
+            <li>{{score}}</li>
+          {{/each}}
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="userPage">
+  <div class="bio">
+    <div class="demo-card-wide mdl-card mdl-shadow--2dp">
+      <div class="mdl-card__title">
+        <h2 class="mdl-card__title-text">{{biographyTitle}}: {{username}}</h2>
+      </div>
+      {{#unless isOwnUser}}
+        <div class="mdl-card__supporting-text about">
+          {{biography}}
+        </div>
+      {{/unless}}
+      {{#if isOwnUser}}
+        <form class="about" action="#" method='POST'>
+          <div class="mdl-textfield mdl-js-textfield">
+            <textarea class="mdl-textfield__input" type="text" rows= "6" id="sample5"  name="biography">{{biography}}</textarea>
+            <label class="mdl-textfield__label" for="sample5"></label>
+          </div>
+          <div class="mdl-cell mdl-cell--12-col resetPassword">
+            <div class="mdl-cell mdl-cell--12-col">
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+                  {{submit}}
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      {{/if}}
+    </div>
+  </div>
+</div>

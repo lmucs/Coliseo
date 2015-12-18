@@ -41,16 +41,16 @@ const handleRegistration = async (req, res, next) => {
     console.log('User registration validation failed');
     return handleRegistrationError(errors, req, res, next);
   } else {
-    // TODO: make sure that no duplicates exist case insensitively
+    let userModel;
     try {
-      await User.create({
-        username: username,
+      userModel = await User.create({
+        username: username.toLowerCase(),
         password: calculateSaltHash(password),
         email: email,
       });
     } catch (e) {
       if (e.name !== 'SequelizeValidationError') {
-        throw e;
+        next(e);
       }
 
       console.error('Error inserting user into database', e);
@@ -63,8 +63,15 @@ const handleRegistration = async (req, res, next) => {
       );
       return handleRegistrationError(errors, req, res, next);
     }
-
-    return res.redirect('email-verify');
+    req.session.regenerate((err) => {
+      if (err) {
+        return next(err);
+      } else {
+        req.session.user = userModel;
+        req.session.authenticated = true;
+        return res.redirect('/');
+      }
+    });
   }
 };
 
@@ -83,13 +90,20 @@ router
     }).post(asyncWrap(handleRegistration));
 
 const handleLogin = async (req, res, next) => {
-  const userModel = await User.find({username: req.username});
+  const userModel = await User.findOne({
+    where: {
+      username: req.body.username.toLowerCase(),
+    }
+  });
+  if (userModel === null) {
+    return res.status(401).render('login', {isLoginError: true});
+  }
   let [iterations, salt, hash] = userModel.password.split('$');
   iterations = parseInt(iterations, 10);
   if (hash !== calculateHash(req.body.password, salt, iterations)) {
     return res.status(401).render('login', {isLoginError: true});
   } else {
-    req.session.regenerate(function(err) {
+    req.session.regenerate((err) => {
       if (err) {
         return next(err);
       } else {
@@ -108,6 +122,11 @@ router
 
 router.get('/email-verify', (req, res, next) => {
   return res.render('email-verify');
+});
+
+router.get('/logout', (req, res, next) => {
+  req.session.destroy();
+  return res.redirect('/');
 });
 
 export default router;

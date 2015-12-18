@@ -1,27 +1,70 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>{{appName}}</title>
+    <title>Coliseo</title>
     <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.5/material.{{primaryColor}}-{{accentColor}}.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer
+    <div class="mdl-layout mdl-js-layout
                 mdl-layout--fixed-header">
       <header class="mdl-layout__header">
         <div class="mdl-layout__header-row">
+          <span class="mdl-layout-title"><a class="title" href="/"><img class="logo" src="https://camo.githubusercontent.com/41a71af7a568072aef542a3676aded5c7764efe6/68747470733a2f2f63646e2e7261776769742e636f6d2f6c6d7563732f436f6c6973656f2f6d61737465722f6c6f676f2e737667"></a></span>
           <div class="mdl-layout-spacer"></div>
-          <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
-                      mdl-textfield--floating-label mdl-textfield--align-right">
-          </div>
+          <nav class="mdl-navigation">
+            {{#unless ownUsername}}
+              <a class="mdl-navigation__link" href="/users/register">{{register}}</a>
+              <a class="mdl-navigation__link" href="/users/login">{{login}}</a>
+            {{/unless}}
+            {{#if ownUsername}}
+              <a class="mdl-navigation__link" href="/leaderboard/user/{{ownUsername}}">{{ownUsername}}</a>
+              <a class="mdl-navigation__link" href="/users/logout">{{logout}}</a>
+            {{/if}}
+            <button id="demo-menu-lower-right" class="mdl-button mdl-js-button mdl-button--icon">
+              <i class="material-icons">language</i>
+            </button>
+            <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+                for="demo-menu-lower-right">
+              {{#unless english}}<a class="languageLink" href="?language=english">{{/unless}}
+                <li {{#if english}}disabled{{/if}} class="mdl-menu__item">
+                English
+                </li>
+              {{#unless english}}</a>{{/unless}}
+              {{#unless spanish}}<a class="languageLink" href="?language=spanish">{{/unless}}
+                <li {{#if spanish}}disabled{{/if}} class="mdl-menu__item">
+                  Espa&ntilde;ol
+                </li>
+              {{#unless spanish}}</a>{{/unless}}
+              {{#unless arabic}}<a class="languageLink" href="?language=arabic">{{/unless}}
+                <li {{#if arabic}}disabled{{/if}} class="mdl-menu__item">
+                  العربية
+                </li>
+              {{#unless arabic}}</a>{{/unless}}
+              {{#unless russian}}<a class="languageLink" href="?language=russian">{{/unless}}
+                <li {{#if russian}}disabled{{/if}} class="mdl-menu__item">
+                  Русский Язык
+                </li>
+              {{#unless russian}}</a>{{/unless}}
+            </ul>
+       <!--      <a class="mdl-navigation__link" href="/leaderboard">Leaderboard</a>
+            <a class="mdl-navigation__link" href="/leaderboard/user">User Profile</a> -->
+          </nav>
         </div>
       </header>
       <div class="mdl-layout__drawer">
-        <span class="mdl-layout-title">{{appName}}</span>
+        <span class="mdl-layout-title"><a class="title" href="/"><img class="logo" src="https://camo.githubusercontent.com/41a71af7a568072aef542a3676aded5c7764efe6/68747470733a2f2f63646e2e7261776769742e636f6d2f6c6d7563732f436f6c6973656f2f6d61737465722f6c6f676f2e737667"></a></span>
         <nav class="mdl-navigation">
-          <a class="mdl-navigation__link" href="/users/register">Register</a>
-          <a class="mdl-navigation__link" href="/users/login">Login</a>
+          {{#unless ownUsername}}
+            <a class="mdl-navigation__link" href="/users/register">{{register}}</a>
+            <a class="mdl-navigation__link" href="/users/login">{{login}}</a>
+          {{/unless}}
+          <a class="mdl-navigation__link" href="/leaderboard">{{leaderboard}}</a>
+          {{#if ownUsername}}
+            <a class="mdl-navigation__link" href="/leaderboard/user/{{ownUsername}}">{{userProfile}}</a>
+            <a class="mdl-navigation__link" href="/users/logout">{{logout}}</a>
+          {{/if}}
         </nav>
       </div>
       <main class="mdl-layout__content">
